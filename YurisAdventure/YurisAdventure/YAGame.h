@@ -10,7 +10,7 @@
 
 // HERE IS THE DUMMY GAME SETUP/INIT FILE. EVERYTHING WOULD START FROM HERE
 static const wstring	DG_INIT_FILE			= L"data/GameInit.txt";
-static const wstring	DG_GUI_INIT_FILE		= L"data/DummyGameGUIInit.txt";
+static const wstring	DG_GUI_INIT_FILE		= L"data/MainMenuGUI.txt";
 static const string		DG_DEBUG_FILE			= "DebugOutput.txt";
 
 
@@ -28,6 +28,23 @@ static const wstring	DG_FONT_COLOR_BLUE		= L"FONT_COLOR_BLUE";
 static const wstring	DG_COLOR_KEY_RED		= L"COLOR_KEY_RED";
 static const wstring	DG_COLOR_KEY_GREEN		= L"COLOR_KEY_GREEN";
 static const wstring	DG_COLOR_KEY_BLUE		= L"COLOR_KEY_BLUE";
+
+// PROPERTIES FOR THE MAIN MENU GUI
+static const wstring GUI_QUANTITY_OF_IMAGES = L"QUANTITY_OF_IMAGES";
+static const wstring GUI_IMAGE_PATH = L"IMAGE_PATH";
+static const wstring GUI_IMAGE_WIDTH = L"IMAGE_WIDTH";
+static const wstring GUI_IMAGE_HEIGHT = L"IMAGE_HEIGHT";
+static const wstring GUI_IMAGE_X = L"IMAGE_X";
+static const wstring GUI_IMAGE_Y = L"IMAGE_Y";
+static const wstring GUI_IMAGE_ANIMATED = L"IMAGE_ANIMATED";
+
+static const wstring GUI_QUANTITY_OF_OPTIONS = L"QUANTITY_OF_OPTIONS";
+static const wstring GUI_OPTION_PATH_UNSELECTED = L"OPTION_PATH_UNSELECTED";
+static const wstring GUI_OPTION_PATH_SELECTED = L"OPTION_PATH_SELECTED";
+static const wstring GUI_OPTION_WIDTH = L"OPTION_WIDTH";
+static const wstring GUI_OPTION_HEIGHT = L"OPTION_HEIGHT";
+static const wstring GUI_OPTION_X = L"OPTION_X";
+static const wstring GUI_OPTION_Y = L"OPTION_Y";
 
 // CONSTANTS FOR ARTWORK - NOTE, THIS SHOULD REALLY BE LOADED FROM A FILE
 static const wstring DG_GO_TO_MM_COMMAND	= L"Go To Main Menu";

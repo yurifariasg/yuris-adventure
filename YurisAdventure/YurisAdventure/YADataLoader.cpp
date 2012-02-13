@@ -143,9 +143,26 @@ void YADataLoader::initColors(	GameGraphics *graphics,
 */
 void YADataLoader::loadGUI(Game *game, wstring guiInitFile)
 {
+    game->getText()->writeDebugOutput("LoadGUI\n");
 	// WE'RE JUST GOING TO IGNORE THE GUI FILE FOR NOW.
 	// FOR THE MOMENT WE ARE CALLING THIS HARD-CODED GUI LOADER
 	hardCodedLoadGUIExample(game);
+
+    game->getGUI()->addScreenGUI(GS_MAIN_MENU, loadGUIFromFile(game, guiInitFile));
+
+    /*gui->addScreenGUI(GS_MAIN_MENU,		mainMenuGUI);
+
+    map<wstring,wstring> *properties = new map<wstring,wstring>();
+	loadGameProperties(game, properties, guiInitFile);
+
+    int imageQuantity, screenHeight;
+	wstring screenWidthProp = (*properties)[DG_SCREEN_WIDTH];
+	wstring screenHeightProp = (*properties)[DG_SCREEN_HEIGHT];
+	wstringstream(screenWidthProp) >> screenWidth;*/
+
+
+
+
 }
 
 /*
@@ -174,7 +191,7 @@ void YADataLoader::hardCodedLoadGUIExample(Game *game)
 	// SETUP THE CURSOR VIA OUR HELPER METHOD
 	initCursor(gui, guiTextureManager);
 	initSplashScreen(game, gui, guiTextureManager);
-	initMainMenu(gui, guiTextureManager);
+	//initMainMenu(gui, guiTextureManager);
 	initInGameGUI(gui, guiTextureManager);
 }
 
@@ -537,5 +554,144 @@ void YADataLoader::hardCodedLoadLevelExample(Game *game)
 
 	player->setAlpha(255);
 	player->setCurrentState(IDLE_STATE);
+}
+
+ScreenGUI* YADataLoader::loadGUIFromFile(Game *game, wstring guiFile)
+{
+    map<wstring,wstring> *properties = new map<wstring,wstring>();
+	loadGameProperties(game, properties, guiFile);
+
+    // Initialize All Variables
+    int imageQuantity, optionQuantity, x, y, width, height;
+    wstring imageQuantityS, optionQuantityS, xS, yS, widthS, heightS, path, pathUnselected, pathSelected, animated;
+
+    imageQuantityS = (*properties)[GUI_QUANTITY_OF_IMAGES];
+    wstringstream(imageQuantityS) >> imageQuantity;
+
+    optionQuantityS = (*properties)[GUI_QUANTITY_OF_OPTIONS];
+    wstringstream(optionQuantityS) >> optionQuantity;
+
+
+    // Texture Stuff
+    GameGraphics *graphics = game->getGraphics();
+	DirectXTextureManager *guiTextureManager = (DirectXTextureManager*)graphics->getGUITextureManager();
+    unsigned int imageID, imageID2;
+
+    // Initialize screen
+    ScreenGUI* screen = new ScreenGUI();
+
+    // Add Images
+    for ( int i = 1 ; i <= imageQuantity ; i++) {
+
+        wstringstream stream;
+
+        // Get Size and Position
+        stream << i << GUI_IMAGE_WIDTH;       
+        widthS = (*properties)[stream.str()];
+        wstringstream(widthS) >> width;
+        stream.str(L"");
+
+        stream << i << GUI_IMAGE_HEIGHT;       
+        heightS = (*properties)[stream.str()];
+        wstringstream(heightS) >> height;
+        stream.str(L"");
+
+        stream << i << GUI_IMAGE_X;       
+        xS = (*properties)[stream.str()];
+        wstringstream(xS) >> x;
+        stream.str(L"");
+
+        stream << i << GUI_IMAGE_Y;       
+        yS = (*properties)[stream.str()];
+        wstringstream(yS) >> y;
+        stream.str(L"");
+
+        // Path and Animated
+
+        stream << i << GUI_IMAGE_PATH;
+        path = stream.str();
+        stream.str(L"");
+
+        stream << i << GUI_IMAGE_ANIMATED;
+        animated = stream.str();
+        stream.str(L"");
+
+        // Create and Add Image
+
+        imageID = guiTextureManager->loadTexture((*properties)[path]);
+	    OverlayImage *imageToAdd = new OverlayImage();
+	    imageToAdd->x = x;
+	    imageToAdd->y = y;
+	    imageToAdd->z = 0;
+	    imageToAdd->alpha = 255;
+        imageToAdd->width = width;
+        imageToAdd->height = height;
+	    imageToAdd->imageID = imageID;
+        screen->addOverlayImage(imageToAdd);
+
+    }
+
+    Button *buttonToAdd;
+
+    for (int i = 1 ; i <= optionQuantity ; i++) {
+
+        wstringstream stream;
+
+        // Get Size and Position
+        stream << i << GUI_OPTION_WIDTH;       
+        widthS = (*properties)[stream.str()];
+        wstringstream(widthS) >> width;
+        stream.str(L"");
+
+        stream << i << GUI_OPTION_HEIGHT;       
+        heightS = (*properties)[stream.str()];
+        wstringstream(heightS) >> height;
+        stream.str(L"");
+
+        stream << i << GUI_OPTION_X;       
+        xS = (*properties)[stream.str()];
+        wstringstream(xS) >> x;
+        stream.str(L"");
+
+        stream << i << GUI_OPTION_Y;       
+        yS = (*properties)[stream.str()];
+        wstringstream(yS) >> y;
+        stream.str(L"");
+
+        // Path and Animated
+
+        stream << i << GUI_OPTION_PATH_UNSELECTED;
+        pathUnselected = (*properties)[stream.str()];
+        stream.str(L"");
+
+        stream << i << GUI_OPTION_PATH_SELECTED;
+        pathSelected = (*properties)[stream.str()];
+        stream.str(L"");
+
+
+        buttonToAdd = new Button();
+
+	    // - GET THE BUTTON COMMAND AND IMAGE IDs
+
+        imageID = guiTextureManager->loadTexture(pathUnselected);
+        imageID2 = guiTextureManager->loadTexture(pathSelected);
+
+	    // - INIT THE START BUTTON
+	    buttonToAdd->initButton(imageID, 
+							    imageID2, // Doesnt Change when mouse over
+							    x,
+							    y,
+							    0,
+							    255,
+                                width,
+                                height,
+							    false,
+                                DG_EXIT_COMMAND);
+
+	    // AND NOW LOAD IT INTO A ScreenGUI
+	    screen->addButton(buttonToAdd);
+    }
+
+    return screen;
 }
 

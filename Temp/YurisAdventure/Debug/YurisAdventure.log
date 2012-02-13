@@ -1,9 +1,31 @@
-﻿Build started 09/02/2012 13:44:10.
-     1>Project "C:\Users\Yuri\Documents\Visual Studio 2010\Projects\IndividualProject_Rep\YurisAdventure\YurisAdventure\YurisAdventure.vcxproj" on node 3 (clean target(s)).
-     1>_PrepareForClean:
-         Deleting file "C:\Users\Yuri\Documents\Visual Studio 2010\Projects\IndividualProject_Rep\Temp\YurisAdventure\Debug\YurisAdventure.lastbuildstate".
-     1>Done Building Project "C:\Users\Yuri\Documents\Visual Studio 2010\Projects\IndividualProject_Rep\YurisAdventure\YurisAdventure\YurisAdventure.vcxproj" (clean target(s)).
+﻿Build started 09/02/2012 18:43:36.
+     1>Project "C:\Users\Yuri\Documents\Visual Studio 2010\Projects\IndividualProject_Rep\YurisAdventure\YurisAdventure\YurisAdventure.vcxproj" on node 2 (build target(s)).
+     1>InitializeBuildStatus:
+         Creating "C:\Users\Yuri\Documents\Visual Studio 2010\Projects\IndividualProject_Rep\Temp\YurisAdventure\Debug\YurisAdventure.unsuccessfulbuild" because "AlwaysCreate" was specified.
+       ClCompile:
+         C:\Program Files\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"C:\Users\Yuri\Documents\Visual Studio 2010\Projects\IndividualProject_Rep\Temp\YurisAdventure\Debug\\" /Fd"C:\Users\Yuri\Documents\Visual Studio 2010\Projects\IndividualProject_Rep\Temp\YurisAdventure\Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt YAKeyEventHandler.cpp
+         YAKeyEventHandler.cpp
+     1>c:\users\yuri\documents\visual studio 2010\projects\individualproject_rep\simplesidescrollerframework\sssf_sourcecode\gui\screengui.h(49): warning C4715: 'ScreenGUI::previousGUIOption' : not all control paths return a value
+       ManifestResourceCompile:
+         All outputs are up-to-date.
+       Link:
+         C:\Program Files\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Yuri\Documents\Visual Studio 2010\Projects\IndividualProject_Rep\Apps\YurisAdventure\YurisAdventure.exe" /INCREMENTAL /NOLOGO SimpleSideScrollerFramework.lib winmm.lib d3d9.lib d3dx9.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"C:\Users\Yuri\Documents\Visual Studio 2010\Projects\IndividualProject_Rep\Temp\YurisAdventure\Debug\YurisAdventure.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\Users\Yuri\Documents\Visual Studio 2010\Projects\IndividualProject_Rep\Apps\YurisAdventure\YurisAdventure.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Yuri\Documents\Visual Studio 2010\Projects\IndividualProject_Rep\Apps\YurisAdventure\YurisAdventure.lib" /MACHINE:X86 "C:\Users\Yuri\Documents\Visual Studio 2010\Projects\IndividualProject_Rep\Temp\YurisAdventure\Debug\YurisAdventure.exe.embed.manifest.res"
+         "C:\Users\Yuri\Documents\Visual Studio 2010\Projects\IndividualProject_Rep\Temp\YurisAdventure\Debug\YAButtonEventHandler.obj"
+         "C:\Users\Yuri\Documents\Visual Studio 2010\Projects\IndividualProject_Rep\Temp\YurisAdventure\Debug\YADataLoader.obj"
+         "C:\Users\Yuri\Documents\Visual Studio 2010\Projects\IndividualProject_Rep\Temp\YurisAdventure\Debug\YAKeyEventHandler.obj"
+         "C:\Users\Yuri\Documents\Visual Studio 2010\Projects\IndividualProject_Rep\Temp\YurisAdventure\Debug\YATextGenerator.obj"
+         "C:\Users\Yuri\Documents\Visual Studio 2010\Projects\IndividualProject_Rep\Temp\YurisAdventure\Debug\YAGame.obj"
+       Manifest:
+         C:\Program Files\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /out:"C:\Users\Yuri\Documents\Visual Studio 2010\Projects\IndividualProject_Rep\Temp\YurisAdventure\Debug\YurisAdventure.exe.embed.manifest" /manifest "C:\Users\Yuri\Documents\Visual Studio 2010\Projects\IndividualProject_Rep\Temp\YurisAdventure\Debug\YurisAdventure.exe.intermediate.manifest"
+         All outputs are up-to-date.
+       LinkEmbedManifest:
+         All outputs are up-to-date.
+         YurisAdventure.vcxproj -> C:\Users\Yuri\Documents\Visual Studio 2010\Projects\IndividualProject_Rep\Apps\YurisAdventure\YurisAdventure.exe
+       FinalizeBuildStatus:
+         Deleting file "C:\Users\Yuri\Documents\Visual Studio 2010\Projects\IndividualProject_Rep\Temp\YurisAdventure\Debug\YurisAdventure.unsuccessfulbuild".
+         Touching "C:\Users\Yuri\Documents\Visual Studio 2010\Projects\IndividualProject_Rep\Temp\YurisAdventure\Debug\YurisAdventure.lastbuildstate".
+     1>Done Building Project "C:\Users\Yuri\Documents\Visual Studio 2010\Projects\IndividualProject_Rep\YurisAdventure\YurisAdventure\YurisAdventure.vcxproj" (build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:00.10
+Time Elapsed 00:00:04.09

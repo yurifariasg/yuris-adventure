@@ -60,6 +60,22 @@ void ScreenGUI::addOverlayImage(OverlayImage *imageToAdd)
 	overlayImages->push_back(imageToAdd);
 }
 
+Button* ScreenGUI::getSelectedButton()
+{
+    list<Button*>::iterator buttonIterator;
+	buttonIterator = buttons->begin();
+	list<Button*>::iterator end = buttons->end();
+    int i = 0; // Current Item
+	while(buttonIterator != end)
+	{
+        Button *buttonToRender = (*buttonIterator);
+        if (i++ == getCurrentGUIOption()) return buttonToRender;
+        buttonIterator++;
+    }
+
+    return NULL;
+}
+
 /*
 	addRenderItemsToRenderList - This method should be called once
 	per frame on this screen if it is currently active. It goes
@@ -106,7 +122,7 @@ void ScreenGUI::addRenderItemsToRenderList(RenderList *renderList)
 		Button *buttonToRender = (*buttonIterator);
 
 		// DETERMINE WHICH Button IMAGE TO USE
-		if ( i++ == getCurrentGUIOption() )//buttonToRender->isMouseOver())
+		if ( i++ == getCurrentGUIOption() )
 			imageId = buttonToRender->getMouseOverTextureID();
 		else
 			imageId = buttonToRender->getNormalTextureID();

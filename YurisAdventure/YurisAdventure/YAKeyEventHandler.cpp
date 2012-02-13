@@ -107,9 +107,10 @@ void YAKeyEventHandler::handleKeyEvents(Game *game)
         } else if (input->isKeyDownForFirstTime(VK_RETURN)) {
             
             int secOption = game->getGUI()->getScreen(GS_MAIN_MENU)->getCurrentGUIOption();
+            game->getGUI()->getScreen(GS_MAIN_MENU)->getSelectedButton()->fireEvent(game);
 
-            if (secOption == 0) game->startGame();
-            if (secOption == 3) game->shutdown();
+            /*if (secOption == 0) game->startGame();
+            if (secOption == 3) game->shutdown();*/
 
         }
 
