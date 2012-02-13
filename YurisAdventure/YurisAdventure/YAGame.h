@@ -12,6 +12,8 @@
 static const wstring	DG_INIT_FILE			= L"data/GameInit.txt";
 static const wstring	DG_GUI_INIT_FILE		= L"data/MainMenuGUI.txt";
 static const string		DG_DEBUG_FILE			= "DebugOutput.txt";
+static const wstring mainMenuControlsGUIFile = L"data/MainMenuControlsGUI.txt";
+static const wstring mainMenuAboutGUIFile = L"data/MainMenuAboutGUI.txt";
 
 
 // HERE ARE THE GAME PROPERTIES WE ARE LOADING FROM FROM THE SETUP FILE
@@ -45,6 +47,7 @@ static const wstring GUI_OPTION_WIDTH = L"OPTION_WIDTH";
 static const wstring GUI_OPTION_HEIGHT = L"OPTION_HEIGHT";
 static const wstring GUI_OPTION_X = L"OPTION_X";
 static const wstring GUI_OPTION_Y = L"OPTION_Y";
+static const wstring GUI_OPTION_COMMAND = L"OPTION_COMMAND";
 
 // CONSTANTS FOR ARTWORK - NOTE, THIS SHOULD REALLY BE LOADED FROM A FILE
 static const wstring DG_GO_TO_MM_COMMAND	= L"Go To Main Menu";

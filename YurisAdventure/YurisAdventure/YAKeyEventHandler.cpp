@@ -109,12 +109,17 @@ void YAKeyEventHandler::handleKeyEvents(Game *game)
             int secOption = game->getGUI()->getScreen(GS_MAIN_MENU)->getCurrentGUIOption();
             game->getGUI()->getScreen(GS_MAIN_MENU)->getSelectedButton()->fireEvent(game);
 
-            /*if (secOption == 0) game->startGame();
-            if (secOption == 3) game->shutdown();*/
-
         }
 
 
+    } else if (gsm->getCurrentGameState() == GS_MENU_CONTROLS_MENU) {
+        if (input->isKeyDownForFirstTime(VK_RETURN)) {
+            game->getGSM()->goToMainMenu();
+        }
+    } else if (gsm->getCurrentGameState() == GS_MENU_ABOUT_MENU) {
+        if (input->isKeyDownForFirstTime(VK_RETURN)) {
+            game->getGSM()->goToMainMenu();
+        }
     }
 
 	// 0X43 is HEX FOR THE 'C' VIRTUAL KEY

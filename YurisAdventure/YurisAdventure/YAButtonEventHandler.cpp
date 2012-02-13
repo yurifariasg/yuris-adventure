@@ -21,7 +21,7 @@ void YAButtonEventHandler::handleButtonEvents(	Game *game,
 	// SO LET'S SHUTDOWN THE ENTIRE APPLICATION
 	if (command.compare(DG_EXIT_COMMAND) == 0)
 	{
-		//game->shutdown();
+		game->shutdown();
 	}
 	// THE USER PRESSED THE MOUSE BUTTON ON THE SPLASH
 	// SCREEN, SO LET'S GO TO THE MAIN MENU
@@ -34,12 +34,20 @@ void YAButtonEventHandler::handleButtonEvents(	Game *game,
 	// SO LET'S START THE GAME FROM THE FIRST LEVEL
 	else if (command.compare(DG_START_COMMAND) == 0)
 	{
-		//game->startGame();
+		game->startGame();
 	}
 	// THE USER PRESSED THE Quit BUTTON ON THE IN-GAME MENU,
 	// SO LET'S UNLOAD THE LEVEL AND RETURN TO THE MAIN MENU
 	else if (command.compare(DG_QUIT_COMMAND) == 0)
 	{
 		game->quitGame();
+	}
+    else if (command.compare(L"Controls") == 0)
+	{
+		game->goToControls();
+	}
+    else if (command.compare(L"About") == 0)
+	{
+        game->getGSM()->goToAbout();
 	}
 }

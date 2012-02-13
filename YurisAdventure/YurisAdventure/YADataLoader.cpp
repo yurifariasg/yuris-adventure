@@ -143,26 +143,13 @@ void YADataLoader::initColors(	GameGraphics *graphics,
 */
 void YADataLoader::loadGUI(Game *game, wstring guiInitFile)
 {
-    game->getText()->writeDebugOutput("LoadGUI\n");
 	// WE'RE JUST GOING TO IGNORE THE GUI FILE FOR NOW.
 	// FOR THE MOMENT WE ARE CALLING THIS HARD-CODED GUI LOADER
 	hardCodedLoadGUIExample(game);
 
     game->getGUI()->addScreenGUI(GS_MAIN_MENU, loadGUIFromFile(game, guiInitFile));
-
-    /*gui->addScreenGUI(GS_MAIN_MENU,		mainMenuGUI);
-
-    map<wstring,wstring> *properties = new map<wstring,wstring>();
-	loadGameProperties(game, properties, guiInitFile);
-
-    int imageQuantity, screenHeight;
-	wstring screenWidthProp = (*properties)[DG_SCREEN_WIDTH];
-	wstring screenHeightProp = (*properties)[DG_SCREEN_HEIGHT];
-	wstringstream(screenWidthProp) >> screenWidth;*/
-
-
-
-
+    game->getGUI()->addScreenGUI(GS_MENU_CONTROLS_MENU, loadGUIFromFile(game, mainMenuControlsGUIFile));
+    game->getGUI()->addScreenGUI(GS_MENU_ABOUT_MENU, loadGUIFromFile(game, mainMenuAboutGUIFile));
 }
 
 /*
@@ -563,14 +550,13 @@ ScreenGUI* YADataLoader::loadGUIFromFile(Game *game, wstring guiFile)
 
     // Initialize All Variables
     int imageQuantity, optionQuantity, x, y, width, height;
-    wstring imageQuantityS, optionQuantityS, xS, yS, widthS, heightS, path, pathUnselected, pathSelected, animated;
+    wstring imageQuantityS, optionQuantityS, xS, yS, widthS, heightS, path, pathUnselected, pathSelected, animated, command;
 
     imageQuantityS = (*properties)[GUI_QUANTITY_OF_IMAGES];
     wstringstream(imageQuantityS) >> imageQuantity;
 
     optionQuantityS = (*properties)[GUI_QUANTITY_OF_OPTIONS];
     wstringstream(optionQuantityS) >> optionQuantity;
-
 
     // Texture Stuff
     GameGraphics *graphics = game->getGraphics();
@@ -658,7 +644,7 @@ ScreenGUI* YADataLoader::loadGUIFromFile(Game *game, wstring guiFile)
         wstringstream(yS) >> y;
         stream.str(L"");
 
-        // Path and Animated
+        // Path, Animated and Command
 
         stream << i << GUI_OPTION_PATH_UNSELECTED;
         pathUnselected = (*properties)[stream.str()];
@@ -668,15 +654,23 @@ ScreenGUI* YADataLoader::loadGUIFromFile(Game *game, wstring guiFile)
         pathSelected = (*properties)[stream.str()];
         stream.str(L"");
 
+        stream << i << GUI_OPTION_COMMAND;
+        command = (*properties)[stream.str()];
+        stream.str(L"");
 
         buttonToAdd = new Button();
 
 	    // - GET THE BUTTON COMMAND AND IMAGE IDs
 
         imageID = guiTextureManager->loadTexture(pathUnselected);
-        imageID2 = guiTextureManager->loadTexture(pathSelected);
 
-	    // - INIT THE START BUTTON
+        if (pathUnselected.compare(pathSelected) == 0) {
+            imageID2 = imageID;
+        } else {
+            imageID2 = guiTextureManager->loadTexture(pathSelected);
+        }
+
+	    // - INIT THE BUTTON
 	    buttonToAdd->initButton(imageID, 
 							    imageID2, // Doesnt Change when mouse over
 							    x,
@@ -686,7 +680,7 @@ ScreenGUI* YADataLoader::loadGUIFromFile(Game *game, wstring guiFile)
                                 width,
                                 height,
 							    false,
-                                DG_EXIT_COMMAND);
+                                command);
 
 	    // AND NOW LOAD IT INTO A ScreenGUI
 	    screen->addButton(buttonToAdd);

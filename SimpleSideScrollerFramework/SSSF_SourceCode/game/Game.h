@@ -102,4 +102,5 @@ public:
 	void	runGameLoop();
 	void	shutdown();
 	void	startGame();
+    void	goToControls();
 };

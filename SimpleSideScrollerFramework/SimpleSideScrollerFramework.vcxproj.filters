@@ -33,9 +33,6 @@
     <Filter Include="SSSF_SourceCode\text">
       <UniqueIdentifier>{93b0ae1d-e6d8-45c4-98c2-db10a7de8c06}</UniqueIdentifier>
     </Filter>
-    <Filter Include="SSSF_SourceCode\timer">
-      <UniqueIdentifier>{474c3abd-6d4d-450e-89ab-a176e7a891db}</UniqueIdentifier>
-    </Filter>
     <Filter Include="SSSF_SourceCode\gsm">
       <UniqueIdentifier>{c4d5d67b-8772-469a-befe-55d6f5c5d97d}</UniqueIdentifier>
     </Filter>
@@ -62,6 +59,9 @@
     </Filter>
     <Filter Include="SSSF_SourceCode\PlatformPlugins\WindowsPlugin">
       <UniqueIdentifier>{660537eb-3d16-4fb7-abc4-d3e5f9f63668}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="VS2010 Files\timer">
+      <UniqueIdentifier>{474c3abd-6d4d-450e-89ab-a176e7a891db}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -180,7 +180,7 @@
       <Filter>SSSF_SourceCode\text</Filter>
     </ClInclude>
     <ClInclude Include="SSSF_SourceCode\timer\GameTimer.h">
-      <Filter>SSSF_SourceCode\timer</Filter>
+      <Filter>VS2010 Files\timer</Filter>
     </ClInclude>
     <ClInclude Include="SSSF_SourceCode\gui\Viewport.h">
       <Filter>SSSF_SourceCode\gui</Filter>
