@@ -219,3 +219,8 @@ void Game::startGame()
 	// THAT'S ONE THING YOU'LL BE DOING
 	dataLoader->loadWorld(this, L"THERE IS NO FILE");
 }
+
+void Game::goToControls()
+{
+    gsm->goToControls();
+}

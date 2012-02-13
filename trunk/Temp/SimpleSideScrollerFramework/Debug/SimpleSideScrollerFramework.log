@@ -1,18 +1,11 @@
-﻿Build started 09/02/2012 18:37:45.
+﻿Build started 13/02/2012 16:14:52.
      1>Project "C:\Users\Yuri\Documents\Visual Studio 2010\Projects\IndividualProject_Rep\SimpleSideScrollerFramework\SimpleSideScrollerFramework.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
-         Touching "C:\Users\Yuri\Documents\Visual Studio 2010\Projects\IndividualProject_Rep\Temp\SimpleSideScrollerFramework\Debug\SimpleSideScrollerFramework.unsuccessfulbuild".
+         Creating "C:\Users\Yuri\Documents\Visual Studio 2010\Projects\IndividualProject_Rep\Temp\SimpleSideScrollerFramework\Debug\SimpleSideScrollerFramework.unsuccessfulbuild" because "AlwaysCreate" was specified.
        ClCompile:
          All outputs are up-to-date.
-         C:\Program Files\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I"C:\Users\Yuri\Documents\Visual Studio 2010\Projects\IndividualProject_Rep\SimpleSideScrollerFramework\\" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"StdAfx.h" /Fp"C:\Users\Yuri\Documents\Visual Studio 2010\Projects\IndividualProject_Rep\Temp\SimpleSideScrollerFramework\Debug\SimpleSideScrollerFramework.pch" /Fo"C:\Users\Yuri\Documents\Visual Studio 2010\Projects\IndividualProject_Rep\Temp\SimpleSideScrollerFramework\Debug\\" /Fd"C:\Users\Yuri\Documents\Visual Studio 2010\Projects\IndividualProject_Rep\Temp\SimpleSideScrollerFramework\Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt SSSF_SourceCode\PlatformPlugins\WindowsPlugin\WindowsInput.cpp SSSF_SourceCode\game\Game.cpp SSSF_SourceCode\gui\GameGUI.cpp SSSF_SourceCode\gui\ScreenGUI.cpp SSSF_SourceCode\input\GameInput.cpp
-         ScreenGUI.cpp
-         Generating Code...
-         Compiling...
-         GameInput.cpp
-         GameGUI.cpp
-         Game.cpp
-         WindowsInput.cpp
-         Generating Code...
+         C:\Program Files\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I"C:\Users\Yuri\Documents\Visual Studio 2010\Projects\IndividualProject_Rep\SimpleSideScrollerFramework\\" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"StdAfx.h" /Fp"C:\Users\Yuri\Documents\Visual Studio 2010\Projects\IndividualProject_Rep\Temp\SimpleSideScrollerFramework\Debug\SimpleSideScrollerFramework.pch" /Fo"C:\Users\Yuri\Documents\Visual Studio 2010\Projects\IndividualProject_Rep\Temp\SimpleSideScrollerFramework\Debug\\" /Fd"C:\Users\Yuri\Documents\Visual Studio 2010\Projects\IndividualProject_Rep\Temp\SimpleSideScrollerFramework\Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt SSSF_SourceCode\gsm\state\GameStateManager.cpp
+         GameStateManager.cpp
        Lib:
          C:\Program Files\Microsoft Visual Studio 10.0\VC\bin\Lib.exe /OUT:"C:\Users\Yuri\Documents\Visual Studio 2010\Projects\IndividualProject_Rep\Common\SimpleSideScrollerFramework.lib" /NOLOGO "C:\Users\Yuri\Documents\Visual Studio 2010\Projects\IndividualProject_Rep\Temp\SimpleSideScrollerFramework\Debug\GameDataLoader.obj"
          "C:\Users\Yuri\Documents\Visual Studio 2010\Projects\IndividualProject_Rep\Temp\SimpleSideScrollerFramework\Debug\Game.obj"
@@ -53,4 +46,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:06.73
+Time Elapsed 00:00:05.32
