@@ -10,9 +10,11 @@
 */
 #pragma once
 #include "stdafx.h"
+#include <stdio.h>
 #include "SSSF_SourceCode\dataLoader\GameDataLoader.h"
 #include "SSSF_SourceCode\game\Game.h"
 #include "SSSF_SourceCode\PlatformPlugins\DirectXPlugin\DirectXTextureManager.h"
+#include "SSSF_SourceCode\gui\ScreenGUI.h"
 
 class YADataLoader : public GameDataLoader
 {
@@ -52,4 +54,7 @@ public:
 	void initSplashScreen(Game *game, GameGUI *gui,	DirectXTextureManager *guiTextureManager);
 	void initMainMenu(GameGUI *gui,	DirectXTextureManager *guiTextureManager);
 	void initInGameGUI(GameGUI *gui, DirectXTextureManager *guiTextureManager);
+    
+    // New Methods
+    ScreenGUI* loadGUIFromFile(Game *game, wstring guiFile);
 };

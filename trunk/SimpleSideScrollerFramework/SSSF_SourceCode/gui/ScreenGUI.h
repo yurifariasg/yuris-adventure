@@ -49,6 +49,8 @@ public:
     int previousGUIOption() { if (opSelected == 0) opSelected = maxOption - 1; else return opSelected--; }
     int getCurrentGUIOption() { return opSelected; }
 
+    Button* getSelectedButton();
+
 
 	// INLINED MUTATOR METHODS
 	void setScreenName(wchar_t *initScreenName)
