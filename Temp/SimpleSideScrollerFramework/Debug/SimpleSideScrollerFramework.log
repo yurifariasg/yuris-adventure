@@ -1,49 +1,68 @@
-﻿Build started 13/02/2012 16:14:52.
-     1>Project "C:\Users\Yuri\Documents\Visual Studio 2010\Projects\IndividualProject_Rep\SimpleSideScrollerFramework\SimpleSideScrollerFramework.vcxproj" on node 2 (build target(s)).
+﻿Build started 2/17/2012 5:33:44 PM.
+     1>Project "C:\Users\Yuri\Documents\Projects\IndividualProject\SimpleSideScrollerFramework\SimpleSideScrollerFramework.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
-         Creating "C:\Users\Yuri\Documents\Visual Studio 2010\Projects\IndividualProject_Rep\Temp\SimpleSideScrollerFramework\Debug\SimpleSideScrollerFramework.unsuccessfulbuild" because "AlwaysCreate" was specified.
+         Creating "C:\Users\Yuri\Documents\Projects\IndividualProject\Temp\SimpleSideScrollerFramework\Debug\SimpleSideScrollerFramework.unsuccessfulbuild" because "AlwaysCreate" was specified.
        ClCompile:
          All outputs are up-to-date.
-         C:\Program Files\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I"C:\Users\Yuri\Documents\Visual Studio 2010\Projects\IndividualProject_Rep\SimpleSideScrollerFramework\\" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"StdAfx.h" /Fp"C:\Users\Yuri\Documents\Visual Studio 2010\Projects\IndividualProject_Rep\Temp\SimpleSideScrollerFramework\Debug\SimpleSideScrollerFramework.pch" /Fo"C:\Users\Yuri\Documents\Visual Studio 2010\Projects\IndividualProject_Rep\Temp\SimpleSideScrollerFramework\Debug\\" /Fd"C:\Users\Yuri\Documents\Visual Studio 2010\Projects\IndividualProject_Rep\Temp\SimpleSideScrollerFramework\Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt SSSF_SourceCode\gsm\state\GameStateManager.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /IC:\Users\Yuri\Documents\Projects\IndividualProject\SimpleSideScrollerFramework\ /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"StdAfx.h" /Fp"C:\Users\Yuri\Documents\Projects\IndividualProject\Temp\SimpleSideScrollerFramework\Debug\SimpleSideScrollerFramework.pch" /Fo"C:\Users\Yuri\Documents\Projects\IndividualProject\Temp\SimpleSideScrollerFramework\Debug\\" /Fd"C:\Users\Yuri\Documents\Projects\IndividualProject\Temp\SimpleSideScrollerFramework\Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt SSSF_SourceCode\PlatformPlugins\DirectXPlugin\DirectXGraphics.cpp SSSF_SourceCode\PlatformPlugins\DirectXPlugin\DirectXTextureManager.cpp SSSF_SourceCode\PlatformPlugins\WindowsPlugin\WindowsInput.cpp SSSF_SourceCode\PlatformPlugins\WindowsPlugin\WindowsOS.cpp SSSF_SourceCode\game\Game.cpp SSSF_SourceCode\graphics\GameGraphics.cpp SSSF_SourceCode\gsm\ai\RandomFloatingBot.cpp SSSF_SourceCode\gsm\physics\Physics.cpp SSSF_SourceCode\gsm\sprite\SpriteManager.cpp SSSF_SourceCode\gsm\state\GameStateManager.cpp SSSF_SourceCode\gsm\world\TiledLayer.cpp SSSF_SourceCode\gsm\world\World.cpp SSSF_SourceCode\gui\Button.cpp SSSF_SourceCode\gui\Cursor.cpp SSSF_SourceCode\gui\GameGUI.cpp SSSF_SourceCode\gui\ScreenGUI.cpp SSSF_SourceCode\input\GameInput.cpp SSSF_SourceCode\text\GameText.cpp
          GameStateManager.cpp
+         Generating Code...
+         Skipping... (no relevant changes detected)
+         GameText.cpp
+         GameInput.cpp
+         ScreenGUI.cpp
+         GameGUI.cpp
+         Cursor.cpp
+         Button.cpp
+         World.cpp
+         TiledLayer.cpp
+         SpriteManager.cpp
+         Physics.cpp
+         RandomFloatingBot.cpp
+         GameGraphics.cpp
+         Game.cpp
+         WindowsOS.cpp
+         WindowsInput.cpp
+         DirectXTextureManager.cpp
+         DirectXGraphics.cpp
        Lib:
-         C:\Program Files\Microsoft Visual Studio 10.0\VC\bin\Lib.exe /OUT:"C:\Users\Yuri\Documents\Visual Studio 2010\Projects\IndividualProject_Rep\Common\SimpleSideScrollerFramework.lib" /NOLOGO "C:\Users\Yuri\Documents\Visual Studio 2010\Projects\IndividualProject_Rep\Temp\SimpleSideScrollerFramework\Debug\GameDataLoader.obj"
-         "C:\Users\Yuri\Documents\Visual Studio 2010\Projects\IndividualProject_Rep\Temp\SimpleSideScrollerFramework\Debug\Game.obj"
-         "C:\Users\Yuri\Documents\Visual Studio 2010\Projects\IndividualProject_Rep\Temp\SimpleSideScrollerFramework\Debug\WStringTable.obj"
-         "C:\Users\Yuri\Documents\Visual Studio 2010\Projects\IndividualProject_Rep\Temp\SimpleSideScrollerFramework\Debug\GameGraphics.obj"
-         "C:\Users\Yuri\Documents\Visual Studio 2010\Projects\IndividualProject_Rep\Temp\SimpleSideScrollerFramework\Debug\RenderList.obj"
-         "C:\Users\Yuri\Documents\Visual Studio 2010\Projects\IndividualProject_Rep\Temp\SimpleSideScrollerFramework\Debug\TextureManager.obj"
-         "C:\Users\Yuri\Documents\Visual Studio 2010\Projects\IndividualProject_Rep\Temp\SimpleSideScrollerFramework\Debug\BotRecycler.obj"
-         "C:\Users\Yuri\Documents\Visual Studio 2010\Projects\IndividualProject_Rep\Temp\SimpleSideScrollerFramework\Debug\RandomFloatingBot.obj"
-         "C:\Users\Yuri\Documents\Visual Studio 2010\Projects\IndividualProject_Rep\Temp\SimpleSideScrollerFramework\Debug\Physics.obj"
-         "C:\Users\Yuri\Documents\Visual Studio 2010\Projects\IndividualProject_Rep\Temp\SimpleSideScrollerFramework\Debug\AnimatedSprite.obj"
-         "C:\Users\Yuri\Documents\Visual Studio 2010\Projects\IndividualProject_Rep\Temp\SimpleSideScrollerFramework\Debug\AnimatedSpriteType.obj"
-         "C:\Users\Yuri\Documents\Visual Studio 2010\Projects\IndividualProject_Rep\Temp\SimpleSideScrollerFramework\Debug\SpriteManager.obj"
-         "C:\Users\Yuri\Documents\Visual Studio 2010\Projects\IndividualProject_Rep\Temp\SimpleSideScrollerFramework\Debug\GameStateManager.obj"
-         "C:\Users\Yuri\Documents\Visual Studio 2010\Projects\IndividualProject_Rep\Temp\SimpleSideScrollerFramework\Debug\SparseLayer.obj"
-         "C:\Users\Yuri\Documents\Visual Studio 2010\Projects\IndividualProject_Rep\Temp\SimpleSideScrollerFramework\Debug\TiledLayer.obj"
-         "C:\Users\Yuri\Documents\Visual Studio 2010\Projects\IndividualProject_Rep\Temp\SimpleSideScrollerFramework\Debug\World.obj"
-         "C:\Users\Yuri\Documents\Visual Studio 2010\Projects\IndividualProject_Rep\Temp\SimpleSideScrollerFramework\Debug\Button.obj"
-         "C:\Users\Yuri\Documents\Visual Studio 2010\Projects\IndividualProject_Rep\Temp\SimpleSideScrollerFramework\Debug\Cursor.obj"
-         "C:\Users\Yuri\Documents\Visual Studio 2010\Projects\IndividualProject_Rep\Temp\SimpleSideScrollerFramework\Debug\GameGUI.obj"
-         "C:\Users\Yuri\Documents\Visual Studio 2010\Projects\IndividualProject_Rep\Temp\SimpleSideScrollerFramework\Debug\ScreenGUI.obj"
-         "C:\Users\Yuri\Documents\Visual Studio 2010\Projects\IndividualProject_Rep\Temp\SimpleSideScrollerFramework\Debug\Viewport.obj"
-         "C:\Users\Yuri\Documents\Visual Studio 2010\Projects\IndividualProject_Rep\Temp\SimpleSideScrollerFramework\Debug\GameInput.obj"
-         "C:\Users\Yuri\Documents\Visual Studio 2010\Projects\IndividualProject_Rep\Temp\SimpleSideScrollerFramework\Debug\DirectXGraphics.obj"
-         "C:\Users\Yuri\Documents\Visual Studio 2010\Projects\IndividualProject_Rep\Temp\SimpleSideScrollerFramework\Debug\DirectXTextureManager.obj"
-         "C:\Users\Yuri\Documents\Visual Studio 2010\Projects\IndividualProject_Rep\Temp\SimpleSideScrollerFramework\Debug\WindowsInput.obj"
-         "C:\Users\Yuri\Documents\Visual Studio 2010\Projects\IndividualProject_Rep\Temp\SimpleSideScrollerFramework\Debug\WindowsOS.obj"
-         "C:\Users\Yuri\Documents\Visual Studio 2010\Projects\IndividualProject_Rep\Temp\SimpleSideScrollerFramework\Debug\WindowsTimer.obj"
-         "C:\Users\Yuri\Documents\Visual Studio 2010\Projects\IndividualProject_Rep\Temp\SimpleSideScrollerFramework\Debug\BufferedTextFileReader.obj"
-         "C:\Users\Yuri\Documents\Visual Studio 2010\Projects\IndividualProject_Rep\Temp\SimpleSideScrollerFramework\Debug\GameText.obj"
-         "C:\Users\Yuri\Documents\Visual Studio 2010\Projects\IndividualProject_Rep\Temp\SimpleSideScrollerFramework\Debug\TextFileWriter.obj"
-         "C:\Users\Yuri\Documents\Visual Studio 2010\Projects\IndividualProject_Rep\Temp\SimpleSideScrollerFramework\Debug\stdafx.obj"
-         SimpleSideScrollerFramework.vcxproj -> C:\Users\Yuri\Documents\Visual Studio 2010\Projects\IndividualProject_Rep\Common\SimpleSideScrollerFramework.lib
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\Lib.exe /OUT:"C:\Users\Yuri\Documents\Projects\IndividualProject\Common\SimpleSideScrollerFramework.lib" /NOLOGO C:\Users\Yuri\Documents\Projects\IndividualProject\Temp\SimpleSideScrollerFramework\Debug\GameDataLoader.obj
+         C:\Users\Yuri\Documents\Projects\IndividualProject\Temp\SimpleSideScrollerFramework\Debug\Game.obj
+         C:\Users\Yuri\Documents\Projects\IndividualProject\Temp\SimpleSideScrollerFramework\Debug\WStringTable.obj
+         C:\Users\Yuri\Documents\Projects\IndividualProject\Temp\SimpleSideScrollerFramework\Debug\GameGraphics.obj
+         C:\Users\Yuri\Documents\Projects\IndividualProject\Temp\SimpleSideScrollerFramework\Debug\RenderList.obj
+         C:\Users\Yuri\Documents\Projects\IndividualProject\Temp\SimpleSideScrollerFramework\Debug\TextureManager.obj
+         C:\Users\Yuri\Documents\Projects\IndividualProject\Temp\SimpleSideScrollerFramework\Debug\BotRecycler.obj
+         C:\Users\Yuri\Documents\Projects\IndividualProject\Temp\SimpleSideScrollerFramework\Debug\RandomFloatingBot.obj
+         C:\Users\Yuri\Documents\Projects\IndividualProject\Temp\SimpleSideScrollerFramework\Debug\Physics.obj
+         C:\Users\Yuri\Documents\Projects\IndividualProject\Temp\SimpleSideScrollerFramework\Debug\AnimatedSprite.obj
+         C:\Users\Yuri\Documents\Projects\IndividualProject\Temp\SimpleSideScrollerFramework\Debug\AnimatedSpriteType.obj
+         C:\Users\Yuri\Documents\Projects\IndividualProject\Temp\SimpleSideScrollerFramework\Debug\SpriteManager.obj
+         C:\Users\Yuri\Documents\Projects\IndividualProject\Temp\SimpleSideScrollerFramework\Debug\GameStateManager.obj
+         C:\Users\Yuri\Documents\Projects\IndividualProject\Temp\SimpleSideScrollerFramework\Debug\SparseLayer.obj
+         C:\Users\Yuri\Documents\Projects\IndividualProject\Temp\SimpleSideScrollerFramework\Debug\TiledLayer.obj
+         C:\Users\Yuri\Documents\Projects\IndividualProject\Temp\SimpleSideScrollerFramework\Debug\World.obj
+         C:\Users\Yuri\Documents\Projects\IndividualProject\Temp\SimpleSideScrollerFramework\Debug\Button.obj
+         C:\Users\Yuri\Documents\Projects\IndividualProject\Temp\SimpleSideScrollerFramework\Debug\Cursor.obj
+         C:\Users\Yuri\Documents\Projects\IndividualProject\Temp\SimpleSideScrollerFramework\Debug\GameGUI.obj
+         C:\Users\Yuri\Documents\Projects\IndividualProject\Temp\SimpleSideScrollerFramework\Debug\ScreenGUI.obj
+         C:\Users\Yuri\Documents\Projects\IndividualProject\Temp\SimpleSideScrollerFramework\Debug\Viewport.obj
+         C:\Users\Yuri\Documents\Projects\IndividualProject\Temp\SimpleSideScrollerFramework\Debug\GameInput.obj
+         C:\Users\Yuri\Documents\Projects\IndividualProject\Temp\SimpleSideScrollerFramework\Debug\DirectXGraphics.obj
+         C:\Users\Yuri\Documents\Projects\IndividualProject\Temp\SimpleSideScrollerFramework\Debug\DirectXTextureManager.obj
+         C:\Users\Yuri\Documents\Projects\IndividualProject\Temp\SimpleSideScrollerFramework\Debug\WindowsInput.obj
+         C:\Users\Yuri\Documents\Projects\IndividualProject\Temp\SimpleSideScrollerFramework\Debug\WindowsOS.obj
+         C:\Users\Yuri\Documents\Projects\IndividualProject\Temp\SimpleSideScrollerFramework\Debug\WindowsTimer.obj
+         C:\Users\Yuri\Documents\Projects\IndividualProject\Temp\SimpleSideScrollerFramework\Debug\BufferedTextFileReader.obj
+         C:\Users\Yuri\Documents\Projects\IndividualProject\Temp\SimpleSideScrollerFramework\Debug\GameText.obj
+         C:\Users\Yuri\Documents\Projects\IndividualProject\Temp\SimpleSideScrollerFramework\Debug\TextFileWriter.obj
+         C:\Users\Yuri\Documents\Projects\IndividualProject\Temp\SimpleSideScrollerFramework\Debug\stdafx.obj
+         SimpleSideScrollerFramework.vcxproj -> C:\Users\Yuri\Documents\Projects\IndividualProject\Common\SimpleSideScrollerFramework.lib
        FinalizeBuildStatus:
-         Deleting file "C:\Users\Yuri\Documents\Visual Studio 2010\Projects\IndividualProject_Rep\Temp\SimpleSideScrollerFramework\Debug\SimpleSideScrollerFramework.unsuccessfulbuild".
-         Touching "C:\Users\Yuri\Documents\Visual Studio 2010\Projects\IndividualProject_Rep\Temp\SimpleSideScrollerFramework\Debug\SimpleSideScrollerFramework.lastbuildstate".
-     1>Done Building Project "C:\Users\Yuri\Documents\Visual Studio 2010\Projects\IndividualProject_Rep\SimpleSideScrollerFramework\SimpleSideScrollerFramework.vcxproj" (build target(s)).
+         Deleting file "C:\Users\Yuri\Documents\Projects\IndividualProject\Temp\SimpleSideScrollerFramework\Debug\SimpleSideScrollerFramework.unsuccessfulbuild".
+         Touching "C:\Users\Yuri\Documents\Projects\IndividualProject\Temp\SimpleSideScrollerFramework\Debug\SimpleSideScrollerFramework.lastbuildstate".
+     1>Done Building Project "C:\Users\Yuri\Documents\Projects\IndividualProject\SimpleSideScrollerFramework\SimpleSideScrollerFramework.vcxproj" (build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:05.32
+Time Elapsed 00:00:03.98

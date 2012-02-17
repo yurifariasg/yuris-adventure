@@ -50,4 +50,20 @@ void YAButtonEventHandler::handleButtonEvents(	Game *game,
 	{
         game->getGSM()->goToAbout();
 	}
+    else if (command.compare(L"Continue") == 0)
+	{
+        game->getGSM()->goToGame();
+	}
+    else if (command.compare(L"Controls InGame") == 0)
+	{
+		game->getGSM()->goToControlsInGame();
+	}
+    else if (command.compare(L"About InGame") == 0)
+	{
+		game->getGSM()->goToAboutInGame();
+	}
+    else if (command.compare(L"Quit Game") == 0)
+	{
+		game->quitGame();
+	}
 }

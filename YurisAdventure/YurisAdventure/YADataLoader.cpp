@@ -150,6 +150,9 @@ void YADataLoader::loadGUI(Game *game, wstring guiInitFile)
     game->getGUI()->addScreenGUI(GS_MAIN_MENU, loadGUIFromFile(game, guiInitFile));
     game->getGUI()->addScreenGUI(GS_MENU_CONTROLS_MENU, loadGUIFromFile(game, mainMenuControlsGUIFile));
     game->getGUI()->addScreenGUI(GS_MENU_ABOUT_MENU, loadGUIFromFile(game, mainMenuAboutGUIFile));
+	game->getGUI()->addScreenGUI(GS_PAUSED, loadGUIFromFile(game, pausedGameFile));
+	game->getGUI()->addScreenGUI(GS_IN_GAME_CONTROLS, loadGUIFromFile(game, controlsGameFile));
+	game->getGUI()->addScreenGUI(GS_IN_GAME_ABOUT, loadGUIFromFile(game, aboutGameFile));
 }
 
 /*

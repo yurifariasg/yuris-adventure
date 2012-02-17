@@ -14,6 +14,9 @@ static const wstring	DG_GUI_INIT_FILE		= L"data/MainMenuGUI.txt";
 static const string		DG_DEBUG_FILE			= "DebugOutput.txt";
 static const wstring mainMenuControlsGUIFile = L"data/MainMenuControlsGUI.txt";
 static const wstring mainMenuAboutGUIFile = L"data/MainMenuAboutGUI.txt";
+static const wstring pausedGameFile = L"data/PauseGUI.txt";
+static const wstring controlsGameFile = L"data/InGameControlsGUI.txt";
+static const wstring aboutGameFile = L"data/InGameAboutGUI.txt";
 
 
 // HERE ARE THE GAME PROPERTIES WE ARE LOADING FROM FROM THE SETUP FILE

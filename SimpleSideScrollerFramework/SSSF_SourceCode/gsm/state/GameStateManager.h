@@ -97,4 +97,7 @@ public:
 	void			update(Game *game);
     void            goToControls();
     void            goToAbout();
+	void			goToInGameMenu();
+	void			goToControlsInGame();
+	void			goToAboutInGame();
 };
