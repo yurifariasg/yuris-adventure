@@ -84,6 +84,21 @@ void GameStateManager::goToControls()
     currentGameState = GS_MENU_CONTROLS_MENU;
 }
 
+void GameStateManager::goToInGameMenu()
+{
+	currentGameState = GS_PAUSED;
+}
+
+void GameStateManager::goToControlsInGame()
+{
+	currentGameState = GS_IN_GAME_CONTROLS;
+}
+
+void GameStateManager::goToAboutInGame()
+{
+	currentGameState = GS_IN_GAME_ABOUT;
+}
+
 void GameStateManager::goToAbout()
 {
     currentGameState = GS_MENU_ABOUT_MENU;

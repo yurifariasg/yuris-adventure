@@ -90,6 +90,10 @@ void YAKeyEventHandler::handleKeyEvents(Game *game)
 		{
 			vX = PLAYER_SPEED;
 		}
+
+		if (input->isKeyDownForFirstTime(VK_ESCAPE)) {
+			game->getGSM()->goToInGameMenu();
+		}
 		
 		// NOW SET THE ACTUAL VELOCITY
 		Physics *physics = gsm->getPhysics();
@@ -98,6 +102,14 @@ void YAKeyEventHandler::handleKeyEvents(Game *game)
 		// NOTE THAT THE VIEWPORT SHOULD FOLLOW THE PLAYER, AND SO SHOULD BE CORRECTED AFTER PHYSICS
 		// ARE APPLIED. I HAVE PROVIDED A SIMPLE WAY OF DOING SO, WHICH SHOULD BE IMPROVED, DEPENDING
 		// ON THE GAME'S NEED
+
+	} else if (gsm->getCurrentGameState() == GS_SPLASH_SCREEN) {
+
+		if (input->isKeyDownForFirstTime(VK_RETURN) ||
+			input->isKeyDownForFirstTime(VK_SPACE)) {
+				game->getGSM()->goToMainMenu();
+		}
+
     } else if (gsm->getCurrentGameState() == GS_MAIN_MENU) {
 
         if (input->isKeyDownForFirstTime(S_KEY)) {
@@ -109,6 +121,29 @@ void YAKeyEventHandler::handleKeyEvents(Game *game)
             int secOption = game->getGUI()->getScreen(GS_MAIN_MENU)->getCurrentGUIOption();
             game->getGUI()->getScreen(GS_MAIN_MENU)->getSelectedButton()->fireEvent(game);
 
+		}
+
+
+    } else if (gsm->getCurrentGameState() == GS_PAUSED) {
+
+        if (input->isKeyDownForFirstTime(S_KEY)) {
+            game->getGUI()->getScreen(GS_PAUSED)->nextGUIOption();
+        } else if (input->isKeyDownForFirstTime(W_KEY)) {
+            game->getGUI()->getScreen(GS_PAUSED)->previousGUIOption();
+        } else if (input->isKeyDownForFirstTime(VK_RETURN)) {
+            
+            int secOption = game->getGUI()->getScreen(GS_PAUSED)->getCurrentGUIOption();
+            game->getGUI()->getScreen(GS_PAUSED)->getSelectedButton()->fireEvent(game);
+
+        } else if (input->isKeyDownForFirstTime(VK_ESCAPE)) {
+			game->getGSM()->goToGame();
+		}
+
+
+	} else if (gsm->getCurrentGameState() == GS_IN_GAME_CONTROLS || gsm->getCurrentGameState() == GS_IN_GAME_ABOUT) {
+
+        if (input->isKeyDownForFirstTime(VK_ESCAPE)) {
+			game->getGSM()->goToInGameMenu();
         }
 
 
