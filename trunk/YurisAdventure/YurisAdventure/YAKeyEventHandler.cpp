@@ -91,7 +91,7 @@ void YAKeyEventHandler::handleKeyEvents(Game *game)
 			vX = PLAYER_SPEED;
 		}
 
-		if (input->isKeyDownForFirstTime(VK_ESCAPE)) {
+		if (input->isKeyDownForFirstTime(VK_ESCAPE) || input->isKeyDownForFirstTime(VK_TAB)) {
 			game->getGSM()->goToInGameMenu();
 		}
 		
@@ -104,6 +104,7 @@ void YAKeyEventHandler::handleKeyEvents(Game *game)
 		// ON THE GAME'S NEED
 
 	} else if (gsm->getCurrentGameState() == GS_SPLASH_SCREEN) {
+		// Splash Screen
 
 		if (input->isKeyDownForFirstTime(VK_RETURN) ||
 			input->isKeyDownForFirstTime(VK_SPACE)) {
@@ -111,6 +112,7 @@ void YAKeyEventHandler::handleKeyEvents(Game *game)
 		}
 
     } else if (gsm->getCurrentGameState() == GS_MAIN_MENU) {
+		// Main Menu
 
         if (input->isKeyDownForFirstTime(S_KEY)) {
             game->getGUI()->getScreen(GS_MAIN_MENU)->nextGUIOption();
@@ -125,6 +127,7 @@ void YAKeyEventHandler::handleKeyEvents(Game *game)
 
 
     } else if (gsm->getCurrentGameState() == GS_PAUSED) {
+		// Paused State
 
         if (input->isKeyDownForFirstTime(S_KEY)) {
             game->getGUI()->getScreen(GS_PAUSED)->nextGUIOption();
@@ -135,24 +138,29 @@ void YAKeyEventHandler::handleKeyEvents(Game *game)
             int secOption = game->getGUI()->getScreen(GS_PAUSED)->getCurrentGUIOption();
             game->getGUI()->getScreen(GS_PAUSED)->getSelectedButton()->fireEvent(game);
 
-        } else if (input->isKeyDownForFirstTime(VK_ESCAPE)) {
+		} else if (input->isKeyDownForFirstTime(VK_ESCAPE) || input->isKeyDownForFirstTime(VK_TAB)) {
 			game->getGSM()->goToGame();
 		}
 
 
 	} else if (gsm->getCurrentGameState() == GS_IN_GAME_CONTROLS || gsm->getCurrentGameState() == GS_IN_GAME_ABOUT) {
+		// InGame Controls and InGame About
 
-        if (input->isKeyDownForFirstTime(VK_ESCAPE)) {
+		if (input->isKeyDownForFirstTime(VK_ESCAPE) || input->isKeyDownForFirstTime(VK_RETURN)) {
 			game->getGSM()->goToInGameMenu();
         }
 
 
     } else if (gsm->getCurrentGameState() == GS_MENU_CONTROLS_MENU) {
-        if (input->isKeyDownForFirstTime(VK_RETURN)) {
+		// Controls Menu
+
+        if (input->isKeyDownForFirstTime(VK_ESCAPE) || input->isKeyDownForFirstTime(VK_RETURN)) {
             game->getGSM()->goToMainMenu();
         }
     } else if (gsm->getCurrentGameState() == GS_MENU_ABOUT_MENU) {
-        if (input->isKeyDownForFirstTime(VK_RETURN)) {
+		// About Menu
+		
+        if (input->isKeyDownForFirstTime(VK_ESCAPE) || input->isKeyDownForFirstTime(VK_RETURN)) {
             game->getGSM()->goToMainMenu();
         }
     }

@@ -1,6 +1,6 @@
 #include "stdafx.h"
 
-// DUMMY GAME INCLUDES
+// ya GAME INCLUDES
 #include "YAButtonEventHandler.h"
 #include "YADataLoader.h"
 #include "YAGame.h"
@@ -55,7 +55,7 @@ void YADataLoader::loadGame(Game *game, wstring gameInitFile)
 
 	// MAKE A CUSTOM GameOS OBJECT (WindowsOS) FOR SOME WINDOWS
 	// PLATFORM STUFF, INCLUDING A Window OF COURSE
-	WindowsOS *dummyOS = new WindowsOS(	hInstance, 
+	WindowsOS *yaOS = new WindowsOS(	hInstance, 
 										nCmdShow,
 										useFullscreen,
 										titleProp,
@@ -67,35 +67,35 @@ void YADataLoader::loadGame(Game *game, wstring gameInitFile)
 	wstringstream(textFontSizeProp) >> textFontSize;
 
 	// RENDERING WILL BE DONE USING DirectX
-	DirectXGraphics *dummyGraphics = new DirectXGraphics(game);
-	dummyGraphics->init(screenWidth, screenHeight);
-	dummyGraphics->initGraphics(dummyOS->getWindowHandle(), useFullscreen);
-	dummyGraphics->initTextFont(textFontSize);
+	DirectXGraphics *yaGraphics = new DirectXGraphics(game);
+	yaGraphics->init(screenWidth, screenHeight);
+	yaGraphics->initGraphics(yaOS->getWindowHandle(), useFullscreen);
+	yaGraphics->initTextFont(textFontSize);
 
 	// AND NOW LOAD THE COLORS THE GRAPHICS WILL USE
 	// AS A COLOR KEY AND FOR RENDERING TEXT
-	initColors(dummyGraphics, properties);
+	initColors(yaGraphics, properties);
 
 	// WE'LL USE WINDOWS PLATFORM METHODS FOR GETTING INPUT
-	WindowsInput *dummyInput = new WindowsInput();
+	WindowsInput *yaInput = new WindowsInput();
 
 	// AND WINDOWS FOR THE TIMER AS WELL
-	WindowsTimer *dummyTimer = new WindowsTimer();
+	WindowsTimer *yaTimer = new WindowsTimer();
 
 	// NOW INITIALIZE THE Game WITH ALL THE
 	// PLATFORM AND GAME SPECIFIC DATA WE JUST CREATED
-	game->initPlatformPlugins(	(GameGraphics*)dummyGraphics,
-								(GameInput*)dummyInput,
-								(GameOS*)dummyOS,
-								(GameTimer*)dummyTimer);
+	game->initPlatformPlugins(	(GameGraphics*)yaGraphics,
+								(GameInput*)yaInput,
+								(GameOS*)yaOS,
+								(GameTimer*)yaTimer);
 
 	// LOAD OUR CUSTOM TEXT GENERATOR, WHICH DRAWS
 	// TEXT ON THE SCREEN EACH FRAME
-	YATextGenerator *dummyTextGenerator = new YATextGenerator();
-	dummyTextGenerator->initText(game);
+	YATextGenerator *yaTextGenerator = new YATextGenerator();
+	yaTextGenerator->initText(game);
 	GameText *text = game->getText();
 	text->initDebugFile(DG_DEBUG_FILE);
-	text->setTextGenerator((TextGenerator*)dummyTextGenerator);
+	text->setTextGenerator((TextGenerator*)yaTextGenerator);
 
 	// INIT THE VIEWPORT TOO
 	initViewport(game->getGUI(), properties);	
@@ -168,7 +168,7 @@ void YADataLoader::loadWorld(Game *game, wstring levelInitFile)
 }
 
 /*
-	initDummyGUI - This method builds a GUI for the Dummy Game application.
+	inityaGUI - This method builds a GUI for the ya Game application.
 	Note that we load all the GUI components from this method, including
 	the ScreenGUI with Buttons and Overlays and the Cursor.
 */
@@ -209,7 +209,7 @@ void YADataLoader::initCursor(GameGUI *gui, DirectXTextureManager *guiTextureMan
 						0,
 						0,
 						0,
-						255,
+						0, // Invisible Cursor
 						32,
 						32);
 	gui->setCursor(cursor);
