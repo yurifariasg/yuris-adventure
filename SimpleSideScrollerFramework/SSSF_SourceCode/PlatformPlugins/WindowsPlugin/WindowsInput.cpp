@@ -52,7 +52,7 @@ void WindowsInput::processInput(Game *game)
 	updateCursorPosition(game, wi, game->getGUI()->getCursor());
 	updateInputState();
 	respondToKeyboardInput(game);
-	respondToMouseInput(game);
+	//respondToMouseInput(game); Ignore Mouse
 }
 
 /*

@@ -78,11 +78,21 @@
     <ClCompile Include="YAGame.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="resource.h" />
     <ClInclude Include="YAButtonEventHandler.h" />
     <ClInclude Include="YADataLoader.h" />
     <ClInclude Include="YAKeyEventHandler.h" />
     <ClInclude Include="YATextGenerator.h" />
     <ClInclude Include="YAGame.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="YurisAdventure.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\..\..\Desktop\GameImages\icon.ico" />
+    <None Include="..\..\..\..\..\desktop\gameimages\icon2.ico" />
+    <None Include="icon1.ico" />
+    <None Include="icon2.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
