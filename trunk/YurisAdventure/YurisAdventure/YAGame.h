@@ -17,6 +17,7 @@ static const wstring mainMenuAboutGUIFile = L"data/MainMenuAboutGUI.txt";
 static const wstring pausedGameFile = L"data/PauseGUI.txt";
 static const wstring controlsGameFile = L"data/InGameControlsGUI.txt";
 static const wstring aboutGameFile = L"data/InGameAboutGUI.txt";
+static const wstring splashscreenFile = L"data/SplashScreenGUI.txt";
 
 
 // HERE ARE THE GAME PROPERTIES WE ARE LOADING FROM FROM THE SETUP FILE
@@ -60,21 +61,6 @@ static const wstring DG_QUIT_COMMAND		= L"Quit";
 static const wstring DG_GREEN_CURSOR_PATH	= L"textures/gui/cursor/green_cursor.png";
 static const wstring DG_RED_CURSOR_PATH		= L"textures/gui/cursor/red_cursor.png";
 static const wstring DG_SPLASH_SCREEN_PATH	= L"textures/gui/overlays/splash_screen.png";
-static const wstring DG_MAIN_MENU_PATH		= L"textures/gui/overlays/mm_background.png";
-static const wstring CLOUDS          		= L"textures/gui/overlays/clouds.png";
-static const wstring MM_LOGO_PATH           = L"textures/gui/logos/mm_logo.png";
-static const wstring MM_START_PATH          = L"textures/gui/logos/mm_startgame.png";
-static const wstring MM_START_SELECT_PATH   = L"textures/gui/logos/mm_startgame_select.png";
-static const wstring MM_CONTROLS_PATH       = L"textures/gui/logos/mm_controls.png";
-static const wstring MM_CONTROLS_SELECT_PATH= L"textures/gui/logos/mm_controls_select.png";
-static const wstring MM_ABOUT_PATH          = L"textures/gui/logos/mm_about.png";
-static const wstring MM_ABOUT_SELECT_PATH   = L"textures/gui/logos/mm_about_select.png";
-static const wstring MM_EXIT_GAME_PATH      = L"textures/gui/logos/mm_exit.png";
-static const wstring MM_EXIT_GAME_SELECT_PATH= L"textures/gui/logos/mm_exit_select.png";
-static const wstring DG_START_IMAGE_PATH	= L"textures/gui/buttons/start_game.png";
-static const wstring DG_START_IMAGE_MO_PATH	= L"textures/gui/buttons/start_game_mo.png";
-static const wstring DG_EXIT_IMAGE_PATH		= L"textures/gui/buttons/exit_game.png";
-static const wstring DG_EXIT_IMAGE_MO_PATH	= L"textures/gui/buttons/exit_game_mo.png";
 static const wstring DG_QUIT_IMAGE_PATH		= L"textures/gui/buttons/quit.png";
 static const wstring DG_QUIT_IMAGE_MO_PATH	= L"textures/gui/buttons/quit_mo.png";
 
@@ -87,9 +73,8 @@ static const wstring	WALL_IMAGE_PATH = L"textures/world/tiles/wall.png";
 
 // FOR OUR SPRITE
 static const wstring	IDLE_STATE = L"IDLE_STATE";
-static const wstring	PLAYER_IDLE0_PATH = L"textures/world/sprites/tros/tros_3_0.png";
-static const wstring	PLAYER_IDLE1_PATH = L"textures/world/sprites/tros/tros_3_1.png";
-static const wstring	PLAYER_IDLE2_PATH = L"textures/world/sprites/tros/tros_3_2.png";
+static const wstring	PLAYER_IDLE1_PATH = L"textures/world/sprites/mainchar/idle_1.png";
+static const wstring	PLAYER_IDLE2_PATH = L"textures/world/sprites/mainchar/idle_2.png";
 static const int		ANIM_SPEED = 6;
 static const int		PLAYER_WIDTH = 64;
 static const int		PLAYER_HEIGHT = 92;

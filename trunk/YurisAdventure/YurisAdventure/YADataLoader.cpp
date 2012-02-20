@@ -143,16 +143,20 @@ void YADataLoader::initColors(	GameGraphics *graphics,
 */
 void YADataLoader::loadGUI(Game *game, wstring guiInitFile)
 {
-	// WE'RE JUST GOING TO IGNORE THE GUI FILE FOR NOW.
-	// FOR THE MOMENT WE ARE CALLING THIS HARD-CODED GUI LOADER
-	hardCodedLoadGUIExample(game);
-
+	// Load From File all the GUI
     game->getGUI()->addScreenGUI(GS_MAIN_MENU, loadGUIFromFile(game, guiInitFile));
     game->getGUI()->addScreenGUI(GS_MENU_CONTROLS_MENU, loadGUIFromFile(game, mainMenuControlsGUIFile));
     game->getGUI()->addScreenGUI(GS_MENU_ABOUT_MENU, loadGUIFromFile(game, mainMenuAboutGUIFile));
 	game->getGUI()->addScreenGUI(GS_PAUSED, loadGUIFromFile(game, pausedGameFile));
 	game->getGUI()->addScreenGUI(GS_IN_GAME_CONTROLS, loadGUIFromFile(game, controlsGameFile));
 	game->getGUI()->addScreenGUI(GS_IN_GAME_ABOUT, loadGUIFromFile(game, aboutGameFile));
+	game->getGUI()->addScreenGUI(GS_SPLASH_SCREEN, loadGUIFromFile(game, splashscreenFile));
+
+	// InGame GUI Empty - TODO
+	game->getGUI()->addScreenGUI(GS_GAME_IN_PROGRESS,	new ScreenGUI());
+
+	// Init Cursor (Gives error if removed) - FIX
+	initCursor(game->getGUI(), (DirectXTextureManager*)game->getGraphics()->getGUITextureManager());
 }
 
 /*
@@ -165,24 +169,6 @@ void YADataLoader::loadWorld(Game *game, wstring levelInitFile)
 	//			PROGRAMICALLY. YOU SHOULD DO THIS
 	//			USING CSV FILES.
 	hardCodedLoadLevelExample(game);
-}
-
-/*
-	inityaGUI - This method builds a GUI for the ya Game application.
-	Note that we load all the GUI components from this method, including
-	the ScreenGUI with Buttons and Overlays and the Cursor.
-*/
-void YADataLoader::hardCodedLoadGUIExample(Game *game)
-{
-	GameGUI *gui = game->getGUI();
-	GameGraphics *graphics = game->getGraphics();
-	DirectXTextureManager *guiTextureManager = (DirectXTextureManager*)graphics->getGUITextureManager();
-
-	// SETUP THE CURSOR VIA OUR HELPER METHOD
-	initCursor(gui, guiTextureManager);
-	initSplashScreen(game, gui, guiTextureManager);
-	//initMainMenu(gui, guiTextureManager);
-	initInGameGUI(gui, guiTextureManager);
 }
 
 /*
@@ -213,211 +199,6 @@ void YADataLoader::initCursor(GameGUI *gui, DirectXTextureManager *guiTextureMan
 						32,
 						32);
 	gui->setCursor(cursor);
-}
-
-/*
-	initSplashScreen - initializes the game's splash screen gui.
-*/
-void YADataLoader::initSplashScreen(Game *game, GameGUI *gui,	DirectXTextureManager *guiTextureManager)
-{
-	// NOW, FIRST LET'S ADD A SPLASH SCREEN GUI
-	ScreenGUI *splashScreenGUI = new ScreenGUI();
-
-	// WE'LL ONLY HAVE ONE IMAGE FOR OUR GIANT BUTTON
-	unsigned int normalTextureID = guiTextureManager->loadTexture(DG_SPLASH_SCREEN_PATH);
-	unsigned int mouseOverTextureID = normalTextureID;
-
-	// INIT THE QUIT BUTTON
-	Button *buttonToAdd = new Button();
-	buttonToAdd->initButton(normalTextureID, 
-							mouseOverTextureID,
-							0,
-							0,
-							0,
-							255,
-							game->getGraphics()->getScreenWidth(),
-							game->getGraphics()->getScreenHeight(),
-							false,
-							DG_GO_TO_MM_COMMAND);
-	splashScreenGUI->addButton(buttonToAdd);
-
-	// AND REGISTER IT WITH THE GUI
-	gui->addScreenGUI(GS_SPLASH_SCREEN, splashScreenGUI);
-}
-
-/*
-	initMainMenu - initializes the game's main menu gui.
-*/
-void YADataLoader::initMainMenu(GameGUI *gui,	DirectXTextureManager *guiTextureManager)
-{
-	// NOW LET'S LOAD A MAIN MENU GUI SCREEN
-	ScreenGUI *mainMenuGUI = new ScreenGUI();
-	unsigned int imageID = guiTextureManager->loadTexture(DG_MAIN_MENU_PATH);
-	OverlayImage *imageToAdd = new OverlayImage();
-	imageToAdd->x = 0;
-	imageToAdd->y = 0;
-	imageToAdd->z = 0;
-	imageToAdd->alpha = 255;
-    imageToAdd->width = 1024;
-	imageToAdd->height = 768;
-	imageToAdd->imageID = imageID;
-	mainMenuGUI->addOverlayImage(imageToAdd);
-
-    
-    unsigned int logoID;
-
-    // Add Clouds
-    logoID = guiTextureManager->loadTexture(CLOUDS);
-	OverlayImage *cloudToAdd = new OverlayImage();
-	cloudToAdd->x = 0;
-	cloudToAdd->y = 0;
-	cloudToAdd->z = 0;
-	cloudToAdd->alpha = 255;
-    cloudToAdd->width = 2024;
-	cloudToAdd->height = 430;
-	cloudToAdd->imageID = logoID;
-	mainMenuGUI->addOverlayImage(cloudToAdd);
-
-    // Add the Logo
-    logoID = guiTextureManager->loadTexture(MM_LOGO_PATH);
-	OverlayImage *logoToAdd = new OverlayImage();
-	logoToAdd->x = 250;
-	logoToAdd->y = 290;
-	logoToAdd->z = 0;
-	logoToAdd->alpha = 255;
-    logoToAdd->width = 750;
-	logoToAdd->height = 100;
-	logoToAdd->imageID = logoID;
-	mainMenuGUI->addOverlayImage(logoToAdd);
-
-	// AND LET'S ADD AN EXIT BUTTON
-	Button *buttonToAdd = new Button();
-
-	// - GET THE BUTTON COMMAND AND IMAGE IDs
-    int normalTextureID;
-    int selectedTextureID;
-
-	// AND LET'S ADD A START BUTTON
-	buttonToAdd = new Button();
-
-	// - GET THE BUTTON COMMAND AND IMAGE IDs
-
-    normalTextureID = guiTextureManager->loadTexture(MM_START_PATH);
-    selectedTextureID = guiTextureManager->loadTexture(MM_START_SELECT_PATH);
-
-	// - INIT THE START BUTTON
-	buttonToAdd->initButton(normalTextureID, 
-							selectedTextureID, // Doesnt Change when mouse over
-							40,
-							420,
-							0,
-							255,
-							240,
-							40,
-							false,
-							DG_START_COMMAND);
-
-	// AND NOW LOAD IT INTO A ScreenGUI
-	mainMenuGUI->addButton(buttonToAdd);
-
-    // AND LET'S ADD A START BUTTON
-	buttonToAdd = new Button();
-
-    // - GET THE BUTTON COMMAND AND IMAGE IDs
-
-    normalTextureID = guiTextureManager->loadTexture(MM_CONTROLS_PATH);
-    selectedTextureID = guiTextureManager->loadTexture(MM_CONTROLS_SELECT_PATH);
-
-	// - INIT THE START BUTTON
-	buttonToAdd->initButton(normalTextureID, 
-							selectedTextureID, // Doesnt Change when mouse over
-							40,
-							420 + 15 + 40,
-							0,
-							255,
-							200,
-							40,
-							false,
-							DG_START_COMMAND);
-
-	// AND NOW LOAD IT INTO A ScreenGUI
-	mainMenuGUI->addButton(buttonToAdd);
-
-    // AND LET'S ADD A START BUTTON
-	buttonToAdd = new Button();
-
-    // - GET THE BUTTON COMMAND AND IMAGE IDs
-
-    normalTextureID = guiTextureManager->loadTexture(MM_ABOUT_PATH);
-    selectedTextureID = guiTextureManager->loadTexture(MM_ABOUT_SELECT_PATH);
-
-	// - INIT THE START BUTTON
-	buttonToAdd->initButton(normalTextureID, 
-							selectedTextureID,
-							40,
-							420 + 40 + 15 + 40 + 15,
-							0,
-							255,
-							140,
-							40,
-							false,
-							DG_START_COMMAND);
-
-	// AND NOW LOAD IT INTO A ScreenGUI
-	mainMenuGUI->addButton(buttonToAdd);
-
-    // AND LET'S ADD A START BUTTON
-	buttonToAdd = new Button();
-
-    normalTextureID = guiTextureManager->loadTexture(MM_EXIT_GAME_PATH);
-    selectedTextureID = guiTextureManager->loadTexture(MM_EXIT_GAME_SELECT_PATH);
-
-	// - INIT THE EXIT BUTTON
-	buttonToAdd->initButton(normalTextureID, 
-							selectedTextureID,
-							40,
-							420 + 40 + 15 + 40 + 15 + 40 + 15, // Initial Pos + Above Height + Margin
-							0,
-							255,
-							210,
-							40,
-							false,
-							DG_EXIT_COMMAND);
-
-	// AND NOW LOAD IT INTO A ScreenGUI
-	mainMenuGUI->addButton(buttonToAdd);
-
-	// AND LET'S ADD OUR SCREENS
-	gui->addScreenGUI(GS_MAIN_MENU,		mainMenuGUI);
-}
-
-/*
-	initInGameGUI - initializes the game's in-game gui.
-*/
-void YADataLoader::initInGameGUI(GameGUI *gui, DirectXTextureManager *guiTextureManager)
-{
-	// NOW ADD THE IN-GAME GUI
-	ScreenGUI *inGameGUI = new ScreenGUI();
-
-	unsigned int normalTextureID = guiTextureManager->loadTexture(DG_QUIT_IMAGE_PATH);
-	unsigned int mouseOverTextureID = guiTextureManager->loadTexture(DG_QUIT_IMAGE_MO_PATH);
-
-	// INIT THE QUIT BUTTON
-	Button *buttonToAdd = new Button();
-	buttonToAdd->initButton(normalTextureID, 
-							mouseOverTextureID,
-							0,
-							0,
-							0,
-							255,
-							200,
-							100,
-							false,
-							DG_QUIT_COMMAND);
-	inGameGUI->addButton(buttonToAdd);
-
-	// AND LET'S ADD OUR SCREENS
-	gui->addScreenGUI(GS_GAME_IN_PROGRESS,	inGameGUI);
 }
 
 /*
@@ -510,7 +291,6 @@ void YADataLoader::hardCodedLoadLevelExample(Game *game)
 
 	// AND NOW LET'S MAKE A MAIN CHARACTER SPRITE
 	AnimatedSpriteType *ast = new AnimatedSpriteType();
-	int spriteImageID0 = worldTextureManager->loadTexture(PLAYER_IDLE0_PATH);
 	int spriteImageID1 = worldTextureManager->loadTexture(PLAYER_IDLE1_PATH);
 	int spriteImageID2 = worldTextureManager->loadTexture(PLAYER_IDLE2_PATH);
 
@@ -520,11 +300,10 @@ void YADataLoader::hardCodedLoadLevelExample(Game *game)
 	// NOW LET'S ADD AN ANIMATION STATE
 	// FIRST THE NAME
 	ast->addAnimationSequence(IDLE_STATE);
-	ast->addAnimationFrame(IDLE_STATE, spriteImageID0, 50);
-	ast->addAnimationFrame(IDLE_STATE, spriteImageID1, 20);
-	ast->addAnimationFrame(IDLE_STATE, spriteImageID2, 40);
-	ast->addAnimationFrame(IDLE_STATE, spriteImageID0, 100);
-	ast->addAnimationFrame(IDLE_STATE, spriteImageID1, 20);
+	ast->addAnimationFrame(IDLE_STATE, spriteImageID1, 25);
+	ast->addAnimationFrame(IDLE_STATE, spriteImageID2, 25);
+	ast->addAnimationFrame(IDLE_STATE, spriteImageID1, 25);
+	ast->addAnimationFrame(IDLE_STATE, spriteImageID2, 25);
 
 	SpriteManager *spriteManager = gsm->getSpriteManager();
 	unsigned int spriteTypeID = spriteManager->addSpriteType(ast);

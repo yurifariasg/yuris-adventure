@@ -42,7 +42,6 @@ public:
 	void loadWorld(Game *game, wstring levelInitFile);
 
 	// THESE ARE HARD-CODED EXAMPLES OF GAME DATA LOADING
-	void hardCodedLoadGUIExample(Game *game);
 	void hardCodedLoadLevelExample(Game *game);
 
 	// SOME HELPER METHODS FOR SETTING UP THE GAME
@@ -51,9 +50,6 @@ public:
 
 	// AND SOME HELPER METHODS FOR LOADING THE GUI
 	void initCursor(GameGUI *gui, DirectXTextureManager *guiTextureManager);
-	void initSplashScreen(Game *game, GameGUI *gui,	DirectXTextureManager *guiTextureManager);
-	void initMainMenu(GameGUI *gui,	DirectXTextureManager *guiTextureManager);
-	void initInGameGUI(GameGUI *gui, DirectXTextureManager *guiTextureManager);
     
     // New Methods
     ScreenGUI* loadGUIFromFile(Game *game, wstring guiFile);
