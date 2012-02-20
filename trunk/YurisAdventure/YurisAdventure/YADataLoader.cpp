@@ -11,6 +11,7 @@
 #include "SSSF_SourceCode\game\Game.h"
 #include "SSSF_SourceCode\graphics\GameGraphics.h"
 #include "SSSF_SourceCode\gsm\state\GameState.h"
+#include "SSSF_SourceCode\gsm\ai\RandomFloatingBot.h"
 #include "SSSF_SourceCode\gsm\world\TiledLayer.h"
 #include "SSSF_SourceCode\gui\Cursor.h"
 #include "SSSF_SourceCode\gui\GameGUI.h"
@@ -323,6 +324,49 @@ void YADataLoader::hardCodedLoadLevelExample(Game *game)
 
 	player->setAlpha(255);
 	player->setCurrentState(IDLE_STATE);
+
+	// Copied
+
+	// LET'S MAKE ANOTHER TYPE OF SPRITE TO USE NOW FOR BOTS
+	wstring BOT_FLOATING0_IMG = L"./textures/world/sprites/hex/Hex0.png";
+	wstring BOT_FLOATING1_IMG = L"./textures/world/sprites/hex/Hex1.png";
+	wstring BOT_FLOATING2_IMG = L"./textures/world/sprites/hex/Hex2.png";
+	wstring BOT_FLOATING3_IMG = L"./textures/world/sprites/hex/Hex3.png";
+	int BOT_WIDTH = 64;
+	int BOT_HEIGHT = 64;
+	wstring FLOATING_STATE = L"FLOATING_STATE";
+
+	ast = new AnimatedSpriteType();
+	vector<unsigned int> botImageIDs;
+	botImageIDs.push_back(worldTextureManager->loadTexture(BOT_FLOATING0_IMG));
+	botImageIDs.push_back(worldTextureManager->loadTexture(BOT_FLOATING1_IMG));
+	botImageIDs.push_back(worldTextureManager->loadTexture(BOT_FLOATING2_IMG));
+	botImageIDs.push_back(worldTextureManager->loadTexture(BOT_FLOATING3_IMG));
+	ast->setTextureSize(BOT_WIDTH, BOT_HEIGHT);
+	ast->addAnimationSequence(FLOATING_STATE);
+	for (int i = 0; i < 4; i++)
+		ast->addAnimationFrame(FLOATING_STATE, botImageIDs.at(i), 10);
+	spriteTypeID = spriteManager->addSpriteType(ast);
+	ast->setSpriteTypeID(spriteTypeID);
+
+	// AND LET'S MAKE 100 OF THEM IN RANDOM PLACES WITH RANDOM TRANSPARENCIES
+	for (int i = 0; i < 4; i++)
+	{
+		RandomFloatingBot *bot = new RandomFloatingBot(gsm->getPhysics(), 2, 20, 2);
+		bot->setSpriteType(ast);
+		bot->setCurrentState(FLOATING_STATE);
+		bot->setAlpha((rand()%200) + 55);
+		bot->pickRandomVelocity(gsm->getPhysics());
+		PhysicalProperties *pp = bot->getPhysicalProperties();
+		pp->setCollidable(false);
+		int x = (i * 300) + 100;
+		int y = (i * 300) + 100;
+		pp->setX(x);
+		pp->setY(y);
+		pp->setAccelerationX(0.0f);
+		pp->setAccelerationY(0.0f);
+		spriteManager->addBot(bot);
+	}
 }
 
 ScreenGUI* YADataLoader::loadGUIFromFile(Game *game, wstring guiFile)
