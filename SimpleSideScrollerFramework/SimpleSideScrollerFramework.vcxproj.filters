@@ -18,9 +18,6 @@
     <Filter Include="SSSF_SourceCode\game">
       <UniqueIdentifier>{c8f94df4-03a6-4ffc-8ea9-124c530305e2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="SSSF_SourceCode\graphics">
-      <UniqueIdentifier>{23b55b3b-7c0a-4cfd-9654-fc990aa3a3f9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="SSSF_SourceCode\gui">
       <UniqueIdentifier>{cda793bc-8666-4268-a17c-00f4531d0b4c}</UniqueIdentifier>
     </Filter>
@@ -63,6 +60,9 @@
     <Filter Include="VS2010 Files\timer">
       <UniqueIdentifier>{474c3abd-6d4d-450e-89ab-a176e7a891db}</UniqueIdentifier>
     </Filter>
+    <Filter Include="SSSF_SourceCode\game\graphics">
+      <UniqueIdentifier>{23b55b3b-7c0a-4cfd-9654-fc990aa3a3f9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -90,13 +90,13 @@
       <Filter>SSSF_SourceCode\game</Filter>
     </ClInclude>
     <ClInclude Include="SSSF_SourceCode\graphics\GameGraphics.h">
-      <Filter>SSSF_SourceCode\graphics</Filter>
+      <Filter>SSSF_SourceCode\game\graphics</Filter>
     </ClInclude>
     <ClInclude Include="SSSF_SourceCode\graphics\RenderList.h">
-      <Filter>SSSF_SourceCode\graphics</Filter>
+      <Filter>SSSF_SourceCode\game\graphics</Filter>
     </ClInclude>
     <ClInclude Include="SSSF_SourceCode\graphics\TextureManager.h">
-      <Filter>SSSF_SourceCode\graphics</Filter>
+      <Filter>SSSF_SourceCode\game\graphics</Filter>
     </ClInclude>
     <ClInclude Include="SSSF_SourceCode\gsm\ai\Bot.h">
       <Filter>SSSF_SourceCode\gsm\ai</Filter>
@@ -218,13 +218,13 @@
       <Filter>SSSF_SourceCode\game</Filter>
     </ClCompile>
     <ClCompile Include="SSSF_SourceCode\graphics\GameGraphics.cpp">
-      <Filter>SSSF_SourceCode\graphics</Filter>
+      <Filter>SSSF_SourceCode\game\graphics</Filter>
     </ClCompile>
     <ClCompile Include="SSSF_SourceCode\graphics\RenderList.cpp">
-      <Filter>SSSF_SourceCode\graphics</Filter>
+      <Filter>SSSF_SourceCode\game\graphics</Filter>
     </ClCompile>
     <ClCompile Include="SSSF_SourceCode\graphics\TextureManager.cpp">
-      <Filter>SSSF_SourceCode\graphics</Filter>
+      <Filter>SSSF_SourceCode\game\graphics</Filter>
     </ClCompile>
     <ClCompile Include="SSSF_SourceCode\gsm\ai\BotRecycler.cpp">
       <Filter>SSSF_SourceCode\gsm\ai</Filter>
