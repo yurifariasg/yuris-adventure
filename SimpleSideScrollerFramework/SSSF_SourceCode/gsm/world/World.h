@@ -35,6 +35,8 @@ private:
 	int worldWidth;
 	int worldHeight;
 
+	int backgroundID;
+
 	// THESE ARE THE BACKGROUND LAYERS
 	vector<WorldLayer*> *layers;
 
@@ -57,4 +59,6 @@ public:
 	void	addWorldRenderItemsToRenderList(Game *game);
 	void	unloadWorld();
 	void	update(Game *game);
+	void setBackground(int id);
+	int getBackgroundID() { return backgroundID; };
 };

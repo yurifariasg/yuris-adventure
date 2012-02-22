@@ -73,9 +73,21 @@ static const wstring	GRASS_IMAGE_PATH = L"textures/world/tiles/grass.png";
 static const wstring	WALL_IMAGE_PATH = L"textures/world/tiles/wall.png";
 
 // FOR OUR SPRITE
-static const wstring	IDLE_STATE = L"IDLE_STATE";
-static const wstring	PLAYER_IDLE1_PATH = L"textures/world/sprites/mainchar/idle_1.png";
-static const wstring	PLAYER_IDLE2_PATH = L"textures/world/sprites/mainchar/idle_2.png";
+static const wstring	IDLE_STATE_RIGHT = L"IDLE_STATE_RIGHT";
+static const wstring	IDLE_STATE_LEFT = L"IDLE_STATE_LEFT";
+static const wstring	MOVING_RIGHT_STATE = L"MOVING_RIGHT_STATE";
+static const wstring	MOVING_LEFT_STATE = L"MOVING_LEFT_STATE";
+static const wstring	PLAYER_IDLE_RIGHT1_PATH = L"textures/world/sprites/mainchar/idle_right1.png";
+static const wstring	PLAYER_IDLE_RIGHT2_PATH = L"textures/world/sprites/mainchar/idle_right2.png";
+static const wstring	PLAYER_IDLE_LEFT1_PATH = L"textures/world/sprites/mainchar/idle_left1.png";
+static const wstring	PLAYER_IDLE_LEFT2_PATH = L"textures/world/sprites/mainchar/idle_left2.png";
+static const wstring	PLAYER_MOVING_RIGHT1_PATH = L"textures/world/sprites/mainchar/moving_right_1.png";
+static const wstring	PLAYER_MOVING_RIGHT2_PATH = L"textures/world/sprites/mainchar/moving_right_2.png";
+static const wstring	PLAYER_MOVING_RIGHT3_PATH = L"textures/world/sprites/mainchar/moving_right_3.png";
+static const wstring	PLAYER_MOVING_LEFT1_PATH = L"textures/world/sprites/mainchar/moving_left_1.png";
+static const wstring	PLAYER_MOVING_LEFT2_PATH = L"textures/world/sprites/mainchar/moving_left_2.png";
+static const wstring	PLAYER_MOVING_LEFT3_PATH = L"textures/world/sprites/mainchar/moving_left_3.png";
+
 static const int		ANIM_SPEED = 6;
 static const int		PLAYER_WIDTH = 64;
 static const int		PLAYER_HEIGHT = 92;
@@ -86,3 +98,5 @@ static const int		NUM_ROWS = 12;
 static const int		TILE_WIDTH = 64;
 static const int		TILE_HEIGHT = 64;
 static const int		Z_LAYER = 0;
+
+// Player Speed declared in Game.h

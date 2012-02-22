@@ -35,6 +35,17 @@ void YATextGenerator::appendTargetFPS(Game *game)
 	textToGenerate.append(DG_TARGET_FPS_TEXT);
 	wss << timer->getTargetFPS();
 	textToGenerate.append(wss.str());
+
+	// Here
+	float playerX = game->getGSM()->getSpriteManager()->getPlayer()->getPhysicalProperties()->getX();
+
+	wstringstream stream;
+
+	stream << " Player Location: " << playerX;
+
+	wstring text = stream.str();
+
+	textToGenerate.append(stream.str());
 }
 
 /*
