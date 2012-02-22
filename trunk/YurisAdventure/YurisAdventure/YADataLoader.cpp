@@ -7,6 +7,8 @@
 #include "YAKeyEventHandler.h"
 #include "YATextGenerator.h"
 
+#include "SSSF_SourceCode\text\BufferedTextFileReader.h"
+
 // GAME OBJECT INCLUDES
 #include "SSSF_SourceCode\game\Game.h"
 #include "SSSF_SourceCode\graphics\GameGraphics.h"
@@ -154,7 +156,7 @@ void YADataLoader::loadGUI(Game *game, wstring guiInitFile)
 	game->getGUI()->addScreenGUI(GS_SPLASH_SCREEN, loadGUIFromFile(game, splashscreenFile));
 
 	// InGame GUI Empty - TODO
-	game->getGUI()->addScreenGUI(GS_GAME_IN_PROGRESS,	new ScreenGUI());
+	game->getGUI()->addScreenGUI(GS_GAME_IN_PROGRESS,	loadGUIFromFile(game, inGameFile));
 
 	// Init Cursor (Gives error if removed) - FIX
 	initCursor(game->getGUI(), (DirectXTextureManager*)game->getGraphics()->getGUITextureManager());
@@ -250,19 +252,20 @@ void YADataLoader::hardCodedLoadLevelExample(Game *game)
 	world->setWorldHeight(NUM_ROWS * TILE_HEIGHT);
 
 	// NOW LOAD OUR TILED BACKGROUND
-	TiledLayer *tiledLayer = new TiledLayer(	NUM_COLUMNS,	NUM_ROWS, 
+	/*TiledLayer *tiledLayer = new TiledLayer(	NUM_COLUMNS,	NUM_ROWS, 
 												TILE_WIDTH,		TILE_HEIGHT, 
 												0, true, 
 												NUM_COLUMNS * TILE_WIDTH,
 												NUM_ROWS * TILE_HEIGHT);
 	int grassID = worldTextureManager->loadTexture(GRASS_IMAGE_PATH);
 	int wallID = worldTextureManager->loadTexture(WALL_IMAGE_PATH);
+
 	srand(1);
 
 	// LET'S GENERATE A RANDOM BACKGROUND USING OUR TWO TILES
 	for (int i = 0; i < (NUM_COLUMNS * NUM_ROWS); i++)
 	{
-		bool isCollidable = false;
+		bool isCollidable = true;
 		int tileIDToUse = grassID;
 		int randomInt = rand() % 100;
 		if (randomInt >= 50)
@@ -286,9 +289,12 @@ void YADataLoader::hardCodedLoadLevelExample(Game *game)
 			Tile *tile = tiledLayer->getTile(i,j);
 			tile->textureID = grassID;
 		}
-	}	
+	}
+	
+	world->addLayer(tiledLayer)
+	*/
 
-	world->addLayer(tiledLayer);
+	world->addLayer(loadTiledLayerFromFile(game, L"data/Levels/Level1.txt", L"data/Levels/Level1_Map.txt"));
 
 	// AND NOW LET'S MAKE A MAIN CHARACTER SPRITE
 	AnimatedSpriteType *ast = new AnimatedSpriteType();
@@ -515,3 +521,152 @@ ScreenGUI* YADataLoader::loadGUIFromFile(Game *game, wstring guiFile)
     return screen;
 }
 
+TiledLayer* YADataLoader::loadTiledLayerFromFile(Game *game, wstring worldFile, wstring worldMapFile)
+{
+
+	map<wstring,wstring> *properties = new map<wstring,wstring>();
+	loadGameProperties(game, properties, worldFile);
+
+	// Load World File Map
+	// TO-DO
+
+	// NOW LOAD OUR TILED BACKGROUND
+	TiledLayer *tiledLayer = new TiledLayer(	NUM_COLUMNS,	NUM_ROWS, 
+												TILE_WIDTH,		TILE_HEIGHT, 
+												0, true, 
+												NUM_COLUMNS * TILE_WIDTH,
+												NUM_ROWS * TILE_HEIGHT);
+
+	map<wstring,int> *texturesID = new map<wstring,int>();
+
+	int texturesCount, emptyTileCode;
+	wstring textureCountS, elementTilePath, elementCode;
+
+	emptyTileCode = game->getGraphics()->getWorldTextureManager()->loadTexture(L"textures/world/tiles/empty_tile.png");
+
+	wstringstream stream;
+
+	// Count
+    textureCountS = (*properties)[L"NUMBER_OF_ELEMENTS"];
+    wstringstream(textureCountS) >> texturesCount;
+    stream.str(L"");
+
+	// Load Textures
+	for (int i = 1 ; i <= texturesCount ; i++) {
+		stream << i << L"ELEMENT_TILE_PATH";
+        elementTilePath = (*properties)[stream.str()];
+		stream.str(L"");
+		stream << i << L"ELEMENT_CODE";
+
+		wstring blabla = (*properties)[stream.str()];
+		int texCode = game->getGraphics()->getWorldTextureManager()->loadTexture(elementTilePath);
+
+		// Insert the Code and ID
+		(*texturesID)[(*properties)[stream.str()]] = texCode;
+		stream.str(L"");
+	}
+
+	// Lets load our World
+
+	BufferedTextFileReader reader;
+	reader.initFile(worldMapFile);
+	wstring line;
+
+	int numberOfTilesTotal = 0;
+
+	int tileCounterPerLine = 0;
+
+	while (reader.hasMoreLines())
+	{
+		line = reader.getNextLine();
+
+		int lineSize = line.size();
+
+		tileCounterPerLine = 0;
+
+		for (int i = 0 ; i < line.size() ; i++) {
+
+			if (&(line[i]) == L"\n" || (line[i]) == 'N') {
+				while (tileCounterPerLine != NUM_COLUMNS) {
+					// Fill with Empty Tiles
+					Tile *tileToAdd = new Tile();
+					tileToAdd->collidable = false;
+					tileToAdd->textureID = emptyTileCode;
+					tiledLayer->addTile(tileToAdd);
+					tileCounterPerLine++;
+					numberOfTilesTotal++;
+				}
+
+				continue;
+			}
+
+		if (line[i] == ' ') {
+			Tile *tileToAdd = new Tile();
+			tileToAdd->collidable = false;
+			tileToAdd->textureID = emptyTileCode;
+			tiledLayer->addTile(tileToAdd);
+			tileCounterPerLine++;
+			numberOfTilesTotal++;
+			continue;
+		}
+
+		Tile *tileToAdd = new Tile();
+
+		tileToAdd->collidable = false;
+
+		stream << line[i];
+		wstring blabla = stream.str();
+		tileToAdd->textureID = (*texturesID)[ stream.str() ];
+		stream.str(L"");
+
+		tiledLayer->addTile(tileToAdd);
+		numberOfTilesTotal++;
+
+		}
+
+	}
+
+	int theTiles = numberOfTilesTotal;
+	int shouldHave = NUM_ROWS * NUM_COLUMNS;
+
+	return tiledLayer;
+
+
+	/*
+		stream << i << GUI_OPTION_WIDTH;       
+        widthS = (*properties)[stream.str()];
+        wstringstream(widthS) >> width;
+        stream.str(L"");
+	*/
+
+	/*srand(1);
+
+	// LET'S GENERATE A RANDOM BACKGROUND USING OUR TWO TILES
+	for (int i = 0; i < (NUM_COLUMNS * NUM_ROWS); i++)
+	{
+		bool isCollidable = true;
+		int tileIDToUse = grassID;
+		int randomInt = rand() % 100;
+		if (randomInt >= 50)
+			isCollidable = true;
+
+		randomInt = rand() % 100;
+		if (randomInt >= 80)
+			tileIDToUse = wallID;
+
+		Tile *tileToAdd = new Tile();
+		tileToAdd->collidable = isCollidable;
+		tileToAdd->textureID = tileIDToUse;
+		tiledLayer->addTile(tileToAdd);
+	}
+
+	// BUT LET'S CLEAR OUT THE TOP-LEFT AREA
+	for (int i = 0; i < 4; i++)
+	{
+		for (int j = 0; j < 4; j++)
+		{
+			Tile *tile = tiledLayer->getTile(i,j);
+			tile->textureID = grassID;
+		}
+	}	*/
+}

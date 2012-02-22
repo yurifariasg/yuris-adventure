@@ -13,6 +13,7 @@
 #include <stdio.h>
 #include "SSSF_SourceCode\dataLoader\GameDataLoader.h"
 #include "SSSF_SourceCode\game\Game.h"
+#include "SSSF_SourceCode\gsm\world\TiledLayer.h"
 #include "SSSF_SourceCode\PlatformPlugins\DirectXPlugin\DirectXTextureManager.h"
 #include "SSSF_SourceCode\gui\ScreenGUI.h"
 
@@ -53,4 +54,5 @@ public:
     
     // New Methods
     ScreenGUI* loadGUIFromFile(Game *game, wstring guiFile);
+	TiledLayer* loadTiledLayerFromFile(Game *game, wstring worldFile, wstring worldMapFile);
 };

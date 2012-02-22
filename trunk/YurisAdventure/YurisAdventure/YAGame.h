@@ -18,6 +18,7 @@ static const wstring pausedGameFile = L"data/PauseGUI.txt";
 static const wstring controlsGameFile = L"data/InGameControlsGUI.txt";
 static const wstring aboutGameFile = L"data/InGameAboutGUI.txt";
 static const wstring splashscreenFile = L"data/SplashScreenGUI.txt";
+static const wstring inGameFile = L"data/InGameGUI.txt";
 
 
 // HERE ARE THE GAME PROPERTIES WE ARE LOADING FROM FROM THE SETUP FILE
@@ -80,8 +81,8 @@ static const int		PLAYER_WIDTH = 64;
 static const int		PLAYER_HEIGHT = 92;
 
 // FOR OUR WORLD
-static const int		NUM_COLUMNS = 60;
-static const int		NUM_ROWS = 40;
+static const int		NUM_COLUMNS = 30;
+static const int		NUM_ROWS = 12;
 static const int		TILE_WIDTH = 64;
 static const int		TILE_HEIGHT = 64;
 static const int		Z_LAYER = 0;
