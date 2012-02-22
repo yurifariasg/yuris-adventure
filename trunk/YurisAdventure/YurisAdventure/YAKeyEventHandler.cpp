@@ -10,6 +10,7 @@
 
 #include "stdafx.h"
 #include "YAKeyEventHandler.h"
+#include "YAGame.h"
 #include "SSSF_SourceCode\game\Game.h"
 #include "SSSF_SourceCode\game\WStringTable.h"
 #include "SSSF_SourceCode\graphics\GameGraphics.h"
@@ -39,10 +40,12 @@ const unsigned int ENTER_KEY = VK_RETURN;
 // THIS IS JUST FOR SHOWING HOW THE CURSOR CAN BE CHANGED
 const unsigned int C_KEY = (unsigned int)'C';
 
-const float PLAYER_SPEED = 5.0f;
+
 const int MIN_FPS = 5;
 const int MAX_FPS = 100;
 const int FPS_INC = 1;
+
+bool isFacingRight = true;
 
 /*
 	handleKeyEvent - this method handles all keyboard interactions. Note that every frame this method
@@ -89,6 +92,21 @@ void YAKeyEventHandler::handleKeyEvents(Game *game)
 		if (input->isKeyDown(D_KEY))
 		{
 			vX = PLAYER_SPEED;
+		}
+
+		if (!input->isKeyDown(D_KEY) && !input->isKeyDown(A_KEY)) {
+			// Hes IDLE
+			if (isFacingRight)
+				game->getGSM()->getSpriteManager()->getPlayer()->setCurrentState(IDLE_STATE_RIGHT);
+			else game->getGSM()->getSpriteManager()->getPlayer()->setCurrentState(IDLE_STATE_LEFT);
+		}
+
+		if (input->isKeyDownForFirstTime(D_KEY)) {
+			isFacingRight = true;
+			game->getGSM()->getSpriteManager()->getPlayer()->setCurrentState(MOVING_RIGHT_STATE);
+		} else if (input->isKeyDownForFirstTime(A_KEY)) {
+			isFacingRight = false;
+			game->getGSM()->getSpriteManager()->getPlayer()->setCurrentState(MOVING_LEFT_STATE);
 		}
 
 		if (input->isKeyDownForFirstTime(VK_ESCAPE) || input->isKeyDownForFirstTime(VK_TAB)) {

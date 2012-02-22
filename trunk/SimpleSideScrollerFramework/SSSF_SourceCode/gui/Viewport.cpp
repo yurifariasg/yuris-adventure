@@ -10,6 +10,9 @@
 
 #include "stdafx.h"
 #include "SSSF_SourceCode\gui\Viewport.h"
+#include "SSSF_SourceCode\game\game.h"
+#include "SSSF_SourceCode\gsm\state\GameStateManager.h"
+
 
 /*
 	Viewport - This default constructor simply sets all integer
@@ -149,4 +152,22 @@ void Viewport::moveViewport(int incX,
 	// OF THE GAME WORLD. CLAMP INSTEAD.
 	else if (viewportY >= worldHeight - viewportHeight)
 		viewportY = worldHeight - viewportHeight - 1;
+}
+
+void Viewport::update(Game *game)
+{
+
+	PhysicalProperties* pp = game->getGSM()->getSpriteManager()->getPlayer()->getPhysicalProperties();
+
+	if (pp->getX() - viewportX > viewportWidth * 50 / 100)
+		game->getGUI()->getViewport()->moveViewport(PLAYER_SPEED, 0,
+				game->getGSM()->getWorld()->getWorldWidth(),
+				game->getGSM()->getWorld()->getWorldHeight());
+	if (pp->getX() - viewportX < viewportWidth * 20 / 100)
+		game->getGUI()->getViewport()->moveViewport(-PLAYER_SPEED, 0,
+				game->getGSM()->getWorld()->getWorldWidth(),
+				game->getGSM()->getWorld()->getWorldHeight());
+
+
+
 }

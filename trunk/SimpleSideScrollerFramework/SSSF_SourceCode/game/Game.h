@@ -31,6 +31,9 @@
 // PREPROCESSOR INCLUDE STATEMENTS
 #include "stdafx.h"
 #include "SSSF_SourceCode\gsm\state\GameState.h"
+
+#define PLAYER_SPEED 5.0f
+
 //#include "SSSF_SourceCode\gsm\state\GameStateManager.h"
 //#include "SSSF_SourceCode\gui\GameGUI.h"
 //#include "SSSF_SourceCode\text\GameText.h"
@@ -47,6 +50,7 @@ class GameGUI;
 class GameText;
 
 static const float PI = 3.1415926535897932384626433f;
+
 
 class Game
 {

@@ -250,4 +250,6 @@ void GameStateManager::update(Game *game)
 	spriteManager->update(game);
 	world.update(game);
 	physics.update(game);
+	game->getGUI()->getViewport()->update(game);
+
 }

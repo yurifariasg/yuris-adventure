@@ -28,6 +28,7 @@ World::World()
 	layers = new vector<WorldLayer*>();
 	worldWidth = 0;
 	worldHeight = 0;
+	backgroundID = -1;
 }
 
 /*
@@ -63,6 +64,13 @@ void World::addWorldRenderItemsToRenderList(Game *game)
 		GameGraphics *graphics = game->getGraphics();
 		RenderList *renderList = graphics->getWorldRenderList();
 		Viewport *viewport = gui->getViewport();
+
+		if (backgroundID != -1) {
+
+			renderList->addRenderItem(backgroundID, 0, 0, 0, 255, 1024, 768);
+
+		}
+
 		for (unsigned int i = 0; i < layers->size(); i++)
 		{
 			layers->at(i)->addRenderItemsToRenderList(	renderList,
@@ -100,4 +108,9 @@ void World::update(Game *game)
 	// NOTE THAT THIS METHOD IS NOT IMPLEMENTED BUT COULD BE
 	// SHOULD YOU WISH TO ADD ANY NON-COLLIDABLE LAYERS WITH
 	// DYNAMIC CONTENT OR PARTICLE SYSTEMS
+}
+
+void World::setBackground(int id)
+{
+	backgroundID = id;
 }

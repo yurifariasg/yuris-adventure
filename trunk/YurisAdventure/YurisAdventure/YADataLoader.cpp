@@ -251,66 +251,53 @@ void YADataLoader::hardCodedLoadLevelExample(Game *game)
 	world->setWorldWidth(NUM_COLUMNS * TILE_WIDTH);
 	world->setWorldHeight(NUM_ROWS * TILE_HEIGHT);
 
-	// NOW LOAD OUR TILED BACKGROUND
-	/*TiledLayer *tiledLayer = new TiledLayer(	NUM_COLUMNS,	NUM_ROWS, 
-												TILE_WIDTH,		TILE_HEIGHT, 
-												0, true, 
-												NUM_COLUMNS * TILE_WIDTH,
-												NUM_ROWS * TILE_HEIGHT);
-	int grassID = worldTextureManager->loadTexture(GRASS_IMAGE_PATH);
-	int wallID = worldTextureManager->loadTexture(WALL_IMAGE_PATH);
+	// Take a look which level to load
+	map<wstring,wstring> *levels = new map<wstring,wstring>();
+	loadGameProperties(game, levels, L"data/levels.txt");
 
-	srand(1);
+	// Load Background
 
-	// LET'S GENERATE A RANDOM BACKGROUND USING OUR TWO TILES
-	for (int i = 0; i < (NUM_COLUMNS * NUM_ROWS); i++)
-	{
-		bool isCollidable = true;
-		int tileIDToUse = grassID;
-		int randomInt = rand() % 100;
-		if (randomInt >= 50)
-			isCollidable = true;
+	wstring levelPath = (*levels)[L"LEVEL1_BG_PATH"];
 
-		randomInt = rand() % 100;
-		if (randomInt >= 80)
-			tileIDToUse = wallID;
+	int oi = 0;
 
-		Tile *tileToAdd = new Tile();
-		tileToAdd->collidable = isCollidable;
-		tileToAdd->textureID = tileIDToUse;
-		tiledLayer->addTile(tileToAdd);
-	}
+	int backgroundID = graphics->getWorldTextureManager()->loadTexture((*levels)[L"LEVEL1_BG_PATH"]);
+	world->setBackground(backgroundID);
 
-	// BUT LET'S CLEAR OUT THE TOP-LEFT AREA
-	for (int i = 0; i < 4; i++)
-	{
-		for (int j = 0; j < 4; j++)
-		{
-			Tile *tile = tiledLayer->getTile(i,j);
-			tile->textureID = grassID;
-		}
-	}
-	
-	world->addLayer(tiledLayer)
-	*/
+	// Initiate World
+
 
 	world->addLayer(loadTiledLayerFromFile(game, L"data/Levels/Level1.txt", L"data/Levels/Level1_Map.txt"));
 
 	// AND NOW LET'S MAKE A MAIN CHARACTER SPRITE
 	AnimatedSpriteType *ast = new AnimatedSpriteType();
-	int spriteImageID1 = worldTextureManager->loadTexture(PLAYER_IDLE1_PATH);
-	int spriteImageID2 = worldTextureManager->loadTexture(PLAYER_IDLE2_PATH);
+	//int spriteImageID1 = worldTextureManager->loadTexture(PLAYER_IDLE1_PATH);
+	//int spriteImageID2 = worldTextureManager->loadTexture(PLAYER_IDLE2_PATH);
 
 	// SIZE OF SPRITE IMAGES
 	ast->setTextureSize(PLAYER_WIDTH, PLAYER_HEIGHT);
 
 	// NOW LET'S ADD AN ANIMATION STATE
 	// FIRST THE NAME
-	ast->addAnimationSequence(IDLE_STATE);
-	ast->addAnimationFrame(IDLE_STATE, spriteImageID1, 25);
-	ast->addAnimationFrame(IDLE_STATE, spriteImageID2, 25);
-	ast->addAnimationFrame(IDLE_STATE, spriteImageID1, 25);
-	ast->addAnimationFrame(IDLE_STATE, spriteImageID2, 25);
+	ast->addAnimationSequence(IDLE_STATE_RIGHT);
+	ast->addAnimationFrame(IDLE_STATE_RIGHT, worldTextureManager->loadTexture(PLAYER_IDLE_RIGHT1_PATH), 25);
+	ast->addAnimationFrame(IDLE_STATE_RIGHT, worldTextureManager->loadTexture(PLAYER_IDLE_RIGHT2_PATH), 25);
+
+	ast->addAnimationSequence(IDLE_STATE_LEFT);
+	ast->addAnimationFrame(IDLE_STATE_LEFT, worldTextureManager->loadTexture(PLAYER_IDLE_LEFT1_PATH), 25);
+	ast->addAnimationFrame(IDLE_STATE_LEFT, worldTextureManager->loadTexture(PLAYER_IDLE_LEFT2_PATH), 25);
+
+	ast->addAnimationSequence(MOVING_RIGHT_STATE);
+	ast->addAnimationFrame(MOVING_RIGHT_STATE, worldTextureManager->loadTexture(PLAYER_MOVING_RIGHT1_PATH), 10);
+	ast->addAnimationFrame(MOVING_RIGHT_STATE, worldTextureManager->loadTexture(PLAYER_MOVING_RIGHT2_PATH), 10);
+	ast->addAnimationFrame(MOVING_RIGHT_STATE, worldTextureManager->loadTexture(PLAYER_MOVING_RIGHT3_PATH), 10);
+
+	ast->addAnimationSequence(MOVING_LEFT_STATE);
+	ast->addAnimationFrame(MOVING_LEFT_STATE, worldTextureManager->loadTexture(PLAYER_MOVING_LEFT1_PATH), 10);
+	ast->addAnimationFrame(MOVING_LEFT_STATE, worldTextureManager->loadTexture(PLAYER_MOVING_LEFT2_PATH), 10);
+	ast->addAnimationFrame(MOVING_LEFT_STATE, worldTextureManager->loadTexture(PLAYER_MOVING_LEFT3_PATH), 10);
+
+
 
 	SpriteManager *spriteManager = gsm->getSpriteManager();
 	unsigned int spriteTypeID = spriteManager->addSpriteType(ast);
@@ -329,7 +316,7 @@ void YADataLoader::hardCodedLoadLevelExample(Game *game)
 	// WE START DOING COLLISIONS AND PHYSICS
 
 	player->setAlpha(255);
-	player->setCurrentState(IDLE_STATE);
+	player->setCurrentState(IDLE_STATE_RIGHT);
 
 	// Copied
 
@@ -626,47 +613,5 @@ TiledLayer* YADataLoader::loadTiledLayerFromFile(Game *game, wstring worldFile, 
 
 	}
 
-	int theTiles = numberOfTilesTotal;
-	int shouldHave = NUM_ROWS * NUM_COLUMNS;
-
 	return tiledLayer;
-
-
-	/*
-		stream << i << GUI_OPTION_WIDTH;       
-        widthS = (*properties)[stream.str()];
-        wstringstream(widthS) >> width;
-        stream.str(L"");
-	*/
-
-	/*srand(1);
-
-	// LET'S GENERATE A RANDOM BACKGROUND USING OUR TWO TILES
-	for (int i = 0; i < (NUM_COLUMNS * NUM_ROWS); i++)
-	{
-		bool isCollidable = true;
-		int tileIDToUse = grassID;
-		int randomInt = rand() % 100;
-		if (randomInt >= 50)
-			isCollidable = true;
-
-		randomInt = rand() % 100;
-		if (randomInt >= 80)
-			tileIDToUse = wallID;
-
-		Tile *tileToAdd = new Tile();
-		tileToAdd->collidable = isCollidable;
-		tileToAdd->textureID = tileIDToUse;
-		tiledLayer->addTile(tileToAdd);
-	}
-
-	// BUT LET'S CLEAR OUT THE TOP-LEFT AREA
-	for (int i = 0; i < 4; i++)
-	{
-		for (int j = 0; j < 4; j++)
-		{
-			Tile *tile = tiledLayer->getTile(i,j);
-			tile->textureID = grassID;
-		}
-	}	*/
 }

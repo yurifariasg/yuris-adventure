@@ -18,6 +18,7 @@
 */
 #pragma once
 #include "stdafx.h"
+#include "SSSF_SourceCode\game\game.h"
 
 class Viewport
 {
@@ -66,4 +67,5 @@ public:
 	bool areWorldCoordinatesInViewport(float x, float y, int width, int height);
 	bool areViewportCoordinatesInViewport(int x, int y, int width, int height);
 	void moveViewport(int incX, int incY,	int worldWidth, int worldHeight);
+	void update(Game *game);
 };
