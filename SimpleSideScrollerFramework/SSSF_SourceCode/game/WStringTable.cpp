@@ -34,6 +34,7 @@ unsigned int WStringTable::getIndexOfWString(wstring key)
 		if (key.compare((*it)) == 0)
 			return counter;
 		it++;
+		counter++;
 	}
 	unsigned int max = 0;
 	max -= 1;
