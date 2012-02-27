@@ -163,7 +163,7 @@ bool GameStateManager::isWorldRenderable()
 void GameStateManager::addLevel(wstring levelToAddName, wstring levelToAddFileNameAndPath)
 {
 	levelNames.push_back(levelToAddName);
-	levelFileNamesWithRelativePath.push_back(levelToAddFileNameAndPath);
+	//levelFileNamesWithRelativePath.push_back(levelToAddFileNameAndPath);
 }
 
 /*
@@ -189,9 +189,9 @@ void GameStateManager::loadLevel(Game *game, unsigned int initLevel)
 		if (currentLevel != NO_LEVEL_LOADED)
 			unloadCurrentLevel();
 		currentLevel = initLevel;
-		wstring fileToLoad = levelFileNamesWithRelativePath[currentLevel];
+		//int fileToLoad = levelFileNamesWithRelativePath[currentLevel];
 		GameDataLoader *dataLoader = game->getDataLoader();
-		dataLoader->loadWorld(game, fileToLoad);
+		dataLoader->loadWorld(game, initLevel);
 	}
 }
 
