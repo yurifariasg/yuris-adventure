@@ -214,10 +214,9 @@ void Game::shutdown()
 void Game::startGame()
 {
 	// AND UPDATE THE GAME STATE OF COURSE
-	gsm->goToLoadLevel();	// NOTE THAT CURRENTLY HTERE IS NO LEVEL FILE,
-	
-	// THAT'S ONE THING YOU'LL BE DOING
-	dataLoader->loadWorld(this, L"THERE IS NO FILE");
+	gsm->goToLoadLevel();
+
+	dataLoader->loadWorld(this, 1); // Level 1
 }
 
 void Game::goToControls()

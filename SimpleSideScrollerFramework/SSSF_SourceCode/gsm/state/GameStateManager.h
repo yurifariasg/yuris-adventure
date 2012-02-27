@@ -48,7 +48,7 @@ private:
 	// NOTE THAT THE LEVEL NAME AT INDEX i IN THE FIRST VECTOR CORRESPONDS
 	// TO THE PATH AND FILE NAME AT INDEX i IN THE SECOND ONE
 	vector<wstring> levelNames;
-	vector<wstring> levelFileNamesWithRelativePath;
+	//vector<int> levelFileNamesWithRelativePath;
 
 	// FOR MANAGING STATIC GAME WORLD DATA, i.e. BACKGROUND IMAGES,
 	// TILES, PLATFORMS, etc. BASICALLY THINGS THAT ARE NOT ANIMATED

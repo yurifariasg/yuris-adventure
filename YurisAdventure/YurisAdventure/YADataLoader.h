@@ -40,10 +40,7 @@ public:
 	// ARE ALL DEFINED IN DummyDataLoader.cpp
 	void loadGame(Game *game, wstring gameInitFile);
 	void loadGUI(Game *game, wstring guiInitFile);
-	void loadWorld(Game *game, wstring levelInitFile);
-
-	// THESE ARE HARD-CODED EXAMPLES OF GAME DATA LOADING
-	void hardCodedLoadLevelExample(Game *game);
+	void loadWorld(Game *game, int levelNumber);
 
 	// SOME HELPER METHODS FOR SETTING UP THE GAME
 	void initColors(GameGraphics *graphics,	map<wstring,wstring> *properties);
@@ -54,5 +51,5 @@ public:
     
     // New Methods
     ScreenGUI* loadGUIFromFile(Game *game, wstring guiFile);
-	TiledLayer* loadTiledLayerFromFile(Game *game, wstring worldFile, wstring worldMapFile);
+	TiledLayer* loadTiledLayerFromFile(Game *game, int worldColumns, int worldRows, wstring worldFile, wstring worldMapFile);
 };

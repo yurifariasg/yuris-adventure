@@ -166,113 +166,65 @@ void YADataLoader::loadGUI(Game *game, wstring guiInitFile)
 	loadLevel - This method should load the data the level described by the
 	levelInitFile argument in to the Game's game state manager.
 */
-void YADataLoader::loadWorld(Game *game, wstring levelInitFile)	
-{
-	// NOTE:	I AM DEMONSTRATING HOW TO LOAD A LEVEL
-	//			PROGRAMICALLY. YOU SHOULD DO THIS
-	//			USING CSV FILES.
-	hardCodedLoadLevelExample(game);
-}
-
-/*
-	initCursor - initializes a simple little cursor for the gui.
-*/
-void YADataLoader::initCursor(GameGUI *gui, DirectXTextureManager *guiTextureManager)
-{
-	// SETUP THE CURSOR
-	vector<unsigned int> *imageIDs = new vector<unsigned int>();
-	int imageID;
-
-	// - FIRST LOAD THE GREEN CURSOR IMAGE
-	imageID = guiTextureManager->loadTexture(DG_GREEN_CURSOR_PATH);
-	imageIDs->push_back(imageID);
-
-	// - AND NOW THE RED ONE
-	imageID = guiTextureManager->loadTexture(DG_RED_CURSOR_PATH);
-	imageIDs->push_back(imageID);
-
-	// - NOW BUILD AND LOAD THE CURSOR
-	Cursor *cursor = new Cursor();
-	cursor->initCursor(	imageIDs,
-						*(imageIDs->begin()),
-						0,
-						0,
-						0,
-						0, // Invisible Cursor
-						32,
-						32);
-	gui->setCursor(cursor);
-}
-
-/*
-	initViewport - initializes the game's viewport.
-*/
-void YADataLoader::initViewport(GameGUI *gui, map<wstring,wstring> *properties)
-{
-	// AND NOW SPECIFY THE VIEWPORT SIZE AND LOCATION. NOTE THAT IN THIS EXAMPLE,
-	// WE ARE PUTTING A TOOLBAR WITH A BUTTON ACCROSS THE NORTH OF THE APPLICATION.
-	// THAT TOOLBAR HAS A HEIGHT OF 64 PIXELS, SO WE'LL MAKE THAT THE OFFSET FOR
-	// THE VIEWPORT IN THE Y AXIS
-	Viewport *viewport = gui->getViewport();
-
-	int viewportOffsetX, viewportOffsetY, screenWidth, screenHeight;
-	wstring viewportOffsetXProp = (*properties)[DG_VIEWPORT_OFFSET_X];
-	wstring viewportOffsetYProp = (*properties)[DG_VIEWPORT_OFFSET_Y];
-	wstring screenWidthProp = (*properties)[DG_SCREEN_WIDTH];
-	wstring screenHeightProp = (*properties)[DG_SCREEN_HEIGHT];
-	wstringstream(viewportOffsetXProp) >> viewportOffsetX;
-	wstringstream(viewportOffsetYProp) >> viewportOffsetY;
-	wstringstream(screenWidthProp) >> screenWidth;
-	wstringstream(screenHeightProp) >> screenHeight;
-	int viewportWidth = screenWidth - viewportOffsetX;
-	int viewportHeight = screenHeight - viewportOffsetY;
-	viewport->setViewportWidth(viewportWidth);
-	viewport->setViewportHeight(viewportHeight);
-	viewport->setViewportOffsetX(viewportOffsetX);
-	viewport->setViewportOffsetY(viewportOffsetY);
-}
-
-/*
-	loadLevelExample - This method loads an example level via a hard-coded
-	approach. This can be useful for testing code, but is not a practical
-	solution. Game levels should be loaded from files.
-*/
-void YADataLoader::hardCodedLoadLevelExample(Game *game)
+void YADataLoader::loadWorld(Game *game, int levelNumber)	
 {
 	// FIRST SETUP THE GAME WORLD DIMENSIONS
 	GameStateManager *gsm = game->getGSM();
 	GameGraphics *graphics = game->getGraphics();
 	TextureManager *worldTextureManager = graphics->getWorldTextureManager();
 
+	// Take a look which level to load
+	map<wstring,wstring> *levels = new map<wstring,wstring>();
+	loadGameProperties(game, levels, LEVEL_FILE);
+
+	int levelCount = 0;
+	wstringstream((*levels)[LEVEL_COUNT]) << levelCount;
+
+	if (levelNumber <= 0 && levelNumber > levelCount) return; // Incorrect Level Number
+
+	// Initialize
+	wstringstream stream;
+	int levelColumns, levelRows;
+	wstring levelBGPath, levelWorldPath, levelElementsPath;
+
+	// Get Level Information
+	stream << levelNumber << LEVEL_NUM_OF_COLUMNS;
+	wstringstream((*levels)[stream.str()]) >> levelColumns;
+	stream.str(L"");
+
+	stream << levelNumber << LEVEL_NUM_OF_ROWS;
+	wstringstream((*levels)[stream.str()]) >> levelRows;
+	stream.str(L"");
+
+	stream << levelNumber << LEVEL_BG_PATH;
+	levelBGPath = (*levels)[stream.str()];
+	stream.str(L"");
+
+	stream << levelNumber << LEVEL_WORLD_PATH;
+	levelWorldPath = (*levels)[stream.str()];
+	stream.str(L"");
+
+	stream << levelNumber << LEVEL_ELEMENT_PATH;
+	levelElementsPath = (*levels)[stream.str()];
+	stream.str(L"");
+
 	// NOTE THAT THE WORLD WILL BE THE SAME DIMENSIONS AS OUR TILED LAYER,
 	// WE COULD GET A PARALLAX SCROLLING EFFECT IF WE MADE A LAYER SMALLER,
 	// AND THEN SCROLLED IT SLOWER
 	World *world = gsm->getWorld();
-	world->setWorldWidth(NUM_COLUMNS * TILE_WIDTH);
-	world->setWorldHeight(NUM_ROWS * TILE_HEIGHT);
+	world->setWorldWidth(levelColumns * TILE_WIDTH);
+	world->setWorldHeight(levelRows * TILE_HEIGHT);
 
-	// Take a look which level to load
-	map<wstring,wstring> *levels = new map<wstring,wstring>();
-	loadGameProperties(game, levels, L"data/levels.txt");
-
-	// Load Background
-
-	wstring levelPath = (*levels)[L"LEVEL1_BG_PATH"];
-
-	int oi = 0;
-
-	int backgroundID = graphics->getWorldTextureManager()->loadTexture((*levels)[L"LEVEL1_BG_PATH"]);
+	int backgroundID = graphics->getWorldTextureManager()->loadTexture(levelBGPath);
 	world->setBackground(backgroundID);
 
 	// Initiate World
-
-
-	world->addLayer(loadTiledLayerFromFile(game, L"data/Levels/Level1.txt", L"data/Levels/Level1_Map.txt"));
+	world->addLayer(loadTiledLayerFromFile(game,
+		levelColumns, levelRows,
+		levelElementsPath, levelWorldPath));
 
 	// AND NOW LET'S MAKE A MAIN CHARACTER SPRITE
 	AnimatedSpriteType *ast = new AnimatedSpriteType();
-	//int spriteImageID1 = worldTextureManager->loadTexture(PLAYER_IDLE1_PATH);
-	//int spriteImageID2 = worldTextureManager->loadTexture(PLAYER_IDLE2_PATH);
 
 	// SIZE OF SPRITE IMAGES
 	ast->setTextureSize(PLAYER_WIDTH, PLAYER_HEIGHT);
@@ -296,8 +248,6 @@ void YADataLoader::hardCodedLoadLevelExample(Game *game)
 	ast->addAnimationFrame(MOVING_LEFT_STATE, worldTextureManager->loadTexture(PLAYER_MOVING_LEFT1_PATH), 10);
 	ast->addAnimationFrame(MOVING_LEFT_STATE, worldTextureManager->loadTexture(PLAYER_MOVING_LEFT2_PATH), 10);
 	ast->addAnimationFrame(MOVING_LEFT_STATE, worldTextureManager->loadTexture(PLAYER_MOVING_LEFT3_PATH), 10);
-
-
 
 	SpriteManager *spriteManager = gsm->getSpriteManager();
 	unsigned int spriteTypeID = spriteManager->addSpriteType(ast);
@@ -360,6 +310,64 @@ void YADataLoader::hardCodedLoadLevelExample(Game *game)
 		pp->setAccelerationY(0.0f);
 		spriteManager->addBot(bot);
 	}
+}
+
+/*
+	initCursor - initializes a simple little cursor for the gui.
+*/
+void YADataLoader::initCursor(GameGUI *gui, DirectXTextureManager *guiTextureManager)
+{
+	// SETUP THE CURSOR
+	vector<unsigned int> *imageIDs = new vector<unsigned int>();
+	int imageID;
+
+	// - FIRST LOAD THE GREEN CURSOR IMAGE
+	imageID = guiTextureManager->loadTexture(DG_GREEN_CURSOR_PATH);
+	imageIDs->push_back(imageID);
+
+	// - AND NOW THE RED ONE
+	imageID = guiTextureManager->loadTexture(DG_RED_CURSOR_PATH);
+	imageIDs->push_back(imageID);
+
+	// - NOW BUILD AND LOAD THE CURSOR
+	Cursor *cursor = new Cursor();
+	cursor->initCursor(	imageIDs,
+						*(imageIDs->begin()),
+						0,
+						0,
+						0,
+						0, // Invisible Cursor
+						32,
+						32);
+	gui->setCursor(cursor);
+}
+
+/*
+	initViewport - initializes the game's viewport.
+*/
+void YADataLoader::initViewport(GameGUI *gui, map<wstring,wstring> *properties)
+{
+	// AND NOW SPECIFY THE VIEWPORT SIZE AND LOCATION. NOTE THAT IN THIS EXAMPLE,
+	// WE ARE PUTTING A TOOLBAR WITH A BUTTON ACCROSS THE NORTH OF THE APPLICATION.
+	// THAT TOOLBAR HAS A HEIGHT OF 64 PIXELS, SO WE'LL MAKE THAT THE OFFSET FOR
+	// THE VIEWPORT IN THE Y AXIS
+	Viewport *viewport = gui->getViewport();
+
+	int viewportOffsetX, viewportOffsetY, screenWidth, screenHeight;
+	wstring viewportOffsetXProp = (*properties)[DG_VIEWPORT_OFFSET_X];
+	wstring viewportOffsetYProp = (*properties)[DG_VIEWPORT_OFFSET_Y];
+	wstring screenWidthProp = (*properties)[DG_SCREEN_WIDTH];
+	wstring screenHeightProp = (*properties)[DG_SCREEN_HEIGHT];
+	wstringstream(viewportOffsetXProp) >> viewportOffsetX;
+	wstringstream(viewportOffsetYProp) >> viewportOffsetY;
+	wstringstream(screenWidthProp) >> screenWidth;
+	wstringstream(screenHeightProp) >> screenHeight;
+	int viewportWidth = screenWidth - viewportOffsetX;
+	int viewportHeight = screenHeight - viewportOffsetY;
+	viewport->setViewportWidth(viewportWidth);
+	viewport->setViewportHeight(viewportHeight);
+	viewport->setViewportOffsetX(viewportOffsetX);
+	viewport->setViewportOffsetY(viewportOffsetY);
 }
 
 ScreenGUI* YADataLoader::loadGUIFromFile(Game *game, wstring guiFile)
@@ -508,7 +516,9 @@ ScreenGUI* YADataLoader::loadGUIFromFile(Game *game, wstring guiFile)
     return screen;
 }
 
-TiledLayer* YADataLoader::loadTiledLayerFromFile(Game *game, wstring worldFile, wstring worldMapFile)
+TiledLayer* YADataLoader::loadTiledLayerFromFile(Game *game,
+		int worldColumns, int worldRows,
+		wstring worldFile, wstring worldMapFile)
 {
 
 	map<wstring,wstring> *properties = new map<wstring,wstring>();
@@ -518,11 +528,11 @@ TiledLayer* YADataLoader::loadTiledLayerFromFile(Game *game, wstring worldFile, 
 	// TO-DO
 
 	// NOW LOAD OUR TILED BACKGROUND
-	TiledLayer *tiledLayer = new TiledLayer(	NUM_COLUMNS,	NUM_ROWS, 
+	TiledLayer *tiledLayer = new TiledLayer(	worldColumns,	worldRows, 
 												TILE_WIDTH,		TILE_HEIGHT, 
 												0, true, 
-												NUM_COLUMNS * TILE_WIDTH,
-												NUM_ROWS * TILE_HEIGHT);
+												worldColumns * TILE_WIDTH,
+												worldRows * TILE_HEIGHT);
 
 	map<wstring,int> *texturesID = new map<wstring,int>();
 
@@ -574,7 +584,7 @@ TiledLayer* YADataLoader::loadTiledLayerFromFile(Game *game, wstring worldFile, 
 		for (int i = 0 ; i < line.size() ; i++) {
 
 			if (&(line[i]) == L"\n" || (line[i]) == 'N') {
-				while (tileCounterPerLine != NUM_COLUMNS) {
+				while (tileCounterPerLine != worldColumns) {
 					// Fill with Empty Tiles
 					Tile *tileToAdd = new Tile();
 					tileToAdd->collidable = false;

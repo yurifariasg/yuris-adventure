@@ -19,6 +19,7 @@ static const wstring controlsGameFile = L"data/InGameControlsGUI.txt";
 static const wstring aboutGameFile = L"data/InGameAboutGUI.txt";
 static const wstring splashscreenFile = L"data/SplashScreenGUI.txt";
 static const wstring inGameFile = L"data/InGameGUI.txt";
+static const wstring LEVEL_FILE = L"data/Levels.txt";
 
 
 // HERE ARE THE GAME PROPERTIES WE ARE LOADING FROM FROM THE SETUP FILE
@@ -53,6 +54,15 @@ static const wstring GUI_OPTION_HEIGHT = L"OPTION_HEIGHT";
 static const wstring GUI_OPTION_X = L"OPTION_X";
 static const wstring GUI_OPTION_Y = L"OPTION_Y";
 static const wstring GUI_OPTION_COMMAND = L"OPTION_COMMAND";
+
+// PROPERTIES FOR LEVELS FILES
+static const wstring LEVEL_COUNT = L"NUMBER_OF_LEVELS";
+static const wstring LEVEL_NUM_OF_COLUMNS = L"LEVEL_NUM_COLUMNS";
+static const wstring LEVEL_NUM_OF_ROWS = L"LEVEL_NUM_ROWS";
+static const wstring LEVEL_BG_PATH = L"LEVEL_BG_PATH";
+static const wstring LEVEL_WORLD_PATH = L"LEVEL_WORLD_PATH";
+static const wstring LEVEL_ELEMENT_PATH = L"LEVEL_ELEMENT_PATH";
+
 
 // CONSTANTS FOR ARTWORK - NOTE, THIS SHOULD REALLY BE LOADED FROM A FILE
 static const wstring DG_GO_TO_MM_COMMAND	= L"Go To Main Menu";
@@ -93,8 +103,8 @@ static const int		PLAYER_WIDTH = 64;
 static const int		PLAYER_HEIGHT = 92;
 
 // FOR OUR WORLD
-static const int		NUM_COLUMNS = 30;
-static const int		NUM_ROWS = 12;
+//static const int		NUM_COLUMNS = 30;
+//static const int		NUM_ROWS = 12;
 static const int		TILE_WIDTH = 64;
 static const int		TILE_HEIGHT = 64;
 static const int		Z_LAYER = 0;
