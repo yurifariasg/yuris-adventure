@@ -51,5 +51,5 @@ public:
     
     // New Methods
     ScreenGUI* loadGUIFromFile(Game *game, wstring guiFile);
-	TiledLayer* loadTiledLayerFromFile(Game *game, int worldColumns, int worldRows, wstring worldFile, wstring worldMapFile);
+	TiledLayer* loadTiledLayerFromFile(Game *game, int worldColumns, int worldRows, wstring worldFile, wstring worldMapFile, vector<int>* respawnPoints);
 };
