@@ -6,6 +6,7 @@
 #include "YAGame.h"
 #include "YAKeyEventHandler.h"
 #include "YATextGenerator.h"
+#include "EnemyBot.h"
 
 #include "SSSF_SourceCode\text\BufferedTextFileReader.h"
 
@@ -223,6 +224,10 @@ void YADataLoader::loadWorld(Game *game, int levelNumber)
 		levelColumns, levelRows,
 		levelElementsPath, levelWorldPath));
 
+	////////////////////////////////////////////
+
+	// Sprites
+
 	// AND NOW LET'S MAKE A MAIN CHARACTER SPRITE
 	AnimatedSpriteType *ast = new AnimatedSpriteType();
 
@@ -271,35 +276,54 @@ void YADataLoader::loadWorld(Game *game, int levelNumber)
 	// Copied
 
 	// LET'S MAKE ANOTHER TYPE OF SPRITE TO USE NOW FOR BOTS
-	wstring BOT_FLOATING0_IMG = L"./textures/world/sprites/hex/Hex0.png";
-	wstring BOT_FLOATING1_IMG = L"./textures/world/sprites/hex/Hex1.png";
-	wstring BOT_FLOATING2_IMG = L"./textures/world/sprites/hex/Hex2.png";
-	wstring BOT_FLOATING3_IMG = L"./textures/world/sprites/hex/Hex3.png";
 	int BOT_WIDTH = 64;
 	int BOT_HEIGHT = 64;
-	wstring FLOATING_STATE = L"FLOATING_STATE";
-
 	ast = new AnimatedSpriteType();
 	vector<unsigned int> botImageIDs;
-	botImageIDs.push_back(worldTextureManager->loadTexture(BOT_FLOATING0_IMG));
-	botImageIDs.push_back(worldTextureManager->loadTexture(BOT_FLOATING1_IMG));
-	botImageIDs.push_back(worldTextureManager->loadTexture(BOT_FLOATING2_IMG));
-	botImageIDs.push_back(worldTextureManager->loadTexture(BOT_FLOATING3_IMG));
+
+	botImageIDs.push_back(worldTextureManager->loadTexture(L"./textures/world/sprites/green_monster/mo_moving_right1.png"));
+	botImageIDs.push_back(worldTextureManager->loadTexture(L"./textures/world/sprites/green_monster/mo_moving_right2.png"));
+	botImageIDs.push_back(worldTextureManager->loadTexture(L"./textures/world/sprites/green_monster/mo_moving_right3.png"));
+	botImageIDs.push_back(worldTextureManager->loadTexture(L"./textures/world/sprites/green_monster/mo_moving_right4.png"));
 	ast->setTextureSize(BOT_WIDTH, BOT_HEIGHT);
-	ast->addAnimationSequence(FLOATING_STATE);
+	ast->addAnimationSequence(BOT_MOVING_RIGHT);
 	for (int i = 0; i < 4; i++)
-		ast->addAnimationFrame(FLOATING_STATE, botImageIDs.at(i), 10);
+		ast->addAnimationFrame(BOT_MOVING_RIGHT, botImageIDs.at(i), 10);
+	botImageIDs.clear();
+
+	botImageIDs.push_back(worldTextureManager->loadTexture(L"./textures/world/sprites/green_monster/mo_moving_left1.png"));
+	botImageIDs.push_back(worldTextureManager->loadTexture(L"./textures/world/sprites/green_monster/mo_moving_left2.png"));
+	botImageIDs.push_back(worldTextureManager->loadTexture(L"./textures/world/sprites/green_monster/mo_moving_left3.png"));
+	botImageIDs.push_back(worldTextureManager->loadTexture(L"./textures/world/sprites/green_monster/mo_moving_left4.png"));
+	ast->setTextureSize(BOT_WIDTH, BOT_HEIGHT);
+	ast->addAnimationSequence(BOT_MOVING_LEFT);
+	for (int i = 0; i < 4; i++)
+		ast->addAnimationFrame(BOT_MOVING_LEFT, botImageIDs.at(i), 10);
+	botImageIDs.clear();
+
+	botImageIDs.push_back(worldTextureManager->loadTexture(L"./textures/world/sprites/green_monster/mo_idle1.png"));
+	botImageIDs.push_back(worldTextureManager->loadTexture(L"./textures/world/sprites/green_monster/mo_idle2.png"));
+	botImageIDs.push_back(worldTextureManager->loadTexture(L"./textures/world/sprites/green_monster/mo_idle3.png"));
+	botImageIDs.push_back(worldTextureManager->loadTexture(L"./textures/world/sprites/green_monster/mo_idle4.png"));
+	ast->setTextureSize(BOT_WIDTH, BOT_HEIGHT);
+	ast->addAnimationSequence(BOT_IDLE_LEFT);
+	ast->addAnimationSequence(BOT_IDLE_RIGHT);
+	for (int i = 0; i < 4; i++) {
+		ast->addAnimationFrame(BOT_IDLE_LEFT, botImageIDs.at(i), 10);
+		ast->addAnimationFrame(BOT_IDLE_RIGHT, botImageIDs.at(i), 10);
+	}
+	botImageIDs.clear();
+
 	spriteTypeID = spriteManager->addSpriteType(ast);
 	ast->setSpriteTypeID(spriteTypeID);
 
-	// AND LET'S MAKE 100 OF THEM IN RANDOM PLACES WITH RANDOM TRANSPARENCIES
-	for (int i = 0; i < 4; i++)
+	// Add Bots
+	for (int i = 0; i < 10; i++)
 	{
-		RandomFloatingBot *bot = new RandomFloatingBot(gsm->getPhysics(), 2, 20, 2);
+		EnemyBot *bot = new EnemyBot(100, 50, BOT_SLOW);
 		bot->setSpriteType(ast);
-		bot->setCurrentState(FLOATING_STATE);
-		bot->setAlpha((rand()%200) + 55);
-		bot->pickRandomVelocity(gsm->getPhysics());
+		bot->setCurrentState(BOT_IDLE_LEFT);
+		bot->setAlpha(255);
 		PhysicalProperties *pp = bot->getPhysicalProperties();
 		pp->setCollidable(false);
 		int x = (i * 300) + 100;
@@ -310,6 +334,73 @@ void YADataLoader::loadWorld(Game *game, int levelNumber)
 		pp->setAccelerationY(0.0f);
 		spriteManager->addBot(bot);
 	}
+
+	// Add Ettins
+
+	BOT_WIDTH = 90;
+	BOT_HEIGHT = 64;
+	ast = new AnimatedSpriteType();
+
+	botImageIDs.push_back(worldTextureManager->loadTexture(L"./textures/world/sprites/ettin/ettin_moving_right1.png"));
+	botImageIDs.push_back(worldTextureManager->loadTexture(L"./textures/world/sprites/ettin/ettin_moving_right2.png"));
+	botImageIDs.push_back(worldTextureManager->loadTexture(L"./textures/world/sprites/ettin/ettin_moving_right3.png"));
+	ast->setTextureSize(BOT_WIDTH, BOT_HEIGHT);
+	ast->addAnimationSequence(BOT_MOVING_RIGHT);
+	for (int i = 0; i < 3; i++) {
+		ast->addAnimationFrame(BOT_MOVING_RIGHT, botImageIDs.at(i), 15);
+	}
+	botImageIDs.clear();
+
+	botImageIDs.push_back(worldTextureManager->loadTexture(L"./textures/world/sprites/ettin/ettin_moving_left1.png"));
+	botImageIDs.push_back(worldTextureManager->loadTexture(L"./textures/world/sprites/ettin/ettin_moving_left2.png"));
+	botImageIDs.push_back(worldTextureManager->loadTexture(L"./textures/world/sprites/ettin/ettin_moving_left3.png"));
+	ast->setTextureSize(BOT_WIDTH, BOT_HEIGHT);
+	ast->addAnimationSequence(BOT_MOVING_LEFT);
+	for (int i = 0; i < 3; i++) {
+		ast->addAnimationFrame(BOT_MOVING_LEFT, botImageIDs.at(i), 15);
+	}
+	botImageIDs.clear();
+
+	botImageIDs.push_back(worldTextureManager->loadTexture(L"./textures/world/sprites/ettin/ettin_idle_left1.png"));
+	botImageIDs.push_back(worldTextureManager->loadTexture(L"./textures/world/sprites/ettin/ettin_idle_left2.png"));
+	ast->setTextureSize(BOT_WIDTH, BOT_HEIGHT);
+	ast->addAnimationSequence(BOT_IDLE_LEFT);
+	for (int i = 0; i < 2; i++) {
+		ast->addAnimationFrame(BOT_IDLE_LEFT, botImageIDs.at(i), 20);
+	}
+	botImageIDs.clear();
+
+	botImageIDs.push_back(worldTextureManager->loadTexture(L"./textures/world/sprites/ettin/ettin_idle_right1.png"));
+	botImageIDs.push_back(worldTextureManager->loadTexture(L"./textures/world/sprites/ettin/ettin_idle_right2.png"));
+	ast->setTextureSize(BOT_WIDTH, BOT_HEIGHT);
+	ast->addAnimationSequence(BOT_IDLE_RIGHT);
+	for (int i = 0; i < 2; i++) {
+		ast->addAnimationFrame(BOT_IDLE_RIGHT, botImageIDs.at(i), 20);
+	}
+	botImageIDs.clear();
+
+	spriteTypeID = spriteManager->addSpriteType(ast);
+	ast->setSpriteTypeID(spriteTypeID);
+
+	// Add Bots
+	for (int i = 0; i < 10; i++)
+	{
+		EnemyBot *bot = new EnemyBot(100, 50, BOT_NORMAL);
+		bot->setSpriteType(ast);
+		bot->setCurrentState(BOT_IDLE_LEFT);
+		bot->setAlpha(255);
+		PhysicalProperties *pp = bot->getPhysicalProperties();
+		pp->setCollidable(false);
+		int x = (i * 300) + 100;
+		int y = (i * 300) + 100;
+		pp->setX(x);
+		pp->setY(y);
+		pp->setAccelerationX(0.0f);
+		pp->setAccelerationY(0.0f);
+		spriteManager->addBot(bot);
+	}
+
+
 }
 
 /*

@@ -98,6 +98,15 @@ static const wstring	PLAYER_MOVING_LEFT1_PATH = L"textures/world/sprites/maincha
 static const wstring	PLAYER_MOVING_LEFT2_PATH = L"textures/world/sprites/mainchar/moving_left_2.png";
 static const wstring	PLAYER_MOVING_LEFT3_PATH = L"textures/world/sprites/mainchar/moving_left_3.png";
 
+// BOTs STATES
+static const wstring	BOT_IDLE_RIGHT = L"BOT_IDLE_RIGHT";
+static const wstring	BOT_IDLE_LEFT = L"BOT_IDLE_LEFT";
+static const wstring	BOT_MOVING_RIGHT = L"BOT_MOVING_RIGHT";
+static const wstring	BOT_MOVING_LEFT = L"BOT_MOVING_LEFT";
+static const wstring	BOT_ATTACKING_RIGHT = L"BOT_ATTACKING_RIGHT";
+static const wstring	BOT_ATTACKING_LEFT = L"BOT_ATTACKING_LEFT";
+
+
 static const int		ANIM_SPEED = 6;
 static const int		PLAYER_WIDTH = 64;
 static const int		PLAYER_HEIGHT = 92;

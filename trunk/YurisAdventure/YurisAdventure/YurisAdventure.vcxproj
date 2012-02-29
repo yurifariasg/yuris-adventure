@@ -71,6 +71,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="EnemyBot.cpp" />
     <ClCompile Include="YAButtonEventHandler.cpp" />
     <ClCompile Include="YADataLoader.cpp" />
     <ClCompile Include="YAKeyEventHandler.cpp" />
@@ -78,6 +79,9 @@
     <ClCompile Include="YAGame.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\SimpleSideScrollerFramework\BotVelocity.h" />
+    <ClInclude Include="BotState.h" />
+    <ClInclude Include="EnemyBot.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="YAButtonEventHandler.h" />
     <ClInclude Include="YADataLoader.h" />
