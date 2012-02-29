@@ -30,6 +30,9 @@
     <ClCompile Include="YATextGenerator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="EnemyBot.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="YAGame.h">
@@ -48,6 +51,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyBot.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\SimpleSideScrollerFramework\BotVelocity.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BotState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
