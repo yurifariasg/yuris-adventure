@@ -219,10 +219,14 @@ void YADataLoader::loadWorld(Game *game, int levelNumber)
 	int backgroundID = graphics->getWorldTextureManager()->loadTexture(levelBGPath);
 	world->setBackground(backgroundID);
 
+	vector<int>* respawnPoints = new vector<int>();
+
 	// Initiate World
 	world->addLayer(loadTiledLayerFromFile(game,
 		levelColumns, levelRows,
-		levelElementsPath, levelWorldPath));
+		levelElementsPath, levelWorldPath, respawnPoints));
+
+	srand(time(NULL));
 
 	////////////////////////////////////////////
 
@@ -326,8 +330,16 @@ void YADataLoader::loadWorld(Game *game, int levelNumber)
 		bot->setAlpha(255);
 		PhysicalProperties *pp = bot->getPhysicalProperties();
 		pp->setCollidable(false);
-		int x = (i * 300) + 100;
-		int y = (i * 300) + 100;
+
+		int x;
+		int y;
+
+		int numberOfRespawnPoints = respawnPoints->size() / 2;
+		int chosenRespawnPoint = (rand() % (numberOfRespawnPoints)) + 1;
+
+		x = respawnPoints->at((chosenRespawnPoint * 2) - 2);
+		y = respawnPoints->at((chosenRespawnPoint * 2) - 1);
+
 		pp->setX(x);
 		pp->setY(y);
 		pp->setAccelerationX(0.0f);
@@ -391,8 +403,16 @@ void YADataLoader::loadWorld(Game *game, int levelNumber)
 		bot->setAlpha(255);
 		PhysicalProperties *pp = bot->getPhysicalProperties();
 		pp->setCollidable(false);
-		int x = (i * 300) + 100;
-		int y = (i * 300) + 100;
+
+		int x;
+		int y;
+
+		int numberOfRespawnPoints = respawnPoints->size() / 2;
+		int chosenRespawnPoint = rand() % (numberOfRespawnPoints + 1);
+
+		x = respawnPoints->at(chosenRespawnPoint * 2);
+		y = respawnPoints->at((chosenRespawnPoint * 2) + 1);
+
 		pp->setX(x);
 		pp->setY(y);
 		pp->setAccelerationX(0.0f);
@@ -609,7 +629,7 @@ ScreenGUI* YADataLoader::loadGUIFromFile(Game *game, wstring guiFile)
 
 TiledLayer* YADataLoader::loadTiledLayerFromFile(Game *game,
 		int worldColumns, int worldRows,
-		wstring worldFile, wstring worldMapFile)
+		wstring worldFile, wstring worldMapFile, vector<int>* respawnPoints)
 {
 
 	map<wstring,wstring> *properties = new map<wstring,wstring>();
@@ -695,6 +715,27 @@ TiledLayer* YADataLoader::loadTiledLayerFromFile(Game *game,
 			tiledLayer->addTile(tileToAdd);
 			tileCounterPerLine++;
 			numberOfTilesTotal++;
+			continue;
+		} else if (line[i] == '*') { // Respawn Point
+
+			int columnNumber = (numberOfTilesTotal % worldColumns);// * TILE_WIDTH
+			int x = columnNumber * TILE_WIDTH;
+
+			int rowNumber = ((numberOfTilesTotal / worldColumns));
+			int y = rowNumber * TILE_HEIGHT;
+
+			respawnPoints->push_back(x); // X
+			respawnPoints->push_back(y); // Y
+
+			// Add an Empty Tile there
+
+			Tile *tileToAdd = new Tile();
+			tileToAdd->collidable = false;
+			tileToAdd->textureID = emptyTileCode;
+			tiledLayer->addTile(tileToAdd);
+			tileCounterPerLine++;
+			numberOfTilesTotal++;
+
 			continue;
 		}
 
