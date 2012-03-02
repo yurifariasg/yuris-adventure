@@ -3,12 +3,12 @@
 			Stony Brook University
 			Computer Science Department
 
-	DummyButtonEventHandler.h
+	YAButtonEventHandler.h
 
 	This is a custom button event handler. Each game can choose
 	to use different buttons and respond differently to when
 	buttons are pressed. This class will handle button presses for
-	the DummyGame following the ButtonEventHandler pattern.
+	the Yuris Adventure following the ButtonEventHandler pattern.
 */
 
 #pragma once

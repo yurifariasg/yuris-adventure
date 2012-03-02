@@ -2,13 +2,12 @@
 #include "stdafx.h"
 
 /*
-	DummyGame.h
+	YAGame.h
 
-	This file contains setup data for making the dummy game. Note that nearly
+	This file contains setup data for making the game. Note that nearly
 	all of this data would better serve us if loaded from files.
 */
 
-// HERE IS THE DUMMY GAME SETUP/INIT FILE. EVERYTHING WOULD START FROM HERE
 static const wstring	DG_INIT_FILE			= L"data/GameInit.txt";
 static const wstring	DG_GUI_INIT_FILE		= L"data/MainMenuGUI.txt";
 static const string		DG_DEBUG_FILE			= "DebugOutput.txt";
@@ -63,6 +62,12 @@ static const wstring LEVEL_BG_PATH = L"LEVEL_BG_PATH";
 static const wstring LEVEL_WORLD_PATH = L"LEVEL_WORLD_PATH";
 static const wstring LEVEL_ELEMENT_PATH = L"LEVEL_ELEMENT_PATH";
 
+static const wstring LEVEL_NUMBER_OF_ELEMENTS = L"NUMBER_OF_ELEMENTS";
+static const wstring ELEMENT_TILE_PATH = L"ELEMENT_TILE_PATH";
+static const wstring ELEMENT_CODE = L"ELEMENT_CODE";
+
+static const wstring EMPTY_TILE = L"textures/world/tiles/empty_tile.png";
+
 
 // CONSTANTS FOR ARTWORK - NOTE, THIS SHOULD REALLY BE LOADED FROM A FILE
 static const wstring DG_GO_TO_MM_COMMAND	= L"Go To Main Menu";
@@ -75,18 +80,13 @@ static const wstring DG_SPLASH_SCREEN_PATH	= L"textures/gui/overlays/splash_scre
 static const wstring DG_QUIT_IMAGE_PATH		= L"textures/gui/buttons/quit.png";
 static const wstring DG_QUIT_IMAGE_MO_PATH	= L"textures/gui/buttons/quit_mo.png";
 
-
-// EXAMPLE LEVEL DATA FOR THE HARD-CODED loadLevelExample
-
-// FOR BACKGROUND TILES
-static const wstring	GRASS_IMAGE_PATH = L"textures/world/tiles/grass.png";
-static const wstring	WALL_IMAGE_PATH = L"textures/world/tiles/wall.png";
-
 // FOR OUR SPRITE
 static const wstring	IDLE_STATE_RIGHT = L"IDLE_STATE_RIGHT";
 static const wstring	IDLE_STATE_LEFT = L"IDLE_STATE_LEFT";
 static const wstring	MOVING_RIGHT_STATE = L"MOVING_RIGHT_STATE";
 static const wstring	MOVING_LEFT_STATE = L"MOVING_LEFT_STATE";
+static const wstring	ATTACKING_RIGHT_STATE = L"ATTACKING_RIGHT_STATE";
+static const wstring	ATTACKING_LEFT_STATE = L"ATTACKING_LEFT_STATE";
 static const wstring	PLAYER_IDLE_RIGHT1_PATH = L"textures/world/sprites/mainchar/idle_right1.png";
 static const wstring	PLAYER_IDLE_RIGHT2_PATH = L"textures/world/sprites/mainchar/idle_right2.png";
 static const wstring	PLAYER_IDLE_LEFT1_PATH = L"textures/world/sprites/mainchar/idle_left1.png";
@@ -97,6 +97,14 @@ static const wstring	PLAYER_MOVING_RIGHT3_PATH = L"textures/world/sprites/mainch
 static const wstring	PLAYER_MOVING_LEFT1_PATH = L"textures/world/sprites/mainchar/moving_left_1.png";
 static const wstring	PLAYER_MOVING_LEFT2_PATH = L"textures/world/sprites/mainchar/moving_left_2.png";
 static const wstring	PLAYER_MOVING_LEFT3_PATH = L"textures/world/sprites/mainchar/moving_left_3.png";
+static const wstring	PLAYER_ATTACKING_RIGHT1_PATH = L"textures/world/sprites/mainchar/sword_attack_right1.png";
+static const wstring	PLAYER_ATTACKING_RIGHT2_PATH = L"textures/world/sprites/mainchar/sword_attack_right2.png";
+static const wstring	PLAYER_ATTACKING_RIGHT3_PATH = L"textures/world/sprites/mainchar/sword_attack_right3.png";
+static const wstring	PLAYER_ATTACKING_RIGHT4_PATH = L"textures/world/sprites/mainchar/sword_attack_right4.png";
+static const wstring	PLAYER_ATTACKING_LEFT1_PATH = L"textures/world/sprites/mainchar/sword_attack_left1.png";
+static const wstring	PLAYER_ATTACKING_LEFT2_PATH = L"textures/world/sprites/mainchar/sword_attack_left2.png";
+static const wstring	PLAYER_ATTACKING_LEFT3_PATH = L"textures/world/sprites/mainchar/sword_attack_left3.png";
+static const wstring	PLAYER_ATTACKING_LEFT4_PATH = L"textures/world/sprites/mainchar/sword_attack_left4.png";
 
 // BOTs STATES
 static const wstring	BOT_IDLE_RIGHT = L"BOT_IDLE_RIGHT";
@@ -106,16 +114,16 @@ static const wstring	BOT_MOVING_LEFT = L"BOT_MOVING_LEFT";
 static const wstring	BOT_ATTACKING_RIGHT = L"BOT_ATTACKING_RIGHT";
 static const wstring	BOT_ATTACKING_LEFT = L"BOT_ATTACKING_LEFT";
 
-
 static const int		ANIM_SPEED = 6;
 static const int		PLAYER_WIDTH = 64;
 static const int		PLAYER_HEIGHT = 92;
 
 // FOR OUR WORLD
-//static const int		NUM_COLUMNS = 30;
-//static const int		NUM_ROWS = 12;
 static const int		TILE_WIDTH = 64;
 static const int		TILE_HEIGHT = 64;
 static const int		Z_LAYER = 0;
+
+static const int PLAYER_HP = 100;
+static const int PLAYER_ATTACK = 50;
 
 // Player Speed declared in Game.h

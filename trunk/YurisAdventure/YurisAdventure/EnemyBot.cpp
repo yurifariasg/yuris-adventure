@@ -5,12 +5,9 @@
 #include "SSSF_SourceCode\gsm\state\GameStateManager.h"
 #include "SSSF_SourceCode\gsm\physics\Physics.h"
 
-EnemyBot::EnemyBot(unsigned int hp, unsigned int attack, BotVelocity velocity)
+EnemyBot::EnemyBot(unsigned int hp, unsigned int attack, BotVelocity velocity) : Creature(hp, attack)
 {
-	this->hp = hp;
-	this->attack = attack;
 	this->velocity = velocity;
-	isFacingLeft = true;
 	state = BOT_IDLE;
 	actionTime = 0;
 
@@ -25,7 +22,8 @@ void EnemyBot::think(Game *game)
 		if (state == BOT_IDLE) { // It WAS IDLE
 
 			// Face Randomly
-			isFacingLeft = (rand() % 2) == 0;
+			if((rand() % 2) == 0)
+				changeFacingDirection();
 
 			float botSpeed = 0;
 
@@ -35,7 +33,7 @@ void EnemyBot::think(Game *game)
 				case BOT_FAST: botSpeed = PLAYER_SPEED * 1.2; break;
 			}
 
-			if (isFacingLeft) {
+			if (isFacingLeft()) {
 				botSpeed = -botSpeed;
 				setCurrentState(BOT_MOVING_LEFT);
 			} else {
@@ -55,7 +53,7 @@ void EnemyBot::think(Game *game)
 
 			// Stay IDLE for a little...
 
-			if (isFacingLeft) setCurrentState(BOT_IDLE_LEFT);
+			if (isFacingLeft()) setCurrentState(BOT_IDLE_LEFT);
 			else setCurrentState(BOT_IDLE_RIGHT);
 
 			state = BOT_IDLE;
@@ -75,6 +73,5 @@ void EnemyBot::think(Game *game)
 
 Bot* EnemyBot::clone()
 {
-	EnemyBot *botClone = new EnemyBot(hp, attack, velocity);
-	return botClone;
+	return this->clone();
 }

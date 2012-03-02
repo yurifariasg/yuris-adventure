@@ -71,6 +71,7 @@ public:
 	SpriteManager*	getSpriteManager()		{ return spriteManager;				}
 	World*			getWorld()				{ return &world;					}
 	wstring			getCurrentLevelName()	{ return levelNames[currentLevel];	}
+	void			setSpriteManager(SpriteManager* sm) { spriteManager = sm; }
 
 	// METHODS FOR TESTING THE CURRENT GAME STATE
 	bool			isAppActive();

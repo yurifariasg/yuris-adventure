@@ -59,5 +59,5 @@ public:
 	void changeFrame();
 	unsigned int getCurrentImageID();
 	void setCurrentState(wstring newState);
-	void updateSprite();
+	virtual void updateSprite();
 };
