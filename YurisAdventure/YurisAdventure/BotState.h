@@ -1,5 +1,8 @@
 #pragma once
 
+/*
+	Enum for Bot States
+*/
 enum BotState
 {
 	BOT_IDLE,

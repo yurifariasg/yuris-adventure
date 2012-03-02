@@ -26,11 +26,16 @@
 #include "SSSF_SourceCode\timer\GameTimer.h"
 #include "SSSF_SourceCode\PlatformPlugins\WindowsPlugin\WindowsTimer.h"
 
+#include "YASpriteManager.h"
+
 // USED FOR MOVEMENT
 const unsigned int W_KEY = (unsigned int)'W';
 const unsigned int A_KEY = (unsigned int)'A';
 const unsigned int S_KEY = (unsigned int)'S';
 const unsigned int D_KEY = (unsigned int)'D';
+const unsigned int SWORD_ATTACK_KEY = (unsigned int) 'J';
+const unsigned int MAGIC_ATTACK_KEY = (unsigned int) 'K';
+const unsigned int ACTION_KEY = (unsigned int) 'L';
 const unsigned int UP_KEY = VK_UP;
 const unsigned int DOWN_KEY = VK_DOWN;
 const unsigned int LEFT_KEY = VK_LEFT;
@@ -44,8 +49,6 @@ const unsigned int C_KEY = (unsigned int)'C';
 const int MIN_FPS = 5;
 const int MAX_FPS = 100;
 const int FPS_INC = 1;
-
-bool isFacingRight = true;
 
 /*
 	handleKeyEvent - this method handles all keyboard interactions. Note that every frame this method
@@ -71,6 +74,11 @@ void YAKeyEventHandler::handleKeyEvents(Game *game)
 		int incY = 0;
 		bool moveViewport = false;
 
+		// Get our Player
+
+		Player* player = ((YASpriteManager*) game->getGSM()->getSpriteManager())->getPlayer();
+
+
 		// WASD AND DIRECTION KEY PRESSES WILL CONTROL THE PLAYER,
 		// SO WE'LL UPDATE THE PLAYER VELOCITY WHEN THESE KEYS ARE
 		// PRESSED, THAT WAY PHYSICS CAN CORRECT AS NEEDED
@@ -94,23 +102,35 @@ void YAKeyEventHandler::handleKeyEvents(Game *game)
 			vX = PLAYER_SPEED;
 		}
 
-		if (!input->isKeyDown(D_KEY) && !input->isKeyDown(A_KEY)) {
+		if (!input->isKeyDown(D_KEY) && !input->isKeyDown(A_KEY) && !player->isAttacking()) {
+
 			// Hes IDLE
-			if (isFacingRight)
-				game->getGSM()->getSpriteManager()->getPlayer()->setCurrentState(IDLE_STATE_RIGHT);
+			if (player->isFacingRight()) game->getGSM()->getSpriteManager()->getPlayer()->setCurrentState(IDLE_STATE_RIGHT);
 			else game->getGSM()->getSpriteManager()->getPlayer()->setCurrentState(IDLE_STATE_LEFT);
+
 		}
 
 		if (input->isKeyDownForFirstTime(D_KEY)) {
-			isFacingRight = true;
+
 			game->getGSM()->getSpriteManager()->getPlayer()->setCurrentState(MOVING_RIGHT_STATE);
+			if (player->isFacingLeft()) player->changeFacingDirection();
+
 		} else if (input->isKeyDownForFirstTime(A_KEY)) {
-			isFacingRight = false;
+
 			game->getGSM()->getSpriteManager()->getPlayer()->setCurrentState(MOVING_LEFT_STATE);
+			if (player->isFacingRight()) player->changeFacingDirection();
+
 		}
 
 		if (input->isKeyDownForFirstTime(VK_ESCAPE) || input->isKeyDownForFirstTime(VK_TAB)) {
 			game->getGSM()->goToInGameMenu();
+		}
+
+		// Attacking
+
+		if (input->isKeyDownForFirstTime(SWORD_ATTACK_KEY) && !player->isAttacking()) {
+			player->startAttack();
+			player->processCombo(SWORD_ATTACK_KEY);
 		}
 		
 		// NOW SET THE ACTUAL VELOCITY

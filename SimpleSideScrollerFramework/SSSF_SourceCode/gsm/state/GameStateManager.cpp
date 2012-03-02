@@ -24,7 +24,7 @@
 */
 GameStateManager::GameStateManager()	
 {
-	spriteManager = new SpriteManager();
+	//spriteManager = new SpriteManager();
 	currentGameState = GS_SPLASH_SCREEN;
 	currentLevel = NO_LEVEL_LOADED;
 }

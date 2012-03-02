@@ -3,9 +3,11 @@
 			Stony Brook University
 			Computer Science Department
 
-	DummyDataLoader.h
+	Modified by: Yuri Farias Gomes
 
-	This class provides a custom importer for the DummyGame to import
+	YADataLoader.h
+
+	This class provides a custom importer for the Yuris Adventure to import
 	game data, gui data, and world (i.e. level) data.
 */
 #pragma once
@@ -16,6 +18,7 @@
 #include "SSSF_SourceCode\gsm\world\TiledLayer.h"
 #include "SSSF_SourceCode\PlatformPlugins\DirectXPlugin\DirectXTextureManager.h"
 #include "SSSF_SourceCode\gui\ScreenGUI.h"
+#include "Player.h"
 
 class YADataLoader : public GameDataLoader
 {
@@ -23,6 +26,9 @@ private:
 	// WE NEED THESE GUYS TO INIT OUR WINDOWS WINDOW
 	HINSTANCE hInstance;
 	int nCmdShow;
+
+	// Add the bots into our game
+	void addBots(Game*, vector<int>*);
 
 public:
 	YADataLoader()	{}

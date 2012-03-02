@@ -156,7 +156,7 @@ void YADataLoader::loadGUI(Game *game, wstring guiInitFile)
 	game->getGUI()->addScreenGUI(GS_IN_GAME_ABOUT, loadGUIFromFile(game, aboutGameFile));
 	game->getGUI()->addScreenGUI(GS_SPLASH_SCREEN, loadGUIFromFile(game, splashscreenFile));
 
-	// InGame GUI Empty - TODO
+	// InGame GUI
 	game->getGUI()->addScreenGUI(GS_GAME_IN_PROGRESS,	loadGUIFromFile(game, inGameFile));
 
 	// Init Cursor (Gives error if removed) - FIX
@@ -236,7 +236,7 @@ void YADataLoader::loadWorld(Game *game, int levelNumber)
 	AnimatedSpriteType *ast = new AnimatedSpriteType();
 
 	// SIZE OF SPRITE IMAGES
-	ast->setTextureSize(PLAYER_WIDTH, PLAYER_HEIGHT);
+	ast->setTextureSize(140, 120);
 
 	// NOW LET'S ADD AN ANIMATION STATE
 	// FIRST THE NAME
@@ -258,6 +258,18 @@ void YADataLoader::loadWorld(Game *game, int levelNumber)
 	ast->addAnimationFrame(MOVING_LEFT_STATE, worldTextureManager->loadTexture(PLAYER_MOVING_LEFT2_PATH), 10);
 	ast->addAnimationFrame(MOVING_LEFT_STATE, worldTextureManager->loadTexture(PLAYER_MOVING_LEFT3_PATH), 10);
 
+	ast->addAnimationSequence(ATTACKING_RIGHT_STATE);
+	ast->addAnimationFrame(ATTACKING_RIGHT_STATE, worldTextureManager->loadTexture(PLAYER_ATTACKING_RIGHT1_PATH), 5);
+	ast->addAnimationFrame(ATTACKING_RIGHT_STATE, worldTextureManager->loadTexture(PLAYER_ATTACKING_RIGHT2_PATH), 5);
+	ast->addAnimationFrame(ATTACKING_RIGHT_STATE, worldTextureManager->loadTexture(PLAYER_ATTACKING_RIGHT3_PATH), 5);
+	ast->addAnimationFrame(ATTACKING_RIGHT_STATE, worldTextureManager->loadTexture(PLAYER_ATTACKING_RIGHT4_PATH), 5);
+
+	ast->addAnimationSequence(ATTACKING_LEFT_STATE);
+	ast->addAnimationFrame(ATTACKING_LEFT_STATE, worldTextureManager->loadTexture(PLAYER_ATTACKING_LEFT1_PATH), 5);
+	ast->addAnimationFrame(ATTACKING_LEFT_STATE, worldTextureManager->loadTexture(PLAYER_ATTACKING_LEFT2_PATH), 5);
+	ast->addAnimationFrame(ATTACKING_LEFT_STATE, worldTextureManager->loadTexture(PLAYER_ATTACKING_LEFT3_PATH), 5);
+	ast->addAnimationFrame(ATTACKING_LEFT_STATE, worldTextureManager->loadTexture(PLAYER_ATTACKING_LEFT4_PATH), 5);
+
 	SpriteManager *spriteManager = gsm->getSpriteManager();
 	unsigned int spriteTypeID = spriteManager->addSpriteType(ast);
 	ast->setSpriteTypeID(spriteTypeID);
@@ -277,150 +289,8 @@ void YADataLoader::loadWorld(Game *game, int levelNumber)
 	player->setAlpha(255);
 	player->setCurrentState(IDLE_STATE_RIGHT);
 
-	// Copied
-
-	// LET'S MAKE ANOTHER TYPE OF SPRITE TO USE NOW FOR BOTS
-	int BOT_WIDTH = 64;
-	int BOT_HEIGHT = 64;
-	ast = new AnimatedSpriteType();
-	vector<unsigned int> botImageIDs;
-
-	botImageIDs.push_back(worldTextureManager->loadTexture(L"./textures/world/sprites/green_monster/mo_moving_right1.png"));
-	botImageIDs.push_back(worldTextureManager->loadTexture(L"./textures/world/sprites/green_monster/mo_moving_right2.png"));
-	botImageIDs.push_back(worldTextureManager->loadTexture(L"./textures/world/sprites/green_monster/mo_moving_right3.png"));
-	botImageIDs.push_back(worldTextureManager->loadTexture(L"./textures/world/sprites/green_monster/mo_moving_right4.png"));
-	ast->setTextureSize(BOT_WIDTH, BOT_HEIGHT);
-	ast->addAnimationSequence(BOT_MOVING_RIGHT);
-	for (int i = 0; i < 4; i++)
-		ast->addAnimationFrame(BOT_MOVING_RIGHT, botImageIDs.at(i), 10);
-	botImageIDs.clear();
-
-	botImageIDs.push_back(worldTextureManager->loadTexture(L"./textures/world/sprites/green_monster/mo_moving_left1.png"));
-	botImageIDs.push_back(worldTextureManager->loadTexture(L"./textures/world/sprites/green_monster/mo_moving_left2.png"));
-	botImageIDs.push_back(worldTextureManager->loadTexture(L"./textures/world/sprites/green_monster/mo_moving_left3.png"));
-	botImageIDs.push_back(worldTextureManager->loadTexture(L"./textures/world/sprites/green_monster/mo_moving_left4.png"));
-	ast->setTextureSize(BOT_WIDTH, BOT_HEIGHT);
-	ast->addAnimationSequence(BOT_MOVING_LEFT);
-	for (int i = 0; i < 4; i++)
-		ast->addAnimationFrame(BOT_MOVING_LEFT, botImageIDs.at(i), 10);
-	botImageIDs.clear();
-
-	botImageIDs.push_back(worldTextureManager->loadTexture(L"./textures/world/sprites/green_monster/mo_idle1.png"));
-	botImageIDs.push_back(worldTextureManager->loadTexture(L"./textures/world/sprites/green_monster/mo_idle2.png"));
-	botImageIDs.push_back(worldTextureManager->loadTexture(L"./textures/world/sprites/green_monster/mo_idle3.png"));
-	botImageIDs.push_back(worldTextureManager->loadTexture(L"./textures/world/sprites/green_monster/mo_idle4.png"));
-	ast->setTextureSize(BOT_WIDTH, BOT_HEIGHT);
-	ast->addAnimationSequence(BOT_IDLE_LEFT);
-	ast->addAnimationSequence(BOT_IDLE_RIGHT);
-	for (int i = 0; i < 4; i++) {
-		ast->addAnimationFrame(BOT_IDLE_LEFT, botImageIDs.at(i), 10);
-		ast->addAnimationFrame(BOT_IDLE_RIGHT, botImageIDs.at(i), 10);
-	}
-	botImageIDs.clear();
-
-	spriteTypeID = spriteManager->addSpriteType(ast);
-	ast->setSpriteTypeID(spriteTypeID);
-
-	// Add Bots
-	for (int i = 0; i < 10; i++)
-	{
-		EnemyBot *bot = new EnemyBot(100, 50, BOT_SLOW);
-		bot->setSpriteType(ast);
-		bot->setCurrentState(BOT_IDLE_LEFT);
-		bot->setAlpha(255);
-		PhysicalProperties *pp = bot->getPhysicalProperties();
-		pp->setCollidable(false);
-
-		int x;
-		int y;
-
-		int numberOfRespawnPoints = respawnPoints->size() / 2;
-		int chosenRespawnPoint = (rand() % (numberOfRespawnPoints)) + 1;
-
-		x = respawnPoints->at((chosenRespawnPoint * 2) - 2);
-		y = respawnPoints->at((chosenRespawnPoint * 2) - 1);
-
-		pp->setX(x);
-		pp->setY(y);
-		pp->setAccelerationX(0.0f);
-		pp->setAccelerationY(0.0f);
-		spriteManager->addBot(bot);
-	}
-
-	// Add Ettins
-
-	BOT_WIDTH = 90;
-	BOT_HEIGHT = 64;
-	ast = new AnimatedSpriteType();
-
-	botImageIDs.push_back(worldTextureManager->loadTexture(L"./textures/world/sprites/ettin/ettin_moving_right1.png"));
-	botImageIDs.push_back(worldTextureManager->loadTexture(L"./textures/world/sprites/ettin/ettin_moving_right2.png"));
-	botImageIDs.push_back(worldTextureManager->loadTexture(L"./textures/world/sprites/ettin/ettin_moving_right3.png"));
-	ast->setTextureSize(BOT_WIDTH, BOT_HEIGHT);
-	ast->addAnimationSequence(BOT_MOVING_RIGHT);
-	for (int i = 0; i < 3; i++) {
-		ast->addAnimationFrame(BOT_MOVING_RIGHT, botImageIDs.at(i), 15);
-	}
-	botImageIDs.clear();
-
-	botImageIDs.push_back(worldTextureManager->loadTexture(L"./textures/world/sprites/ettin/ettin_moving_left1.png"));
-	botImageIDs.push_back(worldTextureManager->loadTexture(L"./textures/world/sprites/ettin/ettin_moving_left2.png"));
-	botImageIDs.push_back(worldTextureManager->loadTexture(L"./textures/world/sprites/ettin/ettin_moving_left3.png"));
-	ast->setTextureSize(BOT_WIDTH, BOT_HEIGHT);
-	ast->addAnimationSequence(BOT_MOVING_LEFT);
-	for (int i = 0; i < 3; i++) {
-		ast->addAnimationFrame(BOT_MOVING_LEFT, botImageIDs.at(i), 15);
-	}
-	botImageIDs.clear();
-
-	botImageIDs.push_back(worldTextureManager->loadTexture(L"./textures/world/sprites/ettin/ettin_idle_left1.png"));
-	botImageIDs.push_back(worldTextureManager->loadTexture(L"./textures/world/sprites/ettin/ettin_idle_left2.png"));
-	ast->setTextureSize(BOT_WIDTH, BOT_HEIGHT);
-	ast->addAnimationSequence(BOT_IDLE_LEFT);
-	for (int i = 0; i < 2; i++) {
-		ast->addAnimationFrame(BOT_IDLE_LEFT, botImageIDs.at(i), 20);
-	}
-	botImageIDs.clear();
-
-	botImageIDs.push_back(worldTextureManager->loadTexture(L"./textures/world/sprites/ettin/ettin_idle_right1.png"));
-	botImageIDs.push_back(worldTextureManager->loadTexture(L"./textures/world/sprites/ettin/ettin_idle_right2.png"));
-	ast->setTextureSize(BOT_WIDTH, BOT_HEIGHT);
-	ast->addAnimationSequence(BOT_IDLE_RIGHT);
-	for (int i = 0; i < 2; i++) {
-		ast->addAnimationFrame(BOT_IDLE_RIGHT, botImageIDs.at(i), 20);
-	}
-	botImageIDs.clear();
-
-	spriteTypeID = spriteManager->addSpriteType(ast);
-	ast->setSpriteTypeID(spriteTypeID);
-
-	// Add Bots
-	for (int i = 0; i < 10; i++)
-	{
-		EnemyBot *bot = new EnemyBot(100, 50, BOT_NORMAL);
-		bot->setSpriteType(ast);
-		bot->setCurrentState(BOT_IDLE_LEFT);
-		bot->setAlpha(255);
-		PhysicalProperties *pp = bot->getPhysicalProperties();
-		pp->setCollidable(false);
-
-		int x;
-		int y;
-
-		int numberOfRespawnPoints = respawnPoints->size() / 2;
-		int chosenRespawnPoint = rand() % (numberOfRespawnPoints + 1);
-
-		x = respawnPoints->at(chosenRespawnPoint * 2);
-		y = respawnPoints->at((chosenRespawnPoint * 2) + 1);
-
-		pp->setX(x);
-		pp->setY(y);
-		pp->setAccelerationX(0.0f);
-		pp->setAccelerationY(0.0f);
-		spriteManager->addBot(bot);
-	}
-
-
+	// Add our Bots
+	addBots(game, respawnPoints);
 }
 
 /*
@@ -481,6 +351,9 @@ void YADataLoader::initViewport(GameGUI *gui, map<wstring,wstring> *properties)
 	viewport->setViewportOffsetY(viewportOffsetY);
 }
 
+/*
+	Loads the GUI from guiFile and returns it
+*/
 ScreenGUI* YADataLoader::loadGUIFromFile(Game *game, wstring guiFile)
 {
     map<wstring,wstring> *properties = new map<wstring,wstring>();
@@ -627,6 +500,12 @@ ScreenGUI* YADataLoader::loadGUIFromFile(Game *game, wstring guiFile)
     return screen;
 }
 
+/*
+	Loads the World from the given Files using the worldColumns and worldRows from that given
+	files. It inserts the found respawnPoints into the given vector and returns the for the
+	correspoding loaded World
+*/
+
 TiledLayer* YADataLoader::loadTiledLayerFromFile(Game *game,
 		int worldColumns, int worldRows,
 		wstring worldFile, wstring worldMapFile, vector<int>* respawnPoints)
@@ -636,7 +515,6 @@ TiledLayer* YADataLoader::loadTiledLayerFromFile(Game *game,
 	loadGameProperties(game, properties, worldFile);
 
 	// Load World File Map
-	// TO-DO
 
 	// NOW LOAD OUR TILED BACKGROUND
 	TiledLayer *tiledLayer = new TiledLayer(	worldColumns,	worldRows, 
@@ -650,21 +528,21 @@ TiledLayer* YADataLoader::loadTiledLayerFromFile(Game *game,
 	int texturesCount, emptyTileCode;
 	wstring textureCountS, elementTilePath, elementCode;
 
-	emptyTileCode = game->getGraphics()->getWorldTextureManager()->loadTexture(L"textures/world/tiles/empty_tile.png");
+	emptyTileCode = game->getGraphics()->getWorldTextureManager()->loadTexture(EMPTY_TILE);
 
 	wstringstream stream;
 
 	// Count
-    textureCountS = (*properties)[L"NUMBER_OF_ELEMENTS"];
+    textureCountS = (*properties)[LEVEL_NUMBER_OF_ELEMENTS];
     wstringstream(textureCountS) >> texturesCount;
     stream.str(L"");
 
 	// Load Textures
 	for (int i = 1 ; i <= texturesCount ; i++) {
-		stream << i << L"ELEMENT_TILE_PATH";
+		stream << i << ELEMENT_TILE_PATH;
         elementTilePath = (*properties)[stream.str()];
 		stream.str(L"");
-		stream << i << L"ELEMENT_CODE";
+		stream << i << ELEMENT_CODE;
 
 		wstring blabla = (*properties)[stream.str()];
 		int texCode = game->getGraphics()->getWorldTextureManager()->loadTexture(elementTilePath);
@@ -695,6 +573,7 @@ TiledLayer* YADataLoader::loadTiledLayerFromFile(Game *game,
 		for (int i = 0 ; i < line.size() ; i++) {
 
 			if (&(line[i]) == L"\n" || (line[i]) == 'N') {
+				// This is not being used...
 				while (tileCounterPerLine != worldColumns) {
 					// Fill with Empty Tiles
 					Tile *tileToAdd = new Tile();
@@ -704,11 +583,10 @@ TiledLayer* YADataLoader::loadTiledLayerFromFile(Game *game,
 					tileCounterPerLine++;
 					numberOfTilesTotal++;
 				}
-
 				continue;
 			}
 
-		if (line[i] == ' ') {
+		if (line[i] == ' ') { // Empty tile if blank space
 			Tile *tileToAdd = new Tile();
 			tileToAdd->collidable = false;
 			tileToAdd->textureID = emptyTileCode;
@@ -718,7 +596,7 @@ TiledLayer* YADataLoader::loadTiledLayerFromFile(Game *game,
 			continue;
 		} else if (line[i] == '*') { // Respawn Point
 
-			int columnNumber = (numberOfTilesTotal % worldColumns);// * TILE_WIDTH
+			int columnNumber = (numberOfTilesTotal % worldColumns);
 			int x = columnNumber * TILE_WIDTH;
 
 			int rowNumber = ((numberOfTilesTotal / worldColumns));
@@ -739,6 +617,7 @@ TiledLayer* YADataLoader::loadTiledLayerFromFile(Game *game,
 			continue;
 		}
 
+		// Gets the Tile related to that Code and add the layer
 		Tile *tileToAdd = new Tile();
 
 		tileToAdd->collidable = false;
@@ -756,4 +635,199 @@ TiledLayer* YADataLoader::loadTiledLayerFromFile(Game *game,
 	}
 
 	return tiledLayer;
+}
+
+/*
+	Add the Bots to our Game
+*/
+void YADataLoader::addBots(Game* game, vector<int>* respawnPoints)
+{
+	// TO-DO: Load from File or Think of something more generic...
+
+	AnimatedSpriteType* ast;
+	TextureManager* worldTextureManager = game->getGraphics()->getWorldTextureManager();
+	SpriteManager* spriteManager = game->getGSM()->getSpriteManager();
+	int spriteTypeID = 0;
+
+	// This map will hold the respawnPoint and how many monsters it has
+	map<int, int>* monstersOnRespawn = new map<int, int>();
+
+	// Lets add the Green Monster
+	int BOT_WIDTH = 64;
+	int BOT_HEIGHT = 64;
+	ast = new AnimatedSpriteType();
+	vector<unsigned int> botImageIDs;
+
+	botImageIDs.push_back(worldTextureManager->loadTexture(L"./textures/world/sprites/green_monster/mo_moving_right1.png"));
+	botImageIDs.push_back(worldTextureManager->loadTexture(L"./textures/world/sprites/green_monster/mo_moving_right2.png"));
+	botImageIDs.push_back(worldTextureManager->loadTexture(L"./textures/world/sprites/green_monster/mo_moving_right3.png"));
+	botImageIDs.push_back(worldTextureManager->loadTexture(L"./textures/world/sprites/green_monster/mo_moving_right4.png"));
+	ast->setTextureSize(BOT_WIDTH, BOT_HEIGHT);
+	ast->addAnimationSequence(BOT_MOVING_RIGHT);
+	for (int i = 0; i < 4; i++)
+		ast->addAnimationFrame(BOT_MOVING_RIGHT, botImageIDs.at(i), 10);
+	botImageIDs.clear();
+
+	botImageIDs.push_back(worldTextureManager->loadTexture(L"./textures/world/sprites/green_monster/mo_moving_left1.png"));
+	botImageIDs.push_back(worldTextureManager->loadTexture(L"./textures/world/sprites/green_monster/mo_moving_left2.png"));
+	botImageIDs.push_back(worldTextureManager->loadTexture(L"./textures/world/sprites/green_monster/mo_moving_left3.png"));
+	botImageIDs.push_back(worldTextureManager->loadTexture(L"./textures/world/sprites/green_monster/mo_moving_left4.png"));
+	ast->setTextureSize(BOT_WIDTH, BOT_HEIGHT);
+	ast->addAnimationSequence(BOT_MOVING_LEFT);
+	for (int i = 0; i < 4; i++)
+		ast->addAnimationFrame(BOT_MOVING_LEFT, botImageIDs.at(i), 10);
+	botImageIDs.clear();
+
+	botImageIDs.push_back(worldTextureManager->loadTexture(L"./textures/world/sprites/green_monster/mo_idle1.png"));
+	botImageIDs.push_back(worldTextureManager->loadTexture(L"./textures/world/sprites/green_monster/mo_idle2.png"));
+	botImageIDs.push_back(worldTextureManager->loadTexture(L"./textures/world/sprites/green_monster/mo_idle3.png"));
+	botImageIDs.push_back(worldTextureManager->loadTexture(L"./textures/world/sprites/green_monster/mo_idle4.png"));
+	ast->setTextureSize(BOT_WIDTH, BOT_HEIGHT);
+	ast->addAnimationSequence(BOT_IDLE_LEFT);
+	ast->addAnimationSequence(BOT_IDLE_RIGHT);
+	for (int i = 0; i < 4; i++) {
+		ast->addAnimationFrame(BOT_IDLE_LEFT, botImageIDs.at(i), 10);
+		ast->addAnimationFrame(BOT_IDLE_RIGHT, botImageIDs.at(i), 10);
+	}
+	botImageIDs.clear();
+
+	spriteTypeID = spriteManager->addSpriteType(ast);
+	ast->setSpriteTypeID(spriteTypeID);
+
+	// Add Bots
+	for (int i = 0; i < 10; i++)
+	{
+		EnemyBot *bot = new EnemyBot(100, 50, BOT_SLOW);
+		bot->setSpriteType(ast);
+		bot->setCurrentState(BOT_IDLE_LEFT);
+		bot->setAlpha(255);
+		PhysicalProperties *pp = bot->getPhysicalProperties();
+		pp->setCollidable(false);
+
+		int x;
+		int y;
+
+		int numberOfRespawnPoints = respawnPoints->size() / 2;
+		int chosenRespawnPoint = (rand() % (numberOfRespawnPoints)) + 1;
+
+		bool foundHisPlace = false;
+
+		while (!foundHisPlace) {
+
+			if (monstersOnRespawn->find(chosenRespawnPoint) == monstersOnRespawn->end()) {
+				monstersOnRespawn->insert( pair<int, int> (chosenRespawnPoint, 1) );
+				foundHisPlace = true;
+				continue;
+			}
+
+			if (monstersOnRespawn->find(chosenRespawnPoint)->second > 4) {
+				chosenRespawnPoint = (rand() % (numberOfRespawnPoints)) + 1;
+			} else {
+				monstersOnRespawn->find(chosenRespawnPoint)->second++;
+				foundHisPlace = true;
+			}
+
+		}
+
+		x = respawnPoints->at((chosenRespawnPoint * 2) - 2);
+		y = respawnPoints->at((chosenRespawnPoint * 2) - 1);
+
+		pp->setX(x);
+		pp->setY(y);
+		pp->setAccelerationX(0.0f);
+		pp->setAccelerationY(0.0f);
+		spriteManager->addBot(bot);
+	}
+
+	// Add Ettins
+
+	BOT_WIDTH = 90;
+	BOT_HEIGHT = 64;
+	ast = new AnimatedSpriteType();
+
+	botImageIDs.push_back(worldTextureManager->loadTexture(L"./textures/world/sprites/ettin/ettin_moving_right1.png"));
+	botImageIDs.push_back(worldTextureManager->loadTexture(L"./textures/world/sprites/ettin/ettin_moving_right2.png"));
+	botImageIDs.push_back(worldTextureManager->loadTexture(L"./textures/world/sprites/ettin/ettin_moving_right3.png"));
+	ast->setTextureSize(BOT_WIDTH, BOT_HEIGHT);
+	ast->addAnimationSequence(BOT_MOVING_RIGHT);
+	for (int i = 0; i < 3; i++) {
+		ast->addAnimationFrame(BOT_MOVING_RIGHT, botImageIDs.at(i), 15);
+	}
+	botImageIDs.clear();
+
+	botImageIDs.push_back(worldTextureManager->loadTexture(L"./textures/world/sprites/ettin/ettin_moving_left1.png"));
+	botImageIDs.push_back(worldTextureManager->loadTexture(L"./textures/world/sprites/ettin/ettin_moving_left2.png"));
+	botImageIDs.push_back(worldTextureManager->loadTexture(L"./textures/world/sprites/ettin/ettin_moving_left3.png"));
+	ast->setTextureSize(BOT_WIDTH, BOT_HEIGHT);
+	ast->addAnimationSequence(BOT_MOVING_LEFT);
+	for (int i = 0; i < 3; i++) {
+		ast->addAnimationFrame(BOT_MOVING_LEFT, botImageIDs.at(i), 15);
+	}
+	botImageIDs.clear();
+
+	botImageIDs.push_back(worldTextureManager->loadTexture(L"./textures/world/sprites/ettin/ettin_idle_left1.png"));
+	botImageIDs.push_back(worldTextureManager->loadTexture(L"./textures/world/sprites/ettin/ettin_idle_left2.png"));
+	ast->setTextureSize(BOT_WIDTH, BOT_HEIGHT);
+	ast->addAnimationSequence(BOT_IDLE_LEFT);
+	for (int i = 0; i < 2; i++) {
+		ast->addAnimationFrame(BOT_IDLE_LEFT, botImageIDs.at(i), 20);
+	}
+	botImageIDs.clear();
+
+	botImageIDs.push_back(worldTextureManager->loadTexture(L"./textures/world/sprites/ettin/ettin_idle_right1.png"));
+	botImageIDs.push_back(worldTextureManager->loadTexture(L"./textures/world/sprites/ettin/ettin_idle_right2.png"));
+	ast->setTextureSize(BOT_WIDTH, BOT_HEIGHT);
+	ast->addAnimationSequence(BOT_IDLE_RIGHT);
+	for (int i = 0; i < 2; i++) {
+		ast->addAnimationFrame(BOT_IDLE_RIGHT, botImageIDs.at(i), 20);
+	}
+	botImageIDs.clear();
+
+	spriteTypeID = spriteManager->addSpriteType(ast);
+	ast->setSpriteTypeID(spriteTypeID);
+
+	// Add Bots
+	for (int i = 0; i < 10; i++)
+	{
+		EnemyBot *bot = new EnemyBot(100, 50, BOT_NORMAL);
+		bot->setSpriteType(ast);
+		bot->setCurrentState(BOT_IDLE_LEFT);
+		bot->setAlpha(255);
+		PhysicalProperties *pp = bot->getPhysicalProperties();
+		pp->setCollidable(false);
+
+		int x;
+		int y;
+
+		int numberOfRespawnPoints = respawnPoints->size() / 2;
+		int chosenRespawnPoint = (rand() % (numberOfRespawnPoints)) + 1;
+
+		bool foundHisPlace = false;
+
+		while (!foundHisPlace) {
+
+			if (monstersOnRespawn->find(chosenRespawnPoint) == monstersOnRespawn->end()) {
+				monstersOnRespawn->insert( pair<int, int> (chosenRespawnPoint, 1) );
+				foundHisPlace = true;
+				continue;
+			}
+
+			if (monstersOnRespawn->find(chosenRespawnPoint)->second > 2) {
+				chosenRespawnPoint = (rand() % (numberOfRespawnPoints)) + 1; // Get another one
+			} else {
+				monstersOnRespawn->find(chosenRespawnPoint)->second++;
+				foundHisPlace = true;
+			}
+
+		}
+
+		x = respawnPoints->at((chosenRespawnPoint * 2) - 2);
+		y = respawnPoints->at((chosenRespawnPoint * 2) - 1);
+
+		pp->setX(x);
+		pp->setY(y);
+		pp->setAccelerationX(0.0f);
+		pp->setAccelerationY(0.0f);
+		spriteManager->addBot(bot);
+	}
 }

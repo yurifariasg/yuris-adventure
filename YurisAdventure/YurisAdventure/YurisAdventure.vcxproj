@@ -71,21 +71,28 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Creature.cpp" />
     <ClCompile Include="EnemyBot.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="YAButtonEventHandler.cpp" />
     <ClCompile Include="YADataLoader.cpp" />
     <ClCompile Include="YAKeyEventHandler.cpp" />
+    <ClCompile Include="YASpriteManager.cpp" />
     <ClCompile Include="YATextGenerator.cpp" />
     <ClCompile Include="YAGame.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\SimpleSideScrollerFramework\BotVelocity.h" />
     <ClInclude Include="BotState.h" />
+    <ClInclude Include="Creature.h" />
     <ClInclude Include="EnemyBot.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="PlayerComboState.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="YAButtonEventHandler.h" />
     <ClInclude Include="YADataLoader.h" />
     <ClInclude Include="YAKeyEventHandler.h" />
+    <ClInclude Include="YASpriteManager.h" />
     <ClInclude Include="YATextGenerator.h" />
     <ClInclude Include="YAGame.h" />
   </ItemGroup>

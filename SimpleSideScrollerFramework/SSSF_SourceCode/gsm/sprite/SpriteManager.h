@@ -29,7 +29,7 @@ private:
 	list<Bot*> bots;
 
 	// AND THIS IS THE PLAYER. AS-IS, WE ONLY ALLOW FOR ONE PLAYER AT A TIME
-	AnimatedSprite player;
+	//AnimatedSprite player;
 
 	// THE BotRecycler MAKES SURE WE DON'T HAVE TO CONSTRUCT BOTS WHENEVER
 	// WE NEED TO SPAWN THEM, INSTEAD IT WILL RECYCLE THEM FOR US
@@ -42,7 +42,7 @@ public:
 
 	// INLINED ACCESSOR METHODS
 	int						getNumberOfSprites()	{ return bots.size();		}
-	AnimatedSprite*			getPlayer()				{ return &player;			}
+	virtual AnimatedSprite*			getPlayer() = 0;
 	list<Bot*>::iterator	getBotsIterator()		{ return bots.begin();		}
 	list<Bot*>::iterator	getEndOfBotsIterator()	{ return bots.end();		}
 

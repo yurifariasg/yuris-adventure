@@ -21,6 +21,7 @@
 #include "YAGame.h"
 #include "YAKeyEventHandler.h"
 #include "YATextGenerator.h"
+#include "YASpriteManager.h"
 
 // GAME OBJECT INCLUDES
 #include "SSSF_SourceCode\game\Game.h"
@@ -54,6 +55,9 @@ int WINAPI WinMain(HINSTANCE hInstance,
 {
 	// CREATE THE GAME
 	Game *dummyGame = new Game();
+
+	// Put our SpriteManager
+	dummyGame->getGSM()->setSpriteManager(new YASpriteManager());
 
 	// FIRST WE'LL SETUP THE DATA LOADER, SINCE IT MAY NEED TO READ
 	// IN DATA TO SETUP OTHER STUFF

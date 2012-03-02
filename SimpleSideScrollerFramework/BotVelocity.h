@@ -1,5 +1,9 @@
 #pragma once
 
+/*
+	Enum for Bot Velocity (Will determine how fast it is)
+*/
+
 enum BotVelocity
 {
 	BOT_SLOW,
