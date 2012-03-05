@@ -28,20 +28,6 @@
 
 #include "YASpriteManager.h"
 
-// USED FOR MOVEMENT
-const unsigned int W_KEY = (unsigned int)'W';
-const unsigned int A_KEY = (unsigned int)'A';
-const unsigned int S_KEY = (unsigned int)'S';
-const unsigned int D_KEY = (unsigned int)'D';
-const unsigned int SWORD_ATTACK_KEY = (unsigned int) 'J';
-const unsigned int MAGIC_ATTACK_KEY = (unsigned int) 'K';
-const unsigned int ACTION_KEY = (unsigned int) 'L';
-const unsigned int UP_KEY = VK_UP;
-const unsigned int DOWN_KEY = VK_DOWN;
-const unsigned int LEFT_KEY = VK_LEFT;
-const unsigned int RIGHT_KEY = VK_RIGHT;
-const unsigned int ENTER_KEY = VK_RETURN;
-
 // THIS IS JUST FOR SHOWING HOW THE CURSOR CAN BE CHANGED
 const unsigned int C_KEY = (unsigned int)'C';
 
