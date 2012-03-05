@@ -114,6 +114,20 @@ static const wstring	BOT_MOVING_LEFT = L"BOT_MOVING_LEFT";
 static const wstring	BOT_ATTACKING_RIGHT = L"BOT_ATTACKING_RIGHT";
 static const wstring	BOT_ATTACKING_LEFT = L"BOT_ATTACKING_LEFT";
 
+// Keys
+const unsigned int W_KEY = (unsigned int)'W';
+const unsigned int A_KEY = (unsigned int)'A';
+const unsigned int S_KEY = (unsigned int)'S';
+const unsigned int D_KEY = (unsigned int)'D';
+const unsigned int SWORD_ATTACK_KEY = (unsigned int) 'J';
+const unsigned int MAGIC_ATTACK_KEY = (unsigned int) 'K';
+const unsigned int ACTION_KEY = (unsigned int) 'L';
+const unsigned int UP_KEY = VK_UP;
+const unsigned int DOWN_KEY = VK_DOWN;
+const unsigned int LEFT_KEY = VK_LEFT;
+const unsigned int RIGHT_KEY = VK_RIGHT;
+const unsigned int ENTER_KEY = VK_RETURN;
+
 static const int		ANIM_SPEED = 6;
 static const int		PLAYER_WIDTH = 64;
 static const int		PLAYER_HEIGHT = 92;

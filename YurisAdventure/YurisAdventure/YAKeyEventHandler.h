@@ -20,6 +20,7 @@ class Game;
 class YAKeyEventHandler : public KeyEventHandler
 {
 public:
+
 	YAKeyEventHandler()		{}
 	~YAKeyEventHandler()		{}
 	void handleKeyEvents(Game *game);
