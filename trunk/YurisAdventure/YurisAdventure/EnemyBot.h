@@ -19,6 +19,8 @@ private:
 	BotState state;
 	unsigned int actionTime;
 
+	int botSpeed;
+
 public:
 	EnemyBot(unsigned int hp, unsigned int attack, BotVelocity);
 	Bot*	clone();

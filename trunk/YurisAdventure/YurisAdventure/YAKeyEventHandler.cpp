@@ -71,19 +71,26 @@ void YAKeyEventHandler::handleKeyEvents(Game *game)
 		float vX = pp->getVelocityX();
 		float vY = pp->getVelocityY();
 
-		if (input->isKeyDown(W_KEY))
+		if (input->isKeyDownForFirstTime(W_KEY) && !player->isAttacking())
 		{
-			vY = -PLAYER_SPEED;
+
+			// Jump
+			if (!pp->getBuoyancy()) {
+				pp->setAccelerationY(-40);
+				pp->setBuoyancy(true);
+			}
+
 		}
-		if (input->isKeyDown(A_KEY))
+		if (input->isKeyDown(A_KEY) && (!player->isAttacking() || pp->getBuoyancy()))
 		{
 			vX = -PLAYER_SPEED;
 		}
 		if (input->isKeyDown(S_KEY))
 		{
-			vY = PLAYER_SPEED;
+			//vY = PLAYER_SPEED;
+			// Crouch
 		}
-		if (input->isKeyDown(D_KEY))
+		if (input->isKeyDown(D_KEY) && (!player->isAttacking() || pp->getBuoyancy()))
 		{
 			vX = PLAYER_SPEED;
 		}

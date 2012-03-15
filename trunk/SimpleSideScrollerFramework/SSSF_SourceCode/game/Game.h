@@ -32,7 +32,7 @@
 #include "stdafx.h"
 #include "SSSF_SourceCode\gsm\state\GameState.h"
 
-#define PLAYER_SPEED 3.0f
+#define PLAYER_SPEED 4.0f
 
 //#include "SSSF_SourceCode\gsm\state\GameStateManager.h"
 //#include "SSSF_SourceCode\gui\GameGUI.h"

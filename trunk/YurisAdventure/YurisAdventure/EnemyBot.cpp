@@ -25,7 +25,7 @@ void EnemyBot::think(Game *game)
 			if((rand() % 2) == 0)
 				changeFacingDirection();
 
-			float botSpeed = 0;
+			botSpeed = 0;
 
 			switch (velocity) {
 				case BOT_SLOW: botSpeed = PLAYER_SPEED * 0.3; break;
@@ -68,6 +68,8 @@ void EnemyBot::think(Game *game)
 
 	} else {
 		actionTime--;
+
+		if (state == BOT_MOVING) this->pp.setVelocity(botSpeed, 0);
 	}
 }
 
