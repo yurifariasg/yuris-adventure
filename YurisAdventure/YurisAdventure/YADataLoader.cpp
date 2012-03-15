@@ -235,8 +235,10 @@ void YADataLoader::loadWorld(Game *game, int levelNumber)
 	// AND NOW LET'S MAKE A MAIN CHARACTER SPRITE
 	AnimatedSpriteType *ast = new AnimatedSpriteType();
 
+	int spriteWidth = 140, spriteHeight = 120;
+
 	// SIZE OF SPRITE IMAGES
-	ast->setTextureSize(140, 120);
+	ast->setTextureSize(spriteWidth, spriteHeight);
 
 	// NOW LET'S ADD AN ANIMATION STATE
 	// FIRST THE NAME
@@ -277,11 +279,24 @@ void YADataLoader::loadWorld(Game *game, int levelNumber)
 	AnimatedSprite *player = spriteManager->getPlayer();
 	player->setSpriteType(ast);
 	PhysicalProperties *playerProps = player->getPhysicalProperties();
-	playerProps->setX(10);
-	playerProps->setY(10);
+	playerProps->setX(100);
+	playerProps->setY(500);
 	playerProps->setVelocity(0.0f, 0.0f);
 	playerProps->setAccelerationX(0);
 	playerProps->setAccelerationY(0);
+	playerProps->setBuoyancy(true);
+
+	int boundVolWidth = 50;
+	int boundVolHeight = 110;
+
+	player->getBoundingVolume()->setWidth(boundVolWidth);
+	player->getBoundingVolume()->setHeight(boundVolHeight);
+
+	// X and Y Based on the Physical Properties
+	// Real X = pp->getX() + bb->getX() // same for Y
+	player->getBoundingVolume()->setX((spriteWidth / 2) - (boundVolWidth / 2));
+	player->getBoundingVolume()->setY((spriteHeight / 2) - (boundVolHeight / 2));
+
 
 	// WE WILL SET LOTS OF OTHER PROPERTIES ONCE
 	// WE START DOING COLLISIONS AND PHYSICS
@@ -620,7 +635,7 @@ TiledLayer* YADataLoader::loadTiledLayerFromFile(Game *game,
 		// Gets the Tile related to that Code and add the layer
 		Tile *tileToAdd = new Tile();
 
-		tileToAdd->collidable = false;
+		tileToAdd->collidable = true;
 
 		stream << line[i];
 		wstring blabla = stream.str();
@@ -703,6 +718,11 @@ void YADataLoader::addBots(Game* game, vector<int>* respawnPoints)
 		bot->setAlpha(255);
 		PhysicalProperties *pp = bot->getPhysicalProperties();
 		pp->setCollidable(false);
+
+		bot->getBoundingVolume()->setX(0);
+		bot->getBoundingVolume()->setY(0);
+		bot->getBoundingVolume()->setWidth(50);
+		bot->getBoundingVolume()->setHeight(50);
 
 		int x;
 		int y;
@@ -795,6 +815,11 @@ void YADataLoader::addBots(Game* game, vector<int>* respawnPoints)
 		bot->setAlpha(255);
 		PhysicalProperties *pp = bot->getPhysicalProperties();
 		pp->setCollidable(false);
+
+		bot->getBoundingVolume()->setX(0);
+		bot->getBoundingVolume()->setY(0);
+		bot->getBoundingVolume()->setWidth(50);
+		bot->getBoundingVolume()->setHeight(50);
 
 		int x;
 		int y;
