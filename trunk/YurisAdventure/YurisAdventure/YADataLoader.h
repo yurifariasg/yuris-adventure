@@ -20,15 +20,35 @@
 #include "SSSF_SourceCode\gui\ScreenGUI.h"
 #include "Player.h"
 
+const bool BOTS_ACTIVE = true;
+
 class YADataLoader : public GameDataLoader
 {
 private:
 	// WE NEED THESE GUYS TO INIT OUR WINDOWS WINDOW
 	HINSTANCE hInstance;
+	wstringstream convertStream;
 	int nCmdShow;
 
 	// Add the bots into our game
 	void addBots(Game*, vector<int>*);
+
+	int convertToInt(wstring convertString)
+	{
+		int y;
+		wstringstream(convertString) >> y;
+		return y;
+	}
+
+	wstring concat(int i, wstring string)
+	{
+		wstring finalStream;
+		convertStream.str(L"");
+		convertStream << i << string;
+		finalStream.assign(convertStream.str());
+        convertStream.str(L"");
+		return finalStream;
+	}
 
 public:
 	YADataLoader()	{}
@@ -47,6 +67,7 @@ public:
 	void loadGame(Game *game, wstring gameInitFile);
 	void loadGUI(Game *game, wstring guiInitFile);
 	void loadWorld(Game *game, int levelNumber);
+	void loadSprite(Game* game, wstring fileName, AnimatedSprite* sprite);
 
 	// SOME HELPER METHODS FOR SETTING UP THE GAME
 	void initColors(GameGraphics *graphics,	map<wstring,wstring> *properties);

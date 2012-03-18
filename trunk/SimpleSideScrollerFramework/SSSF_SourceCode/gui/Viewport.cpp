@@ -131,8 +131,7 @@ void Viewport::moveViewport(int incX,
 
 	// DON'T LET IT GO OFF THE LEFT-MOST EDGE
 	// OF THE GAME WORLD. CLAMP INSTEAD.
-	if (viewportX < 0)				
-		viewportX = 0;
+	if (viewportX < 0) viewportX = 0;
 
 	// DON'T LET IT GO OFF THE RIGHT-MOST EDGE
 	// OF THE GAME WORLD. CLAMP INSTEAD.
@@ -159,12 +158,15 @@ void Viewport::update(Game *game)
 
 	PhysicalProperties* pp = game->getGSM()->getSpriteManager()->getPlayer()->getPhysicalProperties();
 
-	if (pp->getX() - viewportX > viewportWidth * 50 / 100)
-		game->getGUI()->getViewport()->moveViewport(PLAYER_SPEED, 0,
+
+	if (pp->getX() - viewportX > viewportWidth * 0.5
+				&& viewportX + PLAYER_SPEED < game->getGSM()->getWorld()->getWorldWidth())
+		moveViewport(PLAYER_SPEED, 0,
 				game->getGSM()->getWorld()->getWorldWidth(),
 				game->getGSM()->getWorld()->getWorldHeight());
-	if (pp->getX() - viewportX < viewportWidth * 20 / 100)
-		game->getGUI()->getViewport()->moveViewport(-PLAYER_SPEED, 0,
+
+	if (pp->getX() - viewportX < viewportWidth * 0.2 && viewportX - PLAYER_SPEED > 0)
+		moveViewport(-PLAYER_SPEED, 0,
 				game->getGSM()->getWorld()->getWorldWidth(),
 				game->getGSM()->getWorld()->getWorldHeight());
 

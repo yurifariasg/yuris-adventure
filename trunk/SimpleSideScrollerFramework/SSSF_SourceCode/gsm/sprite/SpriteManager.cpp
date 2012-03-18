@@ -138,8 +138,10 @@ void SpriteManager::unloadSprites()
 
 Bot* SpriteManager::removeBot(Bot *botToRemove)
 {
+
+	bots.remove(botToRemove);
+
 	return NULL;
-	// @TODO
 }
 
 /*

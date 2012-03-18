@@ -17,6 +17,7 @@ Physics::Physics()
 {
 	maxVelocity = DEFAULT_MAX_VELOCITY;
 	gravity = DEFAULT_GRAVITY;
+	physicsE = NULL;
 }
 
 /*
@@ -24,42 +25,16 @@ Physics::Physics()
 */
 Physics::~Physics()
 {
-
+	delete physicsE;
 }
 
 void Physics::update(Game *game)
 {
-	// REMEMBER, AT THIS POINT, ALL PLAYER INPUT AND AI
-	// HAVE ALREADY BEEN PROCESSED AND BOT AND PLAYER
-	// STATES, VELOCITIES, AND ACCELERATIONS HAVE ALREADY
-	// BEEN UPDATED. NOW WE HAVE TO PROCESS THE PHYSICS
-	// OF ALL THESE OBJECTS INTERACTING WITH EACH OTHER
-	// AND THE STATIC GAME WORLD. THIS MEANS WE NEED TO
-	// DETECT AND RESOLVE COLLISIONS IN THE ORDER THAT
-	// THEY WILL HAPPEN, AND WITH EACH COLLISION, EXECUTE
-	// ANY GAMEPLAY RESPONSE CODE, UPDATE VELOCITIES, AND
-	// IN THE END, UPDATE POSITIONS
-
-	// FIRST, YOU SHOULD START BY ADDING ACCELERATION TO ALL 
-	// VELOCITIES, WHICH INCLUDES GRAVITY, NOTE THE EXAMPLE
-	// BELOW DOES NOT DO THAT
-
-
-	// FOR NOW, WE'LL JUST ADD THE VELOCITIES TO THE
-	// POSITIONS, WHICH MEANS WE'RE NOT APPLYING GRAVITY OR
-	// ACCELERATION AND WE ARE NOT DOING ANY COLLISION 
-	// DETECTION OR RESPONSE
 	GameStateManager *gsm = game->getGSM();
 	SpriteManager *sm = gsm->getSpriteManager();
-	//AnimatedSprite *player;
 	PhysicalProperties *pp;
 
 	doStaticPhysics(sm->getPlayer(), (TiledLayer*) (gsm->getWorld()->getLayers()->at(0)), game->getGUI()->getViewport());
-
-	// FOR NOW THE PLAYER IS DIRECTLY CONTROLLED BY THE KEYBOARD,
-	// SO WE'LL NEED TO TURN OFF ANY VELOCITY APPLIED BY INPUT
-	// SO THE NEXT FRAME IT DOESN'T GET ADDED
-	//pp->setVelocity(0.0f, 0.0f);
 
 	// AND NOW MOVE ALL THE BOTS
 	list<Bot*>::iterator botIterator = sm->getBotsIterator();
@@ -67,10 +42,12 @@ void Physics::update(Game *game)
 	{			
 		Bot *bot = (*botIterator);
 		pp = bot->getPhysicalProperties();
-		//pp->setPosition(pp->getX() + pp->getVelocityX(), pp->getY() + pp->getVelocityY());
 		doStaticPhysics(bot, (TiledLayer*) (gsm->getWorld()->getLayers()->at(0)), game->getGUI()->getViewport());
 		botIterator++;
 	}
+
+	// Dynamic Physics
+	if (physicsE != NULL) physicsE->updatePhysics(game);
 }
 
 void Physics::doStaticPhysics(AnimatedSprite* sprite, TiledLayer* world, Viewport* viewport)
@@ -111,7 +88,9 @@ void Physics::doStaticPhysics(AnimatedSprite* sprite, TiledLayer* world, Viewpor
 		int rightColumn = ((pp->getX() + sprite->getBoundingVolume()->getX()) + sprite->getBoundingVolume()->getWidth() ) / CELL_WIDTH;
 		int leftColumn = (pp->getX() + sprite->getBoundingVolume()->getX()) / CELL_WIDTH;
 
-		if (leftColumn < 0 || rightColumn > world->getLayerWidth() / CELL_WIDTH) {
+		//int worldWidth = world->getLayerWidth();
+
+		if (leftColumn < 0 || rightColumn > world->getWorldWidth() / CELL_WIDTH) {
 
 			// Invalid Position
 
@@ -164,7 +143,7 @@ void Physics::doStaticPhysics(AnimatedSprite* sprite, TiledLayer* world, Viewpor
 				pp->setAccelerationY(0);
 				pp->setBuoyancy(false);
 
-			} else {
+			} else if (pp->getVelocityY() < 0) {
 
 				// Lose all aceleration hit top...
 				pp->setAccelerationY(0);
@@ -221,12 +200,15 @@ void Physics::doStaticPhysics(AnimatedSprite* sprite, TiledLayer* world, Viewpor
 		tile = NULL;
 	}
 
-	if (tile == NULL) { // Didnt Collide
+	if (tile == NULL
+			&& newPlayerX + sprite->getBoundingVolume()->getX() > 0
+			&& newPlayerX + sprite->getBoundingVolume()->getX()
+			+ sprite->getBoundingVolume()->getWidth() < world->getWorldWidth()) {
+				// Dont go to invalid position
+
 		pp->setPosition(newPlayerX, pp->getY());
 	}
 
 	pp->setVelocity(0,0);
-
-
 	// Ending of Big Function
 }

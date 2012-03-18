@@ -4,14 +4,14 @@
 /*
 	Creates a Creature with the given amount of health and attack
 */
-Creature::Creature(unsigned int hp, unsigned int attack)
+Creature::Creature(int hp, int attack)
 {
-	this->maxHP = hp;
-	this->currentHP = hp;
-	this->attack = attack;
-	this->defense = 0;
-	this->facedLeft = false; // Initialize Facing Right
-	this->attacking = false;
+	maxHP = hp;
+	cHP = hp;
+	attack = attack;
+	defense = 0;
+	facedLeft = false; // Initialize Facing Right
+	attacking = false;
 }
 
 /*
@@ -26,17 +26,17 @@ Creature* Creature::clone()
 /*
 	Creature takes the given amount of damage
 */
-void Creature::takeDamage(unsigned int damage)
+void Creature::takeDamage(int damage)
 {
-	currentHP -= damage;
-	if (currentHP < 0) currentHP = 0;
+	cHP -= damage;
+	if (cHP < 0) cHP = 0;
 
 }
 /*
 	Recover the given amount of Health for this Creature
 */
-void Creature::recoverHealth(unsigned int recoveredHealth)
+void Creature::recoverHealth(int recoveredHealth)
 {
-	currentHP += recoveredHealth;
-	if (currentHP > maxHP) currentHP = maxHP;
+	cHP += recoveredHealth;
+	if (cHP > maxHP) cHP = maxHP;
 }

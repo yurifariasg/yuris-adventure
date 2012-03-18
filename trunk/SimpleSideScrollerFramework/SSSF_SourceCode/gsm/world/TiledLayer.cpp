@@ -254,6 +254,8 @@ void TiledLayer::init(int initColumns,
 	rows = initRows;
 	tileWidth = initTileWidth;
 	tileHeight = initTileHeight;
+	this->worldWidth = worldWidth;
+	this->worldHeight = worldHeight;
 	z = initZ;
 	collidableTiles = initCollidableTiles;
 	tileLayout = new vector<Tile*>();

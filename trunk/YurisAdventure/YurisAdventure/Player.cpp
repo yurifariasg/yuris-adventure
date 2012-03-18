@@ -8,6 +8,7 @@ Player::Player(unsigned int hp, unsigned int attack) : Creature(hp, attack)
 {
 	comboState = COMBO_NONE;
 	actionTime = 0;
+	isTimeToCalculateAttack = false;
 }
 /*
 	Process the Player Combo State for the given pressedKey
@@ -56,19 +57,52 @@ void Player::processCombo(unsigned int pressedKey)
 
 void Player::updateSprite()
 {
+
+	bool isFlying = getPhysicalProperties()->getBuoyancy();
+
+	if (isFlying) {
+
+		if (isAttacking()) {
+			// Jump Attack
+
+			if (isFacingRight()) setCurrentState(JUMPING_STATE_RIGHT);
+			else setCurrentState(JUMPING_STATE_LEFT);
+
+		} else {
+			if (isFacingRight()) setCurrentState(JUMPING_STATE_RIGHT);
+			else setCurrentState(JUMPING_STATE_LEFT);
+		}
+
+	} else {
+		// Idle Attacking or Moving
+
+		if (getPhysicalProperties()->getVelocityX() != 0) {
+			// Moving
+
+			if (isFacingRight()) setCurrentState(MOVING_RIGHT_STATE);
+			else setCurrentState(MOVING_LEFT_STATE);
+
+		} else if (isAttacking()) {
+
+			if (isFacingRight()) setCurrentState(ATTACKING_RIGHT_STATE);
+			else setCurrentState(ATTACKING_LEFT_STATE);
+
+		} else { // Is Idle
+
+			if (isFacingRight()) setCurrentState(IDLE_STATE_RIGHT);
+			else setCurrentState(IDLE_STATE_LEFT);
+
+		}
+	}
+
 	if (isAttacking() && actionTime == 0) {
 		actionTime = 20;
-		
-		if (isFacingRight()) setCurrentState(ATTACKING_RIGHT_STATE);
-		else setCurrentState(ATTACKING_LEFT_STATE);
 	}
 
 	if (actionTime == 1) {
 		stopAttack();
-
-		if (isFacingRight()) setCurrentState(IDLE_STATE_RIGHT);
-		else setCurrentState(IDLE_STATE_LEFT);
-	}
+		isTimeToCalculateAttack = true;
+	} else isTimeToCalculateAttack = false;
 
 	if (actionTime > 0) actionTime--;
 

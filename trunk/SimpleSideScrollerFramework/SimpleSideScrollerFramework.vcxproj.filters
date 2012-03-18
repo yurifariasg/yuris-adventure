@@ -206,6 +206,9 @@
     <ClInclude Include="SSSF_SourceCode\PlatformPlugins\WindowsPlugin\WindowsTimer.h">
       <Filter>SSSF_SourceCode\PlatformPlugins\WindowsPlugin</Filter>
     </ClInclude>
+    <ClInclude Include="EnchancedPhysics.h">
+      <Filter>SSSF_SourceCode\gsm\physics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

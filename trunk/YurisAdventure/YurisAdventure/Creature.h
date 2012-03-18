@@ -12,23 +12,23 @@
 class Creature
 {
 private:
-	unsigned int maxHP;
-	unsigned int currentHP;
-	unsigned int attack;
-	unsigned int defense;
+	int maxHP;
+	int cHP;
+	int attack;
+	int defense;
 	bool facedLeft;
 	bool attacking;
 
 public:
-	Creature(unsigned int, unsigned int);
+	Creature(int, int);
 	Creature*	clone();
-	unsigned int getCurrentHP() { return currentHP; };
+	int getCurrentHP() { return cHP; };
 
-	void takeDamage(unsigned int damage);
-	void recoverHealth(unsigned int recoveredHealth);
+	void takeDamage(int damage);
+	void recoverHealth(int recoveredHealth);
 
-	unsigned int getAttack() { return attack; };
-	bool isDead() { return currentHP == 0; };
+	int getAttack() { return attack; };
+	bool isDead() { return (cHP == 0); };
 	bool isFacingRight() { return !facedLeft; };
 	bool isFacingLeft() { return facedLeft; };
 	void changeFacingDirection() { facedLeft = !facedLeft; }

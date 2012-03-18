@@ -16,10 +16,12 @@ class Player : public Creature, public AnimatedSprite
 {
 private:
 	PlayerComboState comboState;
-	unsigned int actionTime;
+	int actionTime;
+	bool isTimeToCalculateAttack;
 
 public:
 	Player(unsigned int hp, unsigned int attack);
 	void processCombo(unsigned int pressedKey);
 	void updateSprite();
+	bool doAttackCalculation() { return isTimeToCalculateAttack; };
 };
