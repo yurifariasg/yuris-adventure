@@ -85,26 +85,10 @@ static const wstring	IDLE_STATE_RIGHT = L"IDLE_STATE_RIGHT";
 static const wstring	IDLE_STATE_LEFT = L"IDLE_STATE_LEFT";
 static const wstring	MOVING_RIGHT_STATE = L"MOVING_RIGHT_STATE";
 static const wstring	MOVING_LEFT_STATE = L"MOVING_LEFT_STATE";
-static const wstring	ATTACKING_RIGHT_STATE = L"ATTACKING_RIGHT_STATE";
-static const wstring	ATTACKING_LEFT_STATE = L"ATTACKING_LEFT_STATE";
-static const wstring	PLAYER_IDLE_RIGHT1_PATH = L"textures/world/sprites/mainchar/idle_right1.png";
-static const wstring	PLAYER_IDLE_RIGHT2_PATH = L"textures/world/sprites/mainchar/idle_right2.png";
-static const wstring	PLAYER_IDLE_LEFT1_PATH = L"textures/world/sprites/mainchar/idle_left1.png";
-static const wstring	PLAYER_IDLE_LEFT2_PATH = L"textures/world/sprites/mainchar/idle_left2.png";
-static const wstring	PLAYER_MOVING_RIGHT1_PATH = L"textures/world/sprites/mainchar/moving_right_1.png";
-static const wstring	PLAYER_MOVING_RIGHT2_PATH = L"textures/world/sprites/mainchar/moving_right_2.png";
-static const wstring	PLAYER_MOVING_RIGHT3_PATH = L"textures/world/sprites/mainchar/moving_right_3.png";
-static const wstring	PLAYER_MOVING_LEFT1_PATH = L"textures/world/sprites/mainchar/moving_left_1.png";
-static const wstring	PLAYER_MOVING_LEFT2_PATH = L"textures/world/sprites/mainchar/moving_left_2.png";
-static const wstring	PLAYER_MOVING_LEFT3_PATH = L"textures/world/sprites/mainchar/moving_left_3.png";
-static const wstring	PLAYER_ATTACKING_RIGHT1_PATH = L"textures/world/sprites/mainchar/sword_attack_right1.png";
-static const wstring	PLAYER_ATTACKING_RIGHT2_PATH = L"textures/world/sprites/mainchar/sword_attack_right2.png";
-static const wstring	PLAYER_ATTACKING_RIGHT3_PATH = L"textures/world/sprites/mainchar/sword_attack_right3.png";
-static const wstring	PLAYER_ATTACKING_RIGHT4_PATH = L"textures/world/sprites/mainchar/sword_attack_right4.png";
-static const wstring	PLAYER_ATTACKING_LEFT1_PATH = L"textures/world/sprites/mainchar/sword_attack_left1.png";
-static const wstring	PLAYER_ATTACKING_LEFT2_PATH = L"textures/world/sprites/mainchar/sword_attack_left2.png";
-static const wstring	PLAYER_ATTACKING_LEFT3_PATH = L"textures/world/sprites/mainchar/sword_attack_left3.png";
-static const wstring	PLAYER_ATTACKING_LEFT4_PATH = L"textures/world/sprites/mainchar/sword_attack_left4.png";
+static const wstring	ATTACKING_RIGHT_STATE = L"SWORD_ATTACK_RIGHT";
+static const wstring	ATTACKING_LEFT_STATE = L"SWORD_ATTACK_LEFT";
+static const wstring	JUMPING_STATE_RIGHT = L"JUMPING_STATE_RIGHT";
+static const wstring	JUMPING_STATE_LEFT = L"JUMPING_STATE_LEFT";
 
 // BOTs STATES
 static const wstring	BOT_IDLE_RIGHT = L"BOT_IDLE_RIGHT";
@@ -113,6 +97,7 @@ static const wstring	BOT_MOVING_RIGHT = L"BOT_MOVING_RIGHT";
 static const wstring	BOT_MOVING_LEFT = L"BOT_MOVING_LEFT";
 static const wstring	BOT_ATTACKING_RIGHT = L"BOT_ATTACKING_RIGHT";
 static const wstring	BOT_ATTACKING_LEFT = L"BOT_ATTACKING_LEFT";
+static const wstring	BOT_STATE_TAKING_DAMAGE = L"BOT_TAKING_DAMAGE";
 
 // Keys
 const unsigned int W_KEY = (unsigned int)'W';

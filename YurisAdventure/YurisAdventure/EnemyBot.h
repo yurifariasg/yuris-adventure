@@ -17,12 +17,14 @@ class EnemyBot : public Bot, public Creature
 private:
 	BotVelocity velocity;
 	BotState state;
-	unsigned int actionTime;
+	int actionTime;
 
 	int botSpeed;
 
 public:
-	EnemyBot(unsigned int hp, unsigned int attack, BotVelocity);
+	EnemyBot(int hp, int attack, BotVelocity);
 	Bot*	clone();
 	void	think(Game *game);
+	void	setState(BotState newState) { state = newState; };
+	void	setBotSpeed(int newSpeed) { botSpeed = newSpeed; };
 };

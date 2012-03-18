@@ -69,6 +69,8 @@ unsigned int AnimatedSprite::getCurrentImageID()
 */
 void AnimatedSprite::setCurrentState(wstring newState) 
 {
+	if (newState == currentState) return;
+
 	// SET THE ANIMATINO STATE
 	currentState = newState;
 

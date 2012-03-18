@@ -232,52 +232,9 @@ void YADataLoader::loadWorld(Game *game, int levelNumber)
 
 	// Sprites
 
-	// AND NOW LET'S MAKE A MAIN CHARACTER SPRITE
-	AnimatedSpriteType *ast = new AnimatedSpriteType();
-
-	int spriteWidth = 140, spriteHeight = 120;
-
-	// SIZE OF SPRITE IMAGES
-	ast->setTextureSize(spriteWidth, spriteHeight);
-
-	// NOW LET'S ADD AN ANIMATION STATE
-	// FIRST THE NAME
-	ast->addAnimationSequence(IDLE_STATE_RIGHT);
-	ast->addAnimationFrame(IDLE_STATE_RIGHT, worldTextureManager->loadTexture(PLAYER_IDLE_RIGHT1_PATH), 25);
-	ast->addAnimationFrame(IDLE_STATE_RIGHT, worldTextureManager->loadTexture(PLAYER_IDLE_RIGHT2_PATH), 25);
-
-	ast->addAnimationSequence(IDLE_STATE_LEFT);
-	ast->addAnimationFrame(IDLE_STATE_LEFT, worldTextureManager->loadTexture(PLAYER_IDLE_LEFT1_PATH), 25);
-	ast->addAnimationFrame(IDLE_STATE_LEFT, worldTextureManager->loadTexture(PLAYER_IDLE_LEFT2_PATH), 25);
-
-	ast->addAnimationSequence(MOVING_RIGHT_STATE);
-	ast->addAnimationFrame(MOVING_RIGHT_STATE, worldTextureManager->loadTexture(PLAYER_MOVING_RIGHT1_PATH), 10);
-	ast->addAnimationFrame(MOVING_RIGHT_STATE, worldTextureManager->loadTexture(PLAYER_MOVING_RIGHT2_PATH), 10);
-	ast->addAnimationFrame(MOVING_RIGHT_STATE, worldTextureManager->loadTexture(PLAYER_MOVING_RIGHT3_PATH), 10);
-
-	ast->addAnimationSequence(MOVING_LEFT_STATE);
-	ast->addAnimationFrame(MOVING_LEFT_STATE, worldTextureManager->loadTexture(PLAYER_MOVING_LEFT1_PATH), 10);
-	ast->addAnimationFrame(MOVING_LEFT_STATE, worldTextureManager->loadTexture(PLAYER_MOVING_LEFT2_PATH), 10);
-	ast->addAnimationFrame(MOVING_LEFT_STATE, worldTextureManager->loadTexture(PLAYER_MOVING_LEFT3_PATH), 10);
-
-	ast->addAnimationSequence(ATTACKING_RIGHT_STATE);
-	ast->addAnimationFrame(ATTACKING_RIGHT_STATE, worldTextureManager->loadTexture(PLAYER_ATTACKING_RIGHT1_PATH), 5);
-	ast->addAnimationFrame(ATTACKING_RIGHT_STATE, worldTextureManager->loadTexture(PLAYER_ATTACKING_RIGHT2_PATH), 5);
-	ast->addAnimationFrame(ATTACKING_RIGHT_STATE, worldTextureManager->loadTexture(PLAYER_ATTACKING_RIGHT3_PATH), 5);
-	ast->addAnimationFrame(ATTACKING_RIGHT_STATE, worldTextureManager->loadTexture(PLAYER_ATTACKING_RIGHT4_PATH), 5);
-
-	ast->addAnimationSequence(ATTACKING_LEFT_STATE);
-	ast->addAnimationFrame(ATTACKING_LEFT_STATE, worldTextureManager->loadTexture(PLAYER_ATTACKING_LEFT1_PATH), 5);
-	ast->addAnimationFrame(ATTACKING_LEFT_STATE, worldTextureManager->loadTexture(PLAYER_ATTACKING_LEFT2_PATH), 5);
-	ast->addAnimationFrame(ATTACKING_LEFT_STATE, worldTextureManager->loadTexture(PLAYER_ATTACKING_LEFT3_PATH), 5);
-	ast->addAnimationFrame(ATTACKING_LEFT_STATE, worldTextureManager->loadTexture(PLAYER_ATTACKING_LEFT4_PATH), 5);
-
 	SpriteManager *spriteManager = gsm->getSpriteManager();
-	unsigned int spriteTypeID = spriteManager->addSpriteType(ast);
-	ast->setSpriteTypeID(spriteTypeID);
-
 	AnimatedSprite *player = spriteManager->getPlayer();
-	player->setSpriteType(ast);
+	loadSprite(game, L"data/Sprites/PlayerSprite.txt", player);
 	PhysicalProperties *playerProps = player->getPhysicalProperties();
 	playerProps->setX(100);
 	playerProps->setY(500);
@@ -286,18 +243,6 @@ void YADataLoader::loadWorld(Game *game, int levelNumber)
 	playerProps->setAccelerationY(0);
 	playerProps->setBuoyancy(true);
 
-	int boundVolWidth = 50;
-	int boundVolHeight = 110;
-
-	player->getBoundingVolume()->setWidth(boundVolWidth);
-	player->getBoundingVolume()->setHeight(boundVolHeight);
-
-	// X and Y Based on the Physical Properties
-	// Real X = pp->getX() + bb->getX() // same for Y
-	player->getBoundingVolume()->setX((spriteWidth / 2) - (boundVolWidth / 2));
-	player->getBoundingVolume()->setY((spriteHeight / 2) - (boundVolHeight / 2));
-
-
 	// WE WILL SET LOTS OF OTHER PROPERTIES ONCE
 	// WE START DOING COLLISIONS AND PHYSICS
 
@@ -305,7 +250,8 @@ void YADataLoader::loadWorld(Game *game, int levelNumber)
 	player->setCurrentState(IDLE_STATE_RIGHT);
 
 	// Add our Bots
-	addBots(game, respawnPoints);
+	if (BOTS_ACTIVE)
+		addBots(game, respawnPoints);
 }
 
 /*
@@ -673,7 +619,7 @@ void YADataLoader::addBots(Game* game, vector<int>* respawnPoints)
 	ast = new AnimatedSpriteType();
 	vector<unsigned int> botImageIDs;
 
-	botImageIDs.push_back(worldTextureManager->loadTexture(L"./textures/world/sprites/green_monster/mo_moving_right1.png"));
+	/*botImageIDs.push_back(worldTextureManager->loadTexture(L"./textures/world/sprites/green_monster/mo_moving_right1.png"));
 	botImageIDs.push_back(worldTextureManager->loadTexture(L"./textures/world/sprites/green_monster/mo_moving_right2.png"));
 	botImageIDs.push_back(worldTextureManager->loadTexture(L"./textures/world/sprites/green_monster/mo_moving_right3.png"));
 	botImageIDs.push_back(worldTextureManager->loadTexture(L"./textures/world/sprites/green_monster/mo_moving_right4.png"));
@@ -707,13 +653,14 @@ void YADataLoader::addBots(Game* game, vector<int>* respawnPoints)
 	botImageIDs.clear();
 
 	spriteTypeID = spriteManager->addSpriteType(ast);
-	ast->setSpriteTypeID(spriteTypeID);
+	ast->setSpriteTypeID(spriteTypeID);*/
 
 	// Add Bots
 	for (int i = 0; i < 10; i++)
 	{
 		EnemyBot *bot = new EnemyBot(100, 50, BOT_SLOW);
-		bot->setSpriteType(ast);
+		//bot->setSpriteType(ast);
+		loadSprite(game, L"data/Sprites/GreenMonster.txt", bot);
 		bot->setCurrentState(BOT_IDLE_LEFT);
 		bot->setAlpha(255);
 		PhysicalProperties *pp = bot->getPhysicalProperties();
@@ -855,4 +802,53 @@ void YADataLoader::addBots(Game* game, vector<int>* respawnPoints)
 		pp->setAccelerationY(0.0f);
 		spriteManager->addBot(bot);
 	}
+}
+
+void YADataLoader::loadSprite(Game* game, wstring fileName, AnimatedSprite* sprite)
+{
+	map<wstring,wstring> *properties = new map<wstring,wstring>();
+	loadGameProperties(game, properties, fileName);
+
+	int spriteWidth, spriteHeight, bbX, bbY, bbWidth, bbHeight, spriteCount, frameCount, frameTime;
+	wstring stateName, frameSource;
+	AnimatedSpriteType *ast = new AnimatedSpriteType();
+
+	spriteWidth = convertToInt((*properties)[L"SPRITE_WIDTH"]);
+	spriteHeight = convertToInt((*properties)[L"SPRITE_HEIGHT"]);
+	bbX = convertToInt((*properties)[L"BOUNDING_BOX_X"]);
+	bbY = convertToInt((*properties)[L"BOUNDING_BOX_Y"]);
+	bbWidth = convertToInt((*properties)[L"BOUNDING_BOX_WIDTH"]);
+	bbHeight = convertToInt((*properties)[L"BOUNDING_BOX_HEIGHT"]);
+	spriteCount = convertToInt((*properties)[L"NUMBER_OF_SPRITES"]);
+
+	ast->setTextureSize(spriteWidth, spriteHeight);
+
+	for (int i = 1 ; i <= spriteCount ; i++) {
+
+		// Load Each State
+
+		stateName = (*properties)[concat(i, L"STATE_NAME")];
+		frameCount = convertToInt((*properties)[concat(i, L"FRAME_COUNT")]);
+
+		ast->addAnimationSequence(stateName);
+
+		for (int j = 1 ; j <= frameCount ; j++) {
+			// Load Each Frame
+
+			frameSource = (*properties)[concat(i, concat(j, L"FRAME_SOURCE"))];
+			frameTime = convertToInt((*properties)[concat(i, concat(j, L"FRAME_TIME"))]);
+
+			ast->addAnimationFrame(stateName, game->getGraphics()->getWorldTextureManager()->loadTexture(frameSource), frameTime);
+
+		}
+	}
+
+	unsigned int spriteTypeID = game->getGSM()->getSpriteManager()->addSpriteType(ast);
+	ast->setSpriteTypeID(spriteTypeID);
+	sprite->setSpriteType(ast);
+	sprite->getBoundingVolume()->setX(bbX);
+	sprite->getBoundingVolume()->setY(bbY);
+	sprite->getBoundingVolume()->setWidth(bbWidth);
+	sprite->getBoundingVolume()->setHeight(bbHeight);
+
 }

@@ -78,6 +78,10 @@ void YAKeyEventHandler::handleKeyEvents(Game *game)
 			if (!pp->getBuoyancy()) {
 				pp->setAccelerationY(-40);
 				pp->setBuoyancy(true);
+				/*if (player->isFacingRight())
+					game->getGSM()->getSpriteManager()->getPlayer()->setCurrentState(JUMPING_STATE_RIGHT);
+				else
+					game->getGSM()->getSpriteManager()->getPlayer()->setCurrentState(JUMPING_STATE_LEFT);*/
 			}
 
 		}
@@ -95,22 +99,23 @@ void YAKeyEventHandler::handleKeyEvents(Game *game)
 			vX = PLAYER_SPEED;
 		}
 
-		if (!input->isKeyDown(D_KEY) && !input->isKeyDown(A_KEY) && !player->isAttacking()) {
+		/*if (!input->isKeyDown(D_KEY) && !input->isKeyDown(A_KEY) && !player->isAttacking()
+			&& !player->getPhysicalProperties()->getBuoyancy()) {
 
 			// Hes IDLE
 			if (player->isFacingRight()) game->getGSM()->getSpriteManager()->getPlayer()->setCurrentState(IDLE_STATE_RIGHT);
 			else game->getGSM()->getSpriteManager()->getPlayer()->setCurrentState(IDLE_STATE_LEFT);
 
-		}
+		}*/
 
 		if (input->isKeyDownForFirstTime(D_KEY)) {
 
-			game->getGSM()->getSpriteManager()->getPlayer()->setCurrentState(MOVING_RIGHT_STATE);
+			//game->getGSM()->getSpriteManager()->getPlayer()->setCurrentState(MOVING_RIGHT_STATE);
 			if (player->isFacingLeft()) player->changeFacingDirection();
 
 		} else if (input->isKeyDownForFirstTime(A_KEY)) {
 
-			game->getGSM()->getSpriteManager()->getPlayer()->setCurrentState(MOVING_LEFT_STATE);
+			//game->getGSM()->getSpriteManager()->getPlayer()->setCurrentState(MOVING_LEFT_STATE);
 			if (player->isFacingRight()) player->changeFacingDirection();
 
 		}

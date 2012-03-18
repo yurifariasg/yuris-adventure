@@ -5,7 +5,7 @@
 class PhysicalProperties
 {
 protected:
-	float buoyancy;
+	bool buoyancy;
 	float mass;
 	bool  collidable;
 	float coefficientOfRestitution;
@@ -22,7 +22,7 @@ public:
 	~PhysicalProperties()	{}
 
 	// INLINED METHODS
-	float getBuoyancy()						{ return buoyancy;				}
+	bool getBuoyancy()						{ return buoyancy;				}
 	float getMass()							{ return mass;					}
 	float getCoefficientOfRestitution()		{ return coefficientOfRestitution;	}
 	bool isCollidable()						{ return collidable;			}
@@ -33,7 +33,7 @@ public:
 	float getVelocityY()					{ return velocityY;				}
 	float getAccelerationX()				{ return accelerationX;			}
 	float getAccelerationY()				{ return accelerationY;			}
-	void setBuoyancy(float initBuoyancy)	{ buoyancy = initBuoyancy;		}
+	void setBuoyancy(bool initBuoyancy)	{ buoyancy = initBuoyancy;		}
 	void setMass(float initMass)			{ mass = initMass;				}
 	void setCofficientOfRestitution(float cR) { coefficientOfRestitution = cR; }
 	void setCollidable(bool initCollidable)	{ collidable = initCollidable;	}

@@ -78,6 +78,7 @@
     <None Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="EnchancedPhysics.h" />
     <ClInclude Include="SSSF_SourceCode\dataLoader\GameDataLoader.h" />
     <ClInclude Include="SSSF_SourceCode\game\Game.h" />
     <ClInclude Include="SSSF_SourceCode\game\IllegalArgumentException.h" />

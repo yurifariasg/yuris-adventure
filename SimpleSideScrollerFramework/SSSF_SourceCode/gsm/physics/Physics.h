@@ -13,11 +13,8 @@
 
 #pragma once
 #include "stdafx.h"
+#include "EnchancedPhysics.h"
 #include "SSSF_SourceCode\game\Game.h"
-//#include "SSSF_SourceCode\gsm\sprite\AnimatedSprite.h"
-//#include "SSSF_SourceCode\gsm\world\TiledLayer.h"
-
-
 
 const float DEFAULT_MAX_VELOCITY = 100.0f;
 const float DEFAULT_GRAVITY = 4.0f;
@@ -35,7 +32,10 @@ private:
 	// THINK OF THIS AS THE WORLD'S TERMINAL VELOCITY
 	float maxVelocity;
 
+	EnchancedPhysics* physicsE;
+
 	void doStaticPhysics(AnimatedSprite*, TiledLayer*, Viewport*);
+
 	
 
 public:
@@ -44,6 +44,7 @@ public:
 	float	getMaxVelocity()						{ return maxVelocity;				}
 	void	setGravity(float initGravity)			{ gravity = initGravity;			}
 	void	setMaxVelocity(float initMaxVelocity)	{ maxVelocity = initMaxVelocity;	}
+	void	setEnchancedPhysics(EnchancedPhysics* e) { physicsE = e; }
 	int divideSafe(int i, int j) {
 
 		double division = (double) i / (double) j;

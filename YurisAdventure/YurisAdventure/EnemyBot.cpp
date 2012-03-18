@@ -5,7 +5,7 @@
 #include "SSSF_SourceCode\gsm\state\GameStateManager.h"
 #include "SSSF_SourceCode\gsm\physics\Physics.h"
 
-EnemyBot::EnemyBot(unsigned int hp, unsigned int attack, BotVelocity velocity) : Creature(hp, attack)
+EnemyBot::EnemyBot(int hp, int attack, BotVelocity velocity) : Creature(hp, attack)
 {
 	this->velocity = velocity;
 	state = BOT_IDLE;
@@ -16,6 +16,13 @@ EnemyBot::EnemyBot(unsigned int hp, unsigned int attack, BotVelocity velocity) :
 
 void EnemyBot::think(Game *game)
 {
+	if (state == BOT_TAKING_DAMAGE) {
+		setCurrentState(BOT_STATE_TAKING_DAMAGE);
+
+		actionTime = 20;
+		state = BOT_IDLE;
+
+	}
 
 	if (actionTime == 0) { // Action Time Over, Make a Decision!
 
@@ -57,10 +64,7 @@ void EnemyBot::think(Game *game)
 			else setCurrentState(BOT_IDLE_RIGHT);
 
 			state = BOT_IDLE;
-
-			this->pp.setVelocitySafely(
-				game->getGSM()->getPhysics(),
-				0, 0);
+			botSpeed = 0;
 
 			// For some time...
 			actionTime = 100 + (rand() % 100);
@@ -69,7 +73,7 @@ void EnemyBot::think(Game *game)
 	} else {
 		actionTime--;
 
-		if (state == BOT_MOVING) this->pp.setVelocity(botSpeed, 0);
+		this->pp.setVelocity(botSpeed, 0);
 	}
 }
 

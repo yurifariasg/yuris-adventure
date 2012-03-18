@@ -1,12 +1,12 @@
-O                                                           
-O                                                           
-O                                                           
-O   *                   *            *            *         
-OIOIOIOIOIOP      UIOIOIOIOIOIOIOIOIOIOIOP      UIOIOIOIOIOI
-O            AF                            AF               
-O           AWR                           AWR               
-O          AWXR                          AWXR               
-O         AWXZESDSDSDF                  AWXXR               
-O       *AWZZZXCVZXCVEF      *         AWZXXR   *     *     
-DSDSDSDDSWZXCVZZXCVZXZESDSDSDSDSDSDSDDSWZXCVESDSDSDSDSDSDSDS
+                                                            
+                                                            
+                                                            
+    *                   *            *            *         
+OIOIOIOIOIOP       UIOIOIOIOIOIOIOIOIOIOP      UIOIOIOIOIOIP
+               AF                          AF               
+              AWR                         AWR               
+             AWXR                        AWXR               
+            AWXZESDSDSDF                AWXXR               
+          *AWZZZXCVZXCVEF      *       AWZXXR   *     *     
+SDSDSDSDSDSWCVZZXCVZXZESDSDSDSDSDSDSDDSWZXCVESDSDSDSDSDSDSDS
 ZXCVZXCVZXCVZXCVZXCVZXCVZXCVZXCVZXCVZXCVZXCVZXCVZXCVZXCVZXCV

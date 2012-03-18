@@ -43,6 +43,8 @@
 #include "SSSF_SourceCode\PlatformPlugins\DirectXPlugin\DirectXGraphics.h"
 #include "SSSF_SourceCode\PlatformPlugins\DirectXPlugin\DirectXTextureManager.h"
 
+#include "FightPhysics.h"
+
 /*
 	WinMain - This is the application's starting point. In this method we will construct a Game object, 
 	then initialize all the platform-dependent technologies, then construct all the custom data for our 
@@ -58,6 +60,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 
 	// Put our SpriteManager
 	dummyGame->getGSM()->setSpriteManager(new YASpriteManager());
+	dummyGame->getGSM()->getPhysics()->setEnchancedPhysics((new FightPhysics()));
 
 	// FIRST WE'LL SETUP THE DATA LOADER, SINCE IT MAY NEED TO READ
 	// IN DATA TO SETUP OTHER STUFF

@@ -46,6 +46,8 @@ protected:
 	int tileHeight;
 	int layerWidth;
 	int layerHeight;
+	int worldWidth;
+	int worldHeight;
 	int z;
 	// NOTE: z IS HERE IN CASE WE WANT TO LAYER SPRITES
 	// IN FRONT OF OR BEHIND LAYERS IN A GAME WORLD
@@ -58,6 +60,8 @@ public:
 	int getTileWidth()			{ return tileWidth;		}
 	int getLayerWidth()			{ return layerWidth;	}
 	int getLayerHeight()		{ return layerHeight;	}
+	int getWorldWidth()			{ return worldWidth;	}
+	int getWorldHeight()		{ return worldHeight;	}
 	int getZ()					{ return z;				}
 
 	// INLINED MUTATOR METHOD
