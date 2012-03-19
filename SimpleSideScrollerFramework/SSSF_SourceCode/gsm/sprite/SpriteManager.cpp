@@ -134,6 +134,8 @@ AnimatedSpriteType* SpriteManager::getSpriteType(unsigned int typeIndex)
 void SpriteManager::unloadSprites()
 {
 	// @TODO
+	clearSprites();
+	bots.clear();
 }
 
 Bot* SpriteManager::removeBot(Bot *botToRemove)

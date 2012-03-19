@@ -3,7 +3,7 @@
 
 void FightPhysics::updatePhysics(Game* game)
 {
-	Player* player = (Player*) game->getGSM()->getSpriteManager()->getPlayer();
+	Player* player = dynamic_cast<Player*>(game->getGSM()->getSpriteManager()->getPlayer());
 	GameStateManager *gsm = game->getGSM();
 	SpriteManager *sm = gsm->getSpriteManager();
 	PhysicalProperties *pp;
@@ -17,7 +17,6 @@ void FightPhysics::updatePhysics(Game* game)
 			bbY = pp->getY() + bot->getBoundingVolume()->getY(),
 			bbWidth = bot->getBoundingVolume()->getWidth(),
 			bbHeight = bot->getBoundingVolume()->getHeight();
-		Bot* toRemove = NULL;
 
 		if (wasAttacking && !player->isAttacking()) {
 
@@ -36,26 +35,58 @@ void FightPhysics::updatePhysics(Game* game)
 				attackingPointX, attackingPointY, 20, 20,
 				bbX, bbY, bbWidth, bbHeight)) {
 
-				dynamic_cast<EnemyBot*>(bot)->takeDamage(10);
+				dynamic_cast<EnemyBot*>(bot)->takeDamage(player->getAttack());
 				dynamic_cast<EnemyBot*>(bot)->setState(BOT_TAKING_DAMAGE);
 
 				if (player->isFacingLeft()) dynamic_cast<EnemyBot*>(bot)->setBotSpeed(-PLAYER_SPEED);
 				else dynamic_cast<EnemyBot*>(bot)->setBotSpeed(PLAYER_SPEED);
 
 			}
-
-			if (dynamic_cast<EnemyBot*>(bot)->isDead()) {
-				toRemove = bot;
-			} else {
-				toRemove = NULL;
-			}
-
-
 		}
 
 		botIterator++;
-		if (toRemove != NULL)
-			sm->removeBot(toRemove);
+	}
+
+	// Bots Against Player
+
+	botIterator = sm->getBotsIterator();
+	while (botIterator != sm->getEndOfBotsIterator())
+	{
+		EnemyBot *bot = dynamic_cast<EnemyBot*>(*botIterator);
+		pp = player->getPhysicalProperties();
+		int bbX = pp->getX() + player->getBoundingVolume()->getX(),
+			bbY = pp->getY() + player->getBoundingVolume()->getY(),
+			bbWidth = player->getBoundingVolume()->getWidth(),
+			bbHeight = player->getBoundingVolume()->getHeight();
+
+		if (bot->isAttacking()) {
+
+			int attackingPointX = bot->getPhysicalProperties()->getX() +
+				bot->getBoundingVolume()->getX() +
+				(bot->getBoundingVolume()->getWidth() / 2),
+				attackingPointY = bot->getPhysicalProperties()->getY() +
+				bot->getBoundingVolume()->getY() +
+				(bot->getBoundingVolume()->getHeight() / 2);
+
+			if (bot->isFacingRight()) attackingPointX += 30;
+			else attackingPointX -= 30;
+
+
+			if (hasAABBCollision(
+				attackingPointX, attackingPointY, 20, 20,
+				bbX, bbY, bbWidth, bbHeight)) {
+
+				player->takeDamage(bot->getAttack());
+				bot->stopAttack();
+				//dynamic_cast<EnemyBot*>(bot)->setState(BOT_TAKING_DAMAGE);
+
+				//if (bot->isFacingLeft()) dynamic_cast<EnemyBot*>(bot)->setBotSpeed(-PLAYER_SPEED);
+				//else dynamic_cast<EnemyBot*>(bot)->setBotSpeed(PLAYER_SPEED);
+
+			}
+		}
+
+		botIterator++;
 	}
 
 	wasAttacking = player->isAttacking();

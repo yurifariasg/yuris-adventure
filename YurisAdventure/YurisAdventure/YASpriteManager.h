@@ -23,5 +23,8 @@ public:
 	YASpriteManager();
 	~YASpriteManager();
 	Player* getPlayer() { return player; }
+	void reloadPlayer();
+	void update(Game *game);
+	void unloadSprites();
 
 };

@@ -4,11 +4,10 @@
 /*
 	Creates a Player
 */
-Player::Player(unsigned int hp, unsigned int attack) : Creature(hp, attack)
+Player::Player(int hp, int mana, int attack) : Creature(hp, mana, attack)
 {
 	comboState = COMBO_NONE;
 	actionTime = 0;
-	isTimeToCalculateAttack = false;
 }
 /*
 	Process the Player Combo State for the given pressedKey
@@ -58,6 +57,8 @@ void Player::processCombo(unsigned int pressedKey)
 void Player::updateSprite()
 {
 
+	if (!isDead()) { // is dead if statement
+
 	bool isFlying = getPhysicalProperties()->getBuoyancy();
 
 	if (isFlying) {
@@ -87,6 +88,12 @@ void Player::updateSprite()
 			if (isFacingRight()) setCurrentState(ATTACKING_RIGHT_STATE);
 			else setCurrentState(ATTACKING_LEFT_STATE);
 
+		} else if (isCharging) {
+
+			if (isFacingRight()) setCurrentState(CHARGING_STATE_RIGHT);
+			else setCurrentState(CHARGING_STATE_LEFT);
+		
+		
 		} else { // Is Idle
 
 			if (isFacingRight()) setCurrentState(IDLE_STATE_RIGHT);
@@ -99,12 +106,23 @@ void Player::updateSprite()
 		actionTime = 20;
 	}
 
-	if (actionTime == 1) {
+	if (actionTime == 1 && isAttacking())
 		stopAttack();
-		isTimeToCalculateAttack = true;
-	} else isTimeToCalculateAttack = false;
 
-	if (actionTime > 0) actionTime--;
+	} else if (actionTime == 0 || isAttacking()) { // is dead endif statement
+		stopAttack();
+
+		if (isFacingRight())
+			setCurrentState(DYING_STATE_RIGHT);
+		else setCurrentState(DYING_STATE_LEFT);
+
+		actionTime = 200;
+	}
+
+	if (actionTime > 0) {
+		if((isDead() && actionTime > 1)) { actionTime--;
+		} else if (!isDead()) { actionTime--; }
+	}
 
 	AnimatedSprite::updateSprite();
 }
