@@ -64,6 +64,7 @@ void YAKeyEventHandler::handleKeyEvents(Game *game)
 
 		Player* player = ((YASpriteManager*) game->getGSM()->getSpriteManager())->getPlayer();
 
+		if (!player->isDead()) { // isDead if statement
 
 		// WASD AND DIRECTION KEY PRESSES WILL CONTROL THE PLAYER,
 		// SO WE'LL UPDATE THE PLAYER VELOCITY WHEN THESE KEYS ARE
@@ -71,7 +72,14 @@ void YAKeyEventHandler::handleKeyEvents(Game *game)
 		float vX = pp->getVelocityX();
 		float vY = pp->getVelocityY();
 
-		if (input->isKeyDownForFirstTime(W_KEY) && !player->isAttacking())
+
+		if (input->isKeyDown(ACTION_KEY) && (player->canDoSomething() || !player->notCharging())) {
+			player->charges();
+			player->recoverMana(1);
+
+		} else player->stopCharging();
+
+		if (input->isKeyDownForFirstTime(W_KEY) && player->canDoSomething())
 		{
 
 			// Jump
@@ -85,7 +93,7 @@ void YAKeyEventHandler::handleKeyEvents(Game *game)
 			}
 
 		}
-		if (input->isKeyDown(A_KEY) && (!player->isAttacking() || pp->getBuoyancy()))
+		if (input->isKeyDown(A_KEY) && (player->canDoSomething() || pp->getBuoyancy()))
 		{
 			vX = -PLAYER_SPEED;
 		}
@@ -94,7 +102,7 @@ void YAKeyEventHandler::handleKeyEvents(Game *game)
 			//vY = PLAYER_SPEED;
 			// Crouch
 		}
-		if (input->isKeyDown(D_KEY) && (!player->isAttacking() || pp->getBuoyancy()))
+		if (input->isKeyDown(D_KEY) && (player->canDoSomething() || pp->getBuoyancy()))
 		{
 			vX = PLAYER_SPEED;
 		}
@@ -124,16 +132,25 @@ void YAKeyEventHandler::handleKeyEvents(Game *game)
 			game->getGSM()->goToInGameMenu();
 		}
 
-		// Attacking
+		// Cannot Fly
 
-		if (input->isKeyDownForFirstTime(SWORD_ATTACK_KEY) && !player->isAttacking()) {
-			player->startAttack();
-			player->processCombo(SWORD_ATTACK_KEY);
+		if (!player->getPhysicalProperties()->getBuoyancy()) {
+
+			if (input->isKeyDownForFirstTime(SWORD_ATTACK_KEY) && !player->isAttacking()) {
+				player->startAttack();
+				player->processCombo(SWORD_ATTACK_KEY);
+			} else if (input->isKeyDownForFirstTime(MAGIC_ATTACK_KEY)) {
+
+			}
 		}
-		
+
 		// NOW SET THE ACTUAL VELOCITY
 		Physics *physics = gsm->getPhysics();
 		pp->setVelocitySafely(physics, vX, vY);
+
+		} // is dead end if statement
+		
+
 
 		// NOTE THAT THE VIEWPORT SHOULD FOLLOW THE PLAYER, AND SO SHOULD BE CORRECTED AFTER PHYSICS
 		// ARE APPLIED. I HAVE PROVIDED A SIMPLE WAY OF DOING SO, WHICH SHOULD BE IMPROVED, DEPENDING

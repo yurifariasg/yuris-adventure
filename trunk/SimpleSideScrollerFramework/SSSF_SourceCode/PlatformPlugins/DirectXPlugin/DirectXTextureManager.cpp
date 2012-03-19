@@ -27,8 +27,7 @@ DirectXTextureManager::DirectXTextureManager()
 */
 DirectXTextureManager::~DirectXTextureManager()
 {
-	// TODO - GO THROUGH TEXTURE MANAGER AND DELETE EVERYTHING
-//	delete textures;
+	clear();
 }
 
 /*

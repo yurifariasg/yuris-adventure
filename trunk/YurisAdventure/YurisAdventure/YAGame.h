@@ -89,6 +89,10 @@ static const wstring	ATTACKING_RIGHT_STATE = L"SWORD_ATTACK_RIGHT";
 static const wstring	ATTACKING_LEFT_STATE = L"SWORD_ATTACK_LEFT";
 static const wstring	JUMPING_STATE_RIGHT = L"JUMPING_STATE_RIGHT";
 static const wstring	JUMPING_STATE_LEFT = L"JUMPING_STATE_LEFT";
+static const wstring	DYING_STATE_RIGHT = L"DYING_STATE_RIGHT";
+static const wstring	DYING_STATE_LEFT = L"DYING_STATE_LEFT";
+static const wstring	CHARGING_STATE_RIGHT = L"CHARGING_STATE_RIGHT";
+static const wstring	CHARGING_STATE_LEFT = L"CHARGING_STATE_LEFT";
 
 // BOTs STATES
 static const wstring	BOT_IDLE_RIGHT = L"BOT_IDLE_RIGHT";
@@ -98,6 +102,7 @@ static const wstring	BOT_MOVING_LEFT = L"BOT_MOVING_LEFT";
 static const wstring	BOT_ATTACKING_RIGHT = L"BOT_ATTACKING_RIGHT";
 static const wstring	BOT_ATTACKING_LEFT = L"BOT_ATTACKING_LEFT";
 static const wstring	BOT_STATE_TAKING_DAMAGE = L"BOT_TAKING_DAMAGE";
+static const wstring	BOT_STATE_DYING = L"BOT_DYING";
 
 // Keys
 const unsigned int W_KEY = (unsigned int)'W';
@@ -123,6 +128,7 @@ static const int		TILE_HEIGHT = 64;
 static const int		Z_LAYER = 0;
 
 static const int PLAYER_HP = 100;
+static const int PLAYER_MANA = 100;
 static const int PLAYER_ATTACK = 50;
 
 // Player Speed declared in Game.h

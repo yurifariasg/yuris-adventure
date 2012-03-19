@@ -17,11 +17,23 @@ class Player : public Creature, public AnimatedSprite
 private:
 	PlayerComboState comboState;
 	int actionTime;
-	bool isTimeToCalculateAttack;
+	bool isCharging;
 
 public:
-	Player(unsigned int hp, unsigned int attack);
+	Player(int hp, int mana, int attack);
 	void processCombo(unsigned int pressedKey);
 	void updateSprite();
-	bool doAttackCalculation() { return isTimeToCalculateAttack; };
+	int getActionTime() { return actionTime; }
+
+	void charges() { isCharging = true; }
+	void stopCharging() { isCharging = false; }
+
+	bool canDoSomething() { return !isDead() && !isCharging && !isAttacking(); }
+	bool notCharging() { return !isCharging; }
+
+	void reloadData() {
+		actionTime = 0;
+		comboState = COMBO_NONE;
+		Creature::resetData();
+	}
 };

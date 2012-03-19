@@ -4,11 +4,23 @@
 /*
 	Creates a Creature with the given amount of health and attack
 */
-Creature::Creature(int hp, int attack)
+Creature::Creature(int hp, int atk)
+{
+	init(hp, 0, atk);
+}
+
+Creature::Creature(int hp, int mana, int atk)
+{
+	init(hp, mana, atk);
+}
+
+void Creature::init(int hp, int mana, int atk)
 {
 	maxHP = hp;
 	cHP = hp;
-	attack = attack;
+	maxMana = mana;
+	cMana = mana;
+	attack = atk;
 	defense = 0;
 	facedLeft = false; // Initialize Facing Right
 	attacking = false;

@@ -43,6 +43,7 @@ public:
 	// INLINED ACCESSOR METHODS
 	int						getNumberOfSprites()	{ return bots.size();		}
 	virtual AnimatedSprite*			getPlayer() = 0;
+	virtual void reloadPlayer() = 0;
 	list<Bot*>::iterator	getBotsIterator()		{ return bots.begin();		}
 	list<Bot*>::iterator	getEndOfBotsIterator()	{ return bots.end();		}
 
@@ -54,6 +55,7 @@ public:
 	void				clearSprites();
 	AnimatedSpriteType* getSpriteType(unsigned int typeIndex);
 	Bot*				removeBot(Bot *botToRemove);
-	void				unloadSprites();
-	void				update(Game *game);
+	void clearBots() { bots.clear(); }
+	virtual void				unloadSprites();
+	virtual void				update(Game *game);
 };

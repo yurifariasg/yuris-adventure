@@ -16,6 +16,7 @@
 #include "SSSF_SourceCode\text\GameText.h"
 #include "SSSF_SourceCode\timer\GameTimer.h"
 #include "SSSF_SourceCode\PlatformPlugins\WindowsPlugin\WindowsTimer.h"
+#include "Player.h"
 
 static const wstring	DG_TARGET_FPS_TEXT = L"TARGET FPS: ";
 static const int		DG_TARGET_FPS_X	= 2;
@@ -42,6 +43,9 @@ void YATextGenerator::appendTargetFPS(Game *game)
 	wstringstream stream;
 
 	stream << " Player Location: " << playerX;
+
+	stream << " HP: " << dynamic_cast<Player*>(game->getGSM()->getSpriteManager()->getPlayer())->getCurrentHP();
+	stream << " MANA: " << dynamic_cast<Player*>(game->getGSM()->getSpriteManager()->getPlayer())->getCurrentMana();
 
 	wstring text = stream.str();
 

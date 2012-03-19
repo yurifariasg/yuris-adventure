@@ -253,3 +253,9 @@ void GameStateManager::update(Game *game)
 	game->getGUI()->getViewport()->update(game);
 
 }
+
+void GameStateManager::playerKilled()
+{
+	//unloadCurrentLevel();
+	goToMainMenu();
+}
