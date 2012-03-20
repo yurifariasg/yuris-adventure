@@ -33,7 +33,7 @@ void FightPhysics::updatePhysics(Game* game)
 
 			if (hasAABBCollision(
 				attackingPointX, attackingPointY, 20, 20,
-				bbX, bbY, bbWidth, bbHeight)) {
+				bbX, bbY, bbWidth, bbHeight) && !dynamic_cast<EnemyBot*>(bot)->isDead()) {
 
 				dynamic_cast<EnemyBot*>(bot)->takeDamage(player->getAttack());
 				dynamic_cast<EnemyBot*>(bot)->setState(BOT_TAKING_DAMAGE);
@@ -87,6 +87,69 @@ void FightPhysics::updatePhysics(Game* game)
 		}
 
 		botIterator++;
+	}
+
+
+
+	// Projectiles Against People...
+
+	list<Projectile*>::iterator pIterator = sm->getProjectileIterator();
+	while (pIterator != sm->getEndOfProjectileIterator())
+	{
+		Projectile *p = (*pIterator);
+		pp = p->getPhysicalProperties();
+		int bbX = pp->getX() + p->getBoundingVolume()->getX(),
+			bbY = pp->getY() + p->getBoundingVolume()->getY(),
+			bbWidth = p->getBoundingVolume()->getWidth(),
+			bbHeight = p->getBoundingVolume()->getHeight();
+
+		// First, Test Against Player..
+
+		if (hasAABBCollision(
+			player->getPhysicalProperties()->getX() + player->getBoundingVolume()->getX(),
+			player->getPhysicalProperties()->getX() + player->getBoundingVolume()->getX(),
+			player->getBoundingVolume()->getWidth(), player->getBoundingVolume()->getHeight(),
+			bbX, bbY, bbWidth, bbHeight) && p->isEnabled()) {
+			// Collision with Player
+			
+				player->takeDamage(p->getDamage());
+				p->disables();
+
+
+		}
+
+		botIterator = sm->getBotsIterator();
+		while (botIterator != sm->getEndOfBotsIterator())
+		{
+			EnemyBot *bot = dynamic_cast<EnemyBot*>(*botIterator);
+			pp = bot->getPhysicalProperties();
+
+			if (hasAABBCollision(
+				pp->getX() + bot->getBoundingVolume()->getX(),
+				pp->getY() + bot->getBoundingVolume()->getY(),
+				bot->getBoundingVolume()->getWidth(), bot->getBoundingVolume()->getHeight(),
+				bbX, bbY, bbWidth, bbHeight) && !bot->isDead() && p->isEnabled()) {
+
+					dynamic_cast<EnemyBot*>(bot)->takeDamage(p->getDamage());
+					dynamic_cast<EnemyBot*>(bot)->setState(BOT_TAKING_DAMAGE);
+
+					if (!p->isFacingRight()) dynamic_cast<EnemyBot*>(bot)->setBotSpeed(-PLAYER_SPEED);
+					else dynamic_cast<EnemyBot*>(bot)->setBotSpeed(PLAYER_SPEED);
+
+					p->disables();
+
+			}
+
+			botIterator++;
+		}
+
+		Projectile* toRemove = NULL;
+
+		if (!p->isEnabled()) toRemove = p;
+
+		pIterator++;
+
+		if (toRemove != NULL) sm->removeProjectile(toRemove);
 	}
 
 	wasAttacking = player->isAttacking();

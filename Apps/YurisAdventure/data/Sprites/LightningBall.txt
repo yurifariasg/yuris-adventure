@@ -1,0 +1,15 @@
+SPRITE_WIDTH:40
+SPRITE_HEIGHT:40
+BOUNDING_BOX_X:1
+BOUNDING_BOX_Y:1
+BOUNDING_BOX_WIDTH:40
+BOUNDING_BOX_HEIGHT:40
+NUMBER_OF_SPRITES:1
+1STATE_NAME:PROJECTILE_MOVING
+1FRAME_COUNT:3
+11FRAME_SOURCE:textures/world/sprites/lightning_ball/light_ball1.png
+11FRAME_TIME:10
+12FRAME_SOURCE:textures/world/sprites/lightning_ball/light_ball2.png
+12FRAME_TIME:10
+13FRAME_SOURCE:textures/world/sprites/lightning_ball/light_ball3.png
+13FRAME_TIME:10

@@ -209,6 +209,12 @@
     <ClInclude Include="EnchancedPhysics.h">
       <Filter>SSSF_SourceCode\gsm\physics</Filter>
     </ClInclude>
+    <ClInclude Include="SSSF_SourceCode\gsm\ai\Projectile.h">
+      <Filter>SSSF_SourceCode\gsm\ai</Filter>
+    </ClInclude>
+    <ClInclude Include="SSSF_SourceCode\gsm\ai\ProjectileFactory.h">
+      <Filter>SSSF_SourceCode\gsm\ai</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -303,6 +309,12 @@
     </ClCompile>
     <ClCompile Include="SSSF_SourceCode\PlatformPlugins\WindowsPlugin\WindowsTimer.cpp">
       <Filter>SSSF_SourceCode\PlatformPlugins\WindowsPlugin</Filter>
+    </ClCompile>
+    <ClCompile Include="SSSF_SourceCode\gsm\ai\Projectile.cpp">
+      <Filter>SSSF_SourceCode\gsm\ai</Filter>
+    </ClCompile>
+    <ClCompile Include="SSSF_SourceCode\gsm\ai\ProjectileFactory.cpp">
+      <Filter>SSSF_SourceCode\gsm\ai</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

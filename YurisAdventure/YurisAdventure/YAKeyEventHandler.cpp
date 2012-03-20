@@ -74,10 +74,23 @@ void YAKeyEventHandler::handleKeyEvents(Game *game)
 
 
 		if (input->isKeyDown(ACTION_KEY) && (player->canDoSomething() || !player->notCharging())) {
-			player->charges();
-			player->recoverMana(1);
 
-		} else player->stopCharging();
+			if (holdingMagicKey) {
+				player->charges();
+				player->recoverMana(count == 30 ? 1 : 0);
+
+				if (count > 30) count = 25;
+			}
+
+			if (count > 25) holdingMagicKey = true;
+
+			count++;
+
+		} else {
+			player->stopCharging();
+			holdingMagicKey = false;
+			count = 0;
+		}
 
 		if (input->isKeyDownForFirstTime(W_KEY) && player->canDoSomething())
 		{
@@ -86,10 +99,6 @@ void YAKeyEventHandler::handleKeyEvents(Game *game)
 			if (!pp->getBuoyancy()) {
 				pp->setAccelerationY(-40);
 				pp->setBuoyancy(true);
-				/*if (player->isFacingRight())
-					game->getGSM()->getSpriteManager()->getPlayer()->setCurrentState(JUMPING_STATE_RIGHT);
-				else
-					game->getGSM()->getSpriteManager()->getPlayer()->setCurrentState(JUMPING_STATE_LEFT);*/
 			}
 
 		}
@@ -106,15 +115,6 @@ void YAKeyEventHandler::handleKeyEvents(Game *game)
 		{
 			vX = PLAYER_SPEED;
 		}
-
-		/*if (!input->isKeyDown(D_KEY) && !input->isKeyDown(A_KEY) && !player->isAttacking()
-			&& !player->getPhysicalProperties()->getBuoyancy()) {
-
-			// Hes IDLE
-			if (player->isFacingRight()) game->getGSM()->getSpriteManager()->getPlayer()->setCurrentState(IDLE_STATE_RIGHT);
-			else game->getGSM()->getSpriteManager()->getPlayer()->setCurrentState(IDLE_STATE_LEFT);
-
-		}*/
 
 		if (input->isKeyDownForFirstTime(D_KEY)) {
 
@@ -139,7 +139,21 @@ void YAKeyEventHandler::handleKeyEvents(Game *game)
 			if (input->isKeyDownForFirstTime(SWORD_ATTACK_KEY) && !player->isAttacking()) {
 				player->startAttack();
 				player->processCombo(SWORD_ATTACK_KEY);
-			} else if (input->isKeyDownForFirstTime(MAGIC_ATTACK_KEY)) {
+			} else if (input->isKeyDownForFirstTime(MAGIC_ATTACK_KEY) &&
+				player->getCurrentMana() >= 20) {
+
+				int attackingPointX = player->getPhysicalProperties()->getX() +
+					player->getBoundingVolume()->getX() +
+					(player->getBoundingVolume()->getWidth() / 2),
+					attackingPointY = player->getPhysicalProperties()->getY() +
+					player->getBoundingVolume()->getY() +
+					(player->getBoundingVolume()->getHeight() / 2);
+
+				game->getGSM()->getSpriteManager()->addProjectile(
+					L"MAGIC_PROJECTILE", attackingPointX, attackingPointY - 20, player->isFacingRight());
+
+				player->useMana(20);
+
 
 			}
 		}

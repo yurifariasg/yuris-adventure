@@ -46,6 +46,15 @@ void Physics::update(Game *game)
 		botIterator++;
 	}
 
+	list<Projectile*>::iterator pIterator = sm->getProjectileIterator();
+	while (pIterator != sm->getEndOfProjectileIterator())
+	{			
+		Projectile *p = (*pIterator);
+		pp = p->getPhysicalProperties();
+		doProjectilePhysics(p, (TiledLayer*) (gsm->getWorld()->getLayers()->at(0)), game->getGUI()->getViewport());
+		pIterator++;
+	}
+
 	// Dynamic Physics
 	if (physicsE != NULL) physicsE->updatePhysics(game);
 }
@@ -155,6 +164,8 @@ void Physics::doStaticPhysics(AnimatedSprite* sprite, TiledLayer* world, Viewpor
 			// Ok to move..
 			pp->setPosition(pp->getX(), newBBY - sprite->getBoundingVolume()->getY());
 
+			pp->setBuoyancy(true);
+
 			// Gravity Commands...
 			if (pp->getAccelerationY() < getGravity())
 				pp->setAccelerationY(pp->getAccelerationY() + getGravity());
@@ -211,4 +222,76 @@ void Physics::doStaticPhysics(AnimatedSprite* sprite, TiledLayer* world, Viewpor
 
 	pp->setVelocity(0,0);
 	// Ending of Big Function
+}
+
+void Physics::doProjectilePhysics(Projectile* sprite, TiledLayer* world, Viewport* viewport)
+{
+
+
+	PhysicalProperties* pp = sprite->getPhysicalProperties();
+
+	if (!viewport->areWorldCoordinatesInViewport(
+		pp->getX(), pp->getY(), sprite->getBoundingVolume()->getWidth(), sprite->getBoundingVolume()->getHeight())) {
+		return;
+	}
+
+	// Add Acelerations
+	pp->setVelocity(pp->getVelocityX() + pp->getAccelerationX(),
+		pp->getVelocityY() + pp->getAccelerationY());
+
+	const int CELL_WIDTH = 64;
+	const int CELL_HEIGHT = 64;
+
+	// Move Player
+
+	// Now Lets Verify the Left and Right Border...
+
+	int newPlayerX = pp->getX() + (pp->getVelocityX() * (pp->getBuoyancy() ? 1.5 : 1));
+
+	// Top Cell
+	int topRow = divideSafe((pp->getY() + sprite->getBoundingVolume()->getY()), CELL_HEIGHT);
+	int bottomRow = divideSafe(((pp->getY() + sprite->getBoundingVolume()->getY()) + sprite->getBoundingVolume()->getHeight() ), CELL_HEIGHT);
+	int leftColumn = divideSafe(newPlayerX + sprite->getBoundingVolume()->getX(),  CELL_WIDTH);
+	int rightColumn = divideSafe(((newPlayerX + sprite->getBoundingVolume()->getX()) + sprite->getBoundingVolume()->getWidth() ), CELL_WIDTH);
+
+	int *affectedCells = new int[bottomRow - topRow + 1];
+	int currentCell = topRow;
+	int p = 0;
+
+	while (currentCell <= bottomRow) {
+		affectedCells[p++] = currentCell++;
+	}
+
+	Tile* tile = NULL;
+
+	for (p = 0 ; p < bottomRow - topRow + 1; p++) {
+
+		// Left Cell
+		tile = world->getTile(affectedCells[p], leftColumn);
+		if (tile->collidable) { // Collided
+			break;
+		}
+
+		// Right Cell
+		tile = world->getTile(affectedCells[p], rightColumn);
+		if (tile->collidable) { // Collided
+			break;
+		}
+		tile = NULL;
+	}
+
+	if (tile == NULL
+			&& newPlayerX + sprite->getBoundingVolume()->getX() > 0
+			&& newPlayerX + sprite->getBoundingVolume()->getX()
+			+ sprite->getBoundingVolume()->getWidth() < world->getWorldWidth()) {
+				// Dont go to invalid position
+
+		pp->setPosition(newPlayerX, pp->getY());
+	} else {
+		sprite->disables();
+	}
+
+	pp->setVelocity(0,0);
+	// Ending of Big Function
+
 }
