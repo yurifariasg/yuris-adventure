@@ -148,11 +148,6 @@ void EnemyBot::think(Game *game)
 	}
 }
 
-Bot* EnemyBot::clone()
-{
-	return new EnemyBot(getMaxHP(), getAttack(), velocity);
-}
-
 Point* EnemyBot::searchPlayerPosition(Game* game)
 {
 	int x, y;
@@ -165,4 +160,17 @@ Point* EnemyBot::searchPlayerPosition(Game* game)
 		(p->getBoundingVolume()->getHeight() / 2);
 
 	return new Point(x, y);
+}
+
+EnemyBot* EnemyBot::clone()
+{
+	EnemyBot* newBot = new EnemyBot(getMaxHP(), getAttack(), velocity);
+	newBot->setSpriteType(getSpriteType());
+
+	newBot->getBoundingVolume()->setX(getBoundingVolume()->getX());
+	newBot->getBoundingVolume()->setY(getBoundingVolume()->getY());
+	newBot->getBoundingVolume()->setWidth(getBoundingVolume()->getWidth());
+	newBot->getBoundingVolume()->setHeight(getBoundingVolume()->getHeight());
+
+	return newBot;
 }

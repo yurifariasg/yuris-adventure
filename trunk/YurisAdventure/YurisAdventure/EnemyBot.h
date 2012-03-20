@@ -41,7 +41,7 @@ private:
 
 public:
 	EnemyBot(int hp, int attack, BotVelocity);
-	Bot*	clone();
+	EnemyBot*	clone();
 	void	think(Game *game);
 	void	setState(BotState newState) { state = newState; }
 	void	setBotSpeed(int newSpeed) { botSpeed = newSpeed; }

@@ -14,6 +14,8 @@
 #include "SSSF_SourceCode\graphics\GameGraphics.h"
 #include "SSSF_SourceCode\gsm\ai\Bot.h"
 #include "SSSF_SourceCode\gsm\ai\BotRecycler.h"
+#include "SSSF_SourceCode\gsm\ai\ProjectileFactory.h"
+#include "SSSF_SourceCode\gsm\ai\Projectile.h"
 #include "SSSF_SourceCode\gsm\sprite\AnimatedSprite.h"
 #include "SSSF_SourceCode\gsm\sprite\AnimatedSpriteType.h"
 
@@ -28,12 +30,18 @@ private:
 	// THAT MOVES AROUND AND IS NOT THE PLAYER
 	list<Bot*> bots;
 
+	// Active Projectiles
+	list<Projectile*> projectiles;
+
 	// AND THIS IS THE PLAYER. AS-IS, WE ONLY ALLOW FOR ONE PLAYER AT A TIME
 	//AnimatedSprite player;
 
 	// THE BotRecycler MAKES SURE WE DON'T HAVE TO CONSTRUCT BOTS WHENEVER
 	// WE NEED TO SPAWN THEM, INSTEAD IT WILL RECYCLE THEM FOR US
 	BotRecycler recyclableBots;
+
+	
+	ProjectileFactory pFactory;
 
 public:
 	// NOTHING TO INIT OR DESTROY
@@ -47,6 +55,9 @@ public:
 	list<Bot*>::iterator	getBotsIterator()		{ return bots.begin();		}
 	list<Bot*>::iterator	getEndOfBotsIterator()	{ return bots.end();		}
 
+	list<Projectile*>::iterator	getProjectileIterator()		{ return projectiles.begin();		}
+	list<Projectile*>::iterator	getEndOfProjectileIterator()	{ return projectiles.end();		}
+
 	// METHODS DEFINED IN SpriteManager.cpp
 	void				addBot(Bot *botToAdd);
 	void				addSpriteItemsToRenderList(Game *game);
@@ -58,4 +69,7 @@ public:
 	void clearBots() { bots.clear(); }
 	virtual void				unloadSprites();
 	virtual void				update(Game *game);
+	void addProjectile(wstring, int, int, bool);
+	void registerProjectile(Projectile*);
+	void removeProjectile(Projectile* projectileToRemove);
 };

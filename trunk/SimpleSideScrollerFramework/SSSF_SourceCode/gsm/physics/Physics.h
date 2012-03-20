@@ -22,6 +22,7 @@ const float DEFAULT_GRAVITY = 4.0f;
 class AnimatedSprite;
 class TiledLayer;
 class Viewport;
+class Projectile;
 
 class Physics
 {
@@ -35,6 +36,7 @@ private:
 	EnchancedPhysics* physicsE;
 
 	void doStaticPhysics(AnimatedSprite*, TiledLayer*, Viewport*);
+	void doProjectilePhysics(Projectile*, TiledLayer*, Viewport*);
 
 	
 

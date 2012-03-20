@@ -52,3 +52,15 @@ void Creature::recoverHealth(int recoveredHealth)
 	cHP += recoveredHealth;
 	if (cHP > maxHP) cHP = maxHP;
 }
+
+void Creature::useMana(int manaUsed)
+{
+	cMana -= manaUsed;
+	if (cMana < 0) cMana = 0;
+}
+
+void Creature::recoverMana(int manaRecovered)
+{
+	cMana += manaRecovered;
+	if (cMana > maxMana) cMana = maxMana;
+}

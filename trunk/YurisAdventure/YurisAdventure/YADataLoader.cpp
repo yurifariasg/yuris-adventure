@@ -255,6 +255,13 @@ void YADataLoader::loadWorld(Game *game, int levelNumber)
 	// Add our Bots
 	if (BOTS_ACTIVE)
 		addBots(game, respawnPoints);
+
+	// Load Projectiles
+
+	// Lightning Ball
+	Projectile* p = new Projectile(L"MAGIC_PROJECTILE", 20, 5);
+	loadSprite(game, L"data/Sprites/LightningBall.txt", p);
+	spriteManager->registerProjectile(p);
 }
 
 /*
@@ -622,21 +629,17 @@ void YADataLoader::addBots(Game* game, vector<int>* respawnPoints)
 	ast = new AnimatedSpriteType();
 	vector<unsigned int> botImageIDs;
 
+	EnemyBot *sample = new EnemyBot(70, 5, BOT_SLOW);
+	loadSprite(game, L"data/Sprites/GreenMonster.txt", sample);
+
 	// Add Bots
 	for (int i = 0; i < 10; i++)
 	{
-		EnemyBot *bot = new EnemyBot(70, 5, BOT_SLOW);
-		//bot->setSpriteType(ast);
-		loadSprite(game, L"data/Sprites/GreenMonster.txt", bot);
-		bot->setCurrentState(BOT_IDLE_LEFT);
-		bot->setAlpha(255);
-		PhysicalProperties *pp = bot->getPhysicalProperties();
+		EnemyBot *newBot = sample->clone();
+		newBot->setCurrentState(BOT_IDLE_LEFT);
+		newBot->setAlpha(255);
+		PhysicalProperties *pp = newBot->getPhysicalProperties();
 		pp->setCollidable(false);
-
-		bot->getBoundingVolume()->setX(0);
-		bot->getBoundingVolume()->setY(0);
-		bot->getBoundingVolume()->setWidth(50);
-		bot->getBoundingVolume()->setHeight(50);
 
 		int x;
 		int y;
@@ -670,17 +673,20 @@ void YADataLoader::addBots(Game* game, vector<int>* respawnPoints)
 		pp->setY(y);
 		pp->setAccelerationX(0.0f);
 		pp->setAccelerationY(0.0f);
-		spriteManager->addBot(bot);
+		spriteManager->addBot(newBot);
 	}
+	
+	delete sample; // Free the last bot...
+	sample = new EnemyBot(150, 10, BOT_NORMAL);
+	loadSprite(game, L"data/Sprites/BanditSprite.txt", sample);
 
 	// Add Bots
 	for (int i = 0; i < 7; i++)
 	{
-		EnemyBot *bot = new EnemyBot(150, 10, BOT_NORMAL);
-		loadSprite(game, L"data/Sprites/BanditSprite.txt", bot);
-		bot->setCurrentState(BOT_IDLE_LEFT);
-		bot->setAlpha(255);
-		PhysicalProperties *pp = bot->getPhysicalProperties();
+		EnemyBot *newBot = sample->clone();
+		newBot->setCurrentState(BOT_IDLE_LEFT);
+		newBot->setAlpha(255);
+		PhysicalProperties *pp = newBot->getPhysicalProperties();
 		pp->setCollidable(false);
 
 		int x;
@@ -715,7 +721,7 @@ void YADataLoader::addBots(Game* game, vector<int>* respawnPoints)
 		pp->setY(y);
 		pp->setAccelerationX(0.0f);
 		pp->setAccelerationY(0.0f);
-		spriteManager->addBot(bot);
+		spriteManager->addBot(newBot);
 	}
 }
 

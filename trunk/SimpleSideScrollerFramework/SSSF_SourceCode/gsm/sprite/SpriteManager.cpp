@@ -78,6 +78,16 @@ void SpriteManager::addSpriteItemsToRenderList(	Game *game)
 			addSpriteToRenderList(bot, renderList, viewport);
 			botIterator++;
 		}
+
+		// NOW ADD THE REST OF THE SPRITES
+		list<Projectile*>::iterator pIterator;
+		pIterator = projectiles.begin();
+		while (pIterator != projectiles.end())
+		{			
+			Projectile *p = (*pIterator);
+			addSpriteToRenderList(p, renderList, viewport);
+			pIterator++;
+		}
 	}
 }
 
@@ -113,6 +123,7 @@ void SpriteManager::clearSprites()
 {
 	spriteTypes.clear();
 	bots.clear();
+	projectiles.clear();
 }
 
 /*
@@ -166,4 +177,40 @@ void SpriteManager::update(Game *game)
 		bot->think(game);
 		botIterator++;
 	}
+
+	// NOW ADD THE REST OF THE SPRITES
+	list<Projectile*>::iterator pIterator;
+	pIterator = projectiles.begin();
+	while (pIterator != projectiles.end())
+	{			
+		Projectile *p = (*pIterator);
+		p->updateSprite();
+		pIterator++;
+	}
+}
+
+void SpriteManager::addProjectile(wstring type, int x, int y, bool facingRight)
+{
+	Projectile* p = pFactory.createProjectile(type);
+
+	p->getPhysicalProperties()->setX(x);
+	p->getPhysicalProperties()->setY(y);
+	p->setFacingDirectionRight(facingRight);
+	p->setCurrentState(L"PROJECTILE_MOVING");
+	p->setAlpha(255);
+
+	projectiles.push_back(p);
+
+
+}
+
+void SpriteManager::registerProjectile(Projectile* p)
+{
+	pFactory.registerProjectile(p->getType(), p);
+}
+
+void SpriteManager::removeProjectile(Projectile* projectileToRemove)
+{
+	projectiles.remove(projectileToRemove);
+	pFactory.recycleProjectile(projectileToRemove->getType(), projectileToRemove);
 }

@@ -19,9 +19,14 @@ class Game;
 
 class YAKeyEventHandler : public KeyEventHandler
 {
+private:
+	int count;
+
+	bool holdingMagicKey;
+
 public:
 
-	YAKeyEventHandler()		{}
+	YAKeyEventHandler()		{ count = 0; }
 	~YAKeyEventHandler()		{}
 	void handleKeyEvents(Game *game);
 };
