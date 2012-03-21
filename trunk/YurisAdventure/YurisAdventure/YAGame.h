@@ -80,6 +80,13 @@ static const wstring DG_SPLASH_SCREEN_PATH	= L"textures/gui/overlays/splash_scre
 static const wstring DG_QUIT_IMAGE_PATH		= L"textures/gui/buttons/quit.png";
 static const wstring DG_QUIT_IMAGE_MO_PATH	= L"textures/gui/buttons/quit_mo.png";
 
+// INGame GUI Images
+static const wstring HP_BAR_PIECE	= L"textures/gui/overlays/hp_piece.png";
+static const int HP_BAR_MAX = 30;
+static const wstring MANA_BAR_PIECE	= L"textures/gui/overlays/mana_piece.png";
+static const int MANA_BAR_MAX = 30;
+
+
 // FOR OUR SPRITE
 static const wstring	IDLE_STATE_RIGHT = L"IDLE_STATE_RIGHT";
 static const wstring	IDLE_STATE_LEFT = L"IDLE_STATE_LEFT";
@@ -93,6 +100,8 @@ static const wstring	DYING_STATE_RIGHT = L"DYING_STATE_RIGHT";
 static const wstring	DYING_STATE_LEFT = L"DYING_STATE_LEFT";
 static const wstring	CHARGING_STATE_RIGHT = L"CHARGING_STATE_RIGHT";
 static const wstring	CHARGING_STATE_LEFT = L"CHARGING_STATE_LEFT";
+static const wstring	CASTING_STATE_RIGHT = L"CASTING_STATE_RIGHT";
+static const wstring	CASTING_STATE_LEFT = L"CASTING_STATE_LEFT";
 
 // BOTs STATES
 static const wstring	BOT_IDLE_RIGHT = L"BOT_IDLE_RIGHT";
@@ -101,8 +110,26 @@ static const wstring	BOT_MOVING_RIGHT = L"BOT_MOVING_RIGHT";
 static const wstring	BOT_MOVING_LEFT = L"BOT_MOVING_LEFT";
 static const wstring	BOT_ATTACKING_RIGHT = L"BOT_ATTACKING_RIGHT";
 static const wstring	BOT_ATTACKING_LEFT = L"BOT_ATTACKING_LEFT";
-static const wstring	BOT_STATE_TAKING_DAMAGE = L"BOT_TAKING_DAMAGE";
-static const wstring	BOT_STATE_DYING = L"BOT_DYING";
+static const wstring	BOT_STATE_TAKING_DAMAGE_LEFT = L"BOT_TAKING_DAMAGE_LEFT";
+static const wstring	BOT_STATE_TAKING_DAMAGE_RIGHT = L"BOT_TAKING_DAMAGE_RIGHT";
+static const wstring	BOT_STATE_DYING_LEFT = L"BOT_DYING_LEFT";
+static const wstring	BOT_STATE_DYING_RIGHT = L"BOT_DYING_RIGHT";
+
+// Projectile Types
+
+static const wstring	PROJECTILE_MAGIC = L"MAGIC_PROJECTILE";
+
+// Combo Images
+
+static const wstring	ATTACK_INCREASED_IMAGE = L"ATTACK_INCREASED_IMAGE";
+static const wstring	ATTACK_INCREASED_IMAGE_PATH = L"textures/gui/overlays/attack_increased_combo.png";
+
+static const wstring	MAGIC_PENETRATION_IMAGE = L"MAGIC_PENETRATION_IMAGE";
+static const wstring	MAGIC_PENETRATION_IMAGE_PATH = L"textures/gui/overlays/magic_penetration_image.png";
+
+static const wstring	DEFENSE_INCREASE_IMAGE = L"DEFENSE_INCREASE_IMAGE";
+static const wstring	DEFENSE_INCREASE_IMAGE_PATH = L"textures/gui/overlays/defense_increased_image.png";
+
 
 // Keys
 const unsigned int W_KEY = (unsigned int)'W';

@@ -2,6 +2,11 @@
 #include "stdafx.h"
 #include "SSSF_SourceCode\gsm\sprite\AnimatedSprite.h"
 
+// Projectile Sprite State
+
+static const wstring	PROJECTILE_STATE_MOVING_RIGHT = L"PROJECTILE_MOVING_RIGHT";
+static const wstring	PROJECTILE_STATE_MOVING_LEFT = L"PROJECTILE_MOVING_LEFT";
+
 class Projectile : public AnimatedSprite
 {
 	private:

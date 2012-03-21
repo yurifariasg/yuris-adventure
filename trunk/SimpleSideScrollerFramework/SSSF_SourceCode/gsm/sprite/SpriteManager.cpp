@@ -66,9 +66,6 @@ void SpriteManager::addSpriteItemsToRenderList(	Game *game)
 		RenderList *renderList = graphics->getWorldRenderList();
 		Viewport *viewport = gui->getViewport();
 
-		// ADD THE PLAYER SPRITE
-		addSpriteToRenderList(getPlayer(), renderList, viewport);
-
 		// NOW ADD THE REST OF THE SPRITES
 		list<Bot*>::iterator botIterator;
 		botIterator = bots.begin();
@@ -78,6 +75,9 @@ void SpriteManager::addSpriteItemsToRenderList(	Game *game)
 			addSpriteToRenderList(bot, renderList, viewport);
 			botIterator++;
 		}
+
+		// ADD THE PLAYER SPRITE
+		addSpriteToRenderList(getPlayer(), renderList, viewport);
 
 		// NOW ADD THE REST OF THE SPRITES
 		list<Projectile*>::iterator pIterator;
@@ -196,7 +196,6 @@ void SpriteManager::addProjectile(wstring type, int x, int y, bool facingRight)
 	p->getPhysicalProperties()->setX(x);
 	p->getPhysicalProperties()->setY(y);
 	p->setFacingDirectionRight(facingRight);
-	p->setCurrentState(L"PROJECTILE_MOVING");
 	p->setAlpha(255);
 
 	projectiles.push_back(p);

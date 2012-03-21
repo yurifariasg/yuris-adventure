@@ -7,6 +7,8 @@
 #include "YAKeyEventHandler.h"
 #include "YATextGenerator.h"
 #include "EnemyBot.h"
+#include "PlayerGUI.h"
+#include "ImageShower.h"
 
 #include "SSSF_SourceCode\text\BufferedTextFileReader.h"
 
@@ -148,16 +150,19 @@ void YADataLoader::initColors(	GameGraphics *graphics,
 void YADataLoader::loadGUI(Game *game, wstring guiInitFile)
 {
 	// Load From File all the GUI
-    game->getGUI()->addScreenGUI(GS_MAIN_MENU, loadGUIFromFile(game, guiInitFile));
-    game->getGUI()->addScreenGUI(GS_MENU_CONTROLS_MENU, loadGUIFromFile(game, mainMenuControlsGUIFile));
-    game->getGUI()->addScreenGUI(GS_MENU_ABOUT_MENU, loadGUIFromFile(game, mainMenuAboutGUIFile));
-	game->getGUI()->addScreenGUI(GS_PAUSED, loadGUIFromFile(game, pausedGameFile));
-	game->getGUI()->addScreenGUI(GS_IN_GAME_CONTROLS, loadGUIFromFile(game, controlsGameFile));
-	game->getGUI()->addScreenGUI(GS_IN_GAME_ABOUT, loadGUIFromFile(game, aboutGameFile));
-	game->getGUI()->addScreenGUI(GS_SPLASH_SCREEN, loadGUIFromFile(game, splashscreenFile));
+    game->getGUI()->addScreenGUI(GS_MAIN_MENU, loadGUIFromFile(game, guiInitFile, new ScreenGUI()));
+    game->getGUI()->addScreenGUI(GS_MENU_CONTROLS_MENU, loadGUIFromFile(game, mainMenuControlsGUIFile, new ScreenGUI()));
+    game->getGUI()->addScreenGUI(GS_MENU_ABOUT_MENU, loadGUIFromFile(game, mainMenuAboutGUIFile, new ScreenGUI()));
+	game->getGUI()->addScreenGUI(GS_PAUSED, loadGUIFromFile(game, pausedGameFile, new ScreenGUI()));
+	game->getGUI()->addScreenGUI(GS_IN_GAME_CONTROLS, loadGUIFromFile(game, controlsGameFile, new ScreenGUI()));
+	game->getGUI()->addScreenGUI(GS_IN_GAME_ABOUT, loadGUIFromFile(game, aboutGameFile, new ScreenGUI()));
+	game->getGUI()->addScreenGUI(GS_SPLASH_SCREEN, loadGUIFromFile(game, splashscreenFile, new ScreenGUI()));
 
 	// InGame GUI
-	game->getGUI()->addScreenGUI(GS_GAME_IN_PROGRESS,	loadGUIFromFile(game, inGameFile));
+	PlayerGUI* pGUI = new PlayerGUI();
+	game->getGUI()->addScreenGUI(GS_GAME_IN_PROGRESS,	loadGUIFromFile(game, inGameFile, pGUI));
+
+	loadInGameGUI(game, pGUI);
 
 	// Init Cursor (Gives error if removed) - FIX
 	initCursor(game->getGUI(), (DirectXTextureManager*)game->getGraphics()->getGUITextureManager());
@@ -259,7 +264,7 @@ void YADataLoader::loadWorld(Game *game, int levelNumber)
 	// Load Projectiles
 
 	// Lightning Ball
-	Projectile* p = new Projectile(L"MAGIC_PROJECTILE", 20, 5);
+	Projectile* p = new Projectile(PROJECTILE_MAGIC, 20, 5);
 	loadSprite(game, L"data/Sprites/LightningBall.txt", p);
 	spriteManager->registerProjectile(p);
 }
@@ -325,7 +330,7 @@ void YADataLoader::initViewport(GameGUI *gui, map<wstring,wstring> *properties)
 /*
 	Loads the GUI from guiFile and returns it
 */
-ScreenGUI* YADataLoader::loadGUIFromFile(Game *game, wstring guiFile)
+ScreenGUI* YADataLoader::loadGUIFromFile(Game *game, wstring guiFile, ScreenGUI* screen)
 {
     map<wstring,wstring> *properties = new map<wstring,wstring>();
 	loadGameProperties(game, properties, guiFile);
@@ -344,9 +349,6 @@ ScreenGUI* YADataLoader::loadGUIFromFile(Game *game, wstring guiFile)
     GameGraphics *graphics = game->getGraphics();
 	DirectXTextureManager *guiTextureManager = (DirectXTextureManager*)graphics->getGUITextureManager();
     unsigned int imageID, imageID2;
-
-    // Initialize screen
-    ScreenGUI* screen = new ScreenGUI();
 
     // Add Images
     for ( int i = 1 ; i <= imageQuantity ; i++) {
@@ -771,5 +773,67 @@ void YADataLoader::loadSprite(Game* game, wstring fileName, AnimatedSprite* spri
 	sprite->getBoundingVolume()->setY(bbY);
 	sprite->getBoundingVolume()->setWidth(bbWidth);
 	sprite->getBoundingVolume()->setHeight(bbHeight);
+
+}
+
+void YADataLoader::loadInGameGUI(Game* game, PlayerGUI* pGUI)
+{
+	// HP BAR ... 
+	OverlayImage *hpBar = new OverlayImage();
+	hpBar->x = 157; // Specific Position, Refactoring Needed
+	hpBar->y = 54; // Specific Position, Refactoring Needed
+	hpBar->z = 0;
+	hpBar->alpha = 255;
+    hpBar->width = 5;
+    hpBar->height = 15;
+	hpBar->imageID = game->getGraphics()->getGUITextureManager()->loadTexture(HP_BAR_PIECE);
+
+	pGUI->addHPBar(hpBar, HP_BAR_MAX);
+
+	// MANA BAR ...
+	OverlayImage *manaBar = new OverlayImage();
+	manaBar->x = 157; // Specific Position, Refactoring Needed
+	manaBar->y = 79; // Specific Position, Refactoring Needed
+	manaBar->z = 0;
+	manaBar->alpha = 255;
+    manaBar->width = 5;
+    manaBar->height = 15;
+	manaBar->imageID = game->getGraphics()->getGUITextureManager()->loadTexture(MANA_BAR_PIECE);
+
+	pGUI->addManaBar(manaBar, MANA_BAR_MAX);
+
+	OverlayImage *centerMessage = new OverlayImage();
+	centerMessage->x = 0; // Any
+	centerMessage->y = 0; // Any
+	centerMessage->z = 0;
+	centerMessage->alpha = 255;
+    centerMessage->width = 420;
+    centerMessage->height = 50;
+	centerMessage->imageID = game->getGraphics()->getGUITextureManager()->loadTexture(ATTACK_INCREASED_IMAGE_PATH);
+
+	pGUI->addCenterMessage(ATTACK_INCREASED_IMAGE, centerMessage);
+
+	centerMessage = new OverlayImage();
+	centerMessage->x = 0; // Any
+	centerMessage->y = 0; // Any
+	centerMessage->z = 0;
+	centerMessage->alpha = 255;
+    centerMessage->width = 460;
+    centerMessage->height = 50;
+	centerMessage->imageID = game->getGraphics()->getGUITextureManager()->loadTexture(MAGIC_PENETRATION_IMAGE_PATH);
+	pGUI->addCenterMessage(MAGIC_PENETRATION_IMAGE, centerMessage);
+
+	centerMessage = new OverlayImage();
+	centerMessage->x = 0; // Any
+	centerMessage->y = 0; // Any
+	centerMessage->z = 0;
+	centerMessage->alpha = 255;
+    centerMessage->width = 460;
+    centerMessage->height = 50;
+	centerMessage->imageID = game->getGraphics()->getGUITextureManager()->loadTexture(DEFENSE_INCREASE_IMAGE_PATH);
+	pGUI->addCenterMessage(DEFENSE_INCREASE_IMAGE, centerMessage);
+
+	dynamic_cast<Player*>(game->getGSM()->getSpriteManager()->getPlayer())->setImageShower(pGUI);
+
 
 }

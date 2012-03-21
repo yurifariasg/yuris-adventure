@@ -44,8 +44,7 @@ void YATextGenerator::appendTargetFPS(Game *game)
 
 	stream << " Player Location: " << playerX;
 
-	stream << " HP: " << dynamic_cast<Player*>(game->getGSM()->getSpriteManager()->getPlayer())->getCurrentHP();
-	stream << " MANA: " << dynamic_cast<Player*>(game->getGSM()->getSpriteManager()->getPlayer())->getCurrentMana();
+	stream << " Attack: " << dynamic_cast<Player*>(game->getGSM()->getSpriteManager()->getPlayer())->getAttack();
 
 	wstring text = stream.str();
 

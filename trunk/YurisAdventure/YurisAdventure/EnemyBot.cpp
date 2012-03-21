@@ -18,15 +18,21 @@ EnemyBot::EnemyBot(int hp, int attack, BotVelocity velocity) : Creature(hp, atta
 void EnemyBot::think(Game *game)
 {
 	if (state == BOT_TAKING_DAMAGE) {
-		setCurrentState(BOT_STATE_TAKING_DAMAGE);
+		
+		if (isFacingRight()) (BOT_STATE_TAKING_DAMAGE_RIGHT);
+		else setCurrentState(BOT_STATE_TAKING_DAMAGE_LEFT);
+		
 		actionTime = 20;
 		state = BOT_IDLE;
 	}
 
 	// Verify if is Dead
-	if (isDead() && state == BOT_IDLE) { // When Stops, verify if is dead
+	if (isDead() && state != BOT_DYING) { // When Stops, verify if is dead
 		state = BOT_DYING;
-		setCurrentState(BOT_STATE_DYING);
+		
+		if (isFacingRight()) setCurrentState(BOT_STATE_DYING_RIGHT);
+		else setCurrentState(BOT_STATE_DYING_LEFT);
+
 		botSpeed = 0;
 		actionTime = 100;
 	}
@@ -125,7 +131,7 @@ void EnemyBot::think(Game *game)
 				botSpeed, 0);
 
 			// For some time...
-			actionTime = 100 + (rand() % 100);
+			actionTime = 50 + (rand() % 100);
 
 		} else if (state == BOT_MOVING) { // It WAS MOVING
 

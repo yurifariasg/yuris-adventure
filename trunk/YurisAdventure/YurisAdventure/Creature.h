@@ -39,6 +39,11 @@ public:
 	void recoverMana(int manaRecovered);
 
 	int getAttack() { return attack; };
+	void setAttack(int newAttack) { attack = newAttack; };
+
+	int getDefense() { return defense; }
+	void setDefense(int newDefense) { defense = newDefense; }
+
 	bool isDead() { return (cHP == 0); };
 	bool isFacingRight() { return !facedLeft; };
 	bool isFacingLeft() { return facedLeft; };

@@ -28,6 +28,8 @@ void Projectile::updateSprite()
 	if (enabled) {
 		getPhysicalProperties()->setVelocity(
 			toRight ? projectileSpeed : -projectileSpeed, 0);
+		if (toRight) setCurrentState(PROJECTILE_STATE_MOVING_RIGHT);
+		else setCurrentState(PROJECTILE_STATE_MOVING_LEFT);
 	}
 
 	AnimatedSprite::updateSprite();

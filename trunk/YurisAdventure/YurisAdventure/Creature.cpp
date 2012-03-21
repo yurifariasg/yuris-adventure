@@ -40,7 +40,7 @@ Creature* Creature::clone()
 */
 void Creature::takeDamage(int damage)
 {
-	cHP -= damage;
+	cHP -= (damage * (100 - defense)) / 100;
 	if (cHP < 0) cHP = 0;
 
 }

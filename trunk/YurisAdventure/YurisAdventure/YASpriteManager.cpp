@@ -25,7 +25,7 @@ void YASpriteManager::update(Game* game)
 	{
 		EnemyBot *c = dynamic_cast<EnemyBot*>(*botIterator);
 
-		if (c->isDead() && c->getActionTime() == 0) {
+		if (c->isDead() && c->getActionTime() == 0 && c->getState() == BOT_DYING) {
 
 			toRemove = c;
 		} else toRemove = NULL;
