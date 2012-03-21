@@ -8,6 +8,7 @@
 #include "PlayerComboState.h"
 #include "Creature.h"
 #include "YAGame.h"
+#include "ImageShower.h"
 
 /*
 	Class will hold properties for our Player
@@ -18,6 +19,13 @@ private:
 	PlayerComboState comboState;
 	int actionTime;
 	bool isCharging;
+	bool isCasting;
+
+	int buffTimer;
+
+	ImageShower* comboImageShower;
+
+	void updateBuffs();
 
 public:
 	Player(int hp, int mana, int attack);
@@ -25,11 +33,20 @@ public:
 	void updateSprite();
 	int getActionTime() { return actionTime; }
 
+	PlayerComboState getCurrentComboState() { return comboState; }
+
 	void charges() { isCharging = true; }
 	void stopCharging() { isCharging = false; }
 
-	bool canDoSomething() { return !isDead() && !isCharging && !isAttacking(); }
+	bool canDoSomething() { return !isDead() && !isCharging && !isAttacking() && !isCasting; }
 	bool notCharging() { return !isCharging; }
+
+	void setImageShower(ImageShower* i) { comboImageShower = i; }
+
+	void casts() {
+		actionTime = 10;
+		isCasting = true;
+	}
 
 	void reloadData() {
 		actionTime = 0;

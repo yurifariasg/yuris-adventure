@@ -8,6 +8,8 @@ Player::Player(int hp, int mana, int attack) : Creature(hp, mana, attack)
 {
 	comboState = COMBO_NONE;
 	actionTime = 0;
+	buffTimer = 0;
+	comboImageShower = NULL;
 }
 /*
 	Process the Player Combo State for the given pressedKey
@@ -15,38 +17,106 @@ Player::Player(int hp, int mana, int attack) : Creature(hp, mana, attack)
 
 void Player::processCombo(unsigned int pressedKey)
 {
-	if (pressedKey == SWORD_ATTACK_KEY) {
 
-		if (comboState == COMBO_NONE) {
+	if (comboState == COMBO_NONE) {
 
-			comboState = COMBO_ATTACK;
-
-		} else if (comboState == COMBO_ATTACK) {
-			comboState = COMBO_ATTACK_ATTACK;
-			// Start Combo Here - TO_DO
+		switch(pressedKey) {
+		case SWORD_ATTACK_KEY: comboState = COMBO_ATTACK; break;
+		case MAGIC_ATTACK_KEY: comboState = COMBO_MAGIC; break;
+		case S_KEY: comboState = COMBO_CROUCH; break;
+		case ACTION_KEY: comboState = COMBO_NONE; break;
+		default: break;
 		}
 
-	} else if (pressedKey == MAGIC_ATTACK_KEY) {
+	} else if (comboState == COMBO_ATTACK) {
 
-		if (comboState == COMBO_NONE) {
-
-			comboState = COMBO_MAGIC;
-
-		} else if (comboState == COMBO_MAGIC) {
-			comboState = COMBO_MAGIC_MAGIC;
-			// Start Combo Here - TO_DO
+		switch(pressedKey) {
+		case SWORD_ATTACK_KEY: comboState = COMBO_ATTACK_ATTACK; break;
+		case MAGIC_ATTACK_KEY: comboState = COMBO_NONE; break;
+		case S_KEY: comboState = COMBO_NONE; break;
+		case ACTION_KEY: comboState = COMBO_NONE; break;
+		default: comboState = COMBO_NONE; break;
 		}
 
-	} else if (pressedKey == S_KEY) { // Down Key
+	} else if (comboState == COMBO_MAGIC) {
 
-		if (comboState == COMBO_NONE) {
-
-			comboState = COMBO_CROUCH;
-
-		} else if (comboState == COMBO_CROUCH) {
-			comboState = COMBO_CROUCH_CROUCH;
-			// Start Combo Here - TO_DO
+		switch(pressedKey) {
+		case SWORD_ATTACK_KEY: comboState = COMBO_NONE; break;
+		case MAGIC_ATTACK_KEY: comboState = COMBO_MAGIC_MAGIC; break;
+		case S_KEY: comboState = COMBO_NONE; break;
+		case ACTION_KEY: comboState = COMBO_NONE; break;
+		default: comboState = COMBO_NONE; break;
 		}
+
+	} else if (comboState == COMBO_CROUCH) {
+
+		switch(pressedKey) {
+		case SWORD_ATTACK_KEY: comboState = COMBO_NONE; break;
+		case MAGIC_ATTACK_KEY: comboState = COMBO_NONE; break;
+		case S_KEY: comboState = COMBO_CROUCH_CROUCH; break;
+		case ACTION_KEY: comboState = COMBO_NONE; break;
+		default: comboState = COMBO_NONE; break;
+		}
+
+	} else if (comboState == COMBO_ATTACK_ATTACK) {
+
+		switch(pressedKey) {
+		case SWORD_ATTACK_KEY: comboState = COMBO_NONE; break;
+		case MAGIC_ATTACK_KEY: comboState = COMBO_NONE; break;
+		case S_KEY: comboState = COMBO_NONE; break;
+		case ACTION_KEY:
+			// Increase Attack
+			if (getCurrentMana() >= 30) {
+				comboImageShower->showImage(ATTACK_INCREASED_IMAGE);
+				setAttack(PLAYER_ATTACK * 2);
+				useMana(30);
+				buffTimer = 1000;
+			}
+
+			comboState = COMBO_NONE; break;
+		default: comboState = COMBO_NONE; break;
+		}
+
+	} else if (comboState == COMBO_MAGIC_MAGIC) {
+
+		switch(pressedKey) {
+		case SWORD_ATTACK_KEY: comboState = COMBO_NONE; break;
+		case MAGIC_ATTACK_KEY: comboState = COMBO_NONE; break;
+		case S_KEY: comboState = COMBO_NONE; break;
+		case ACTION_KEY:
+			
+			// Magic Penetration
+			if (getCurrentMana() >= 30) {
+				comboImageShower->showImage(MAGIC_PENETRATION_IMAGE);
+				//setAttack(PLAYER_ATTACK * 2);
+				useMana(30);
+				buffTimer = 1000;
+			}
+			
+			comboState = COMBO_NONE; break;
+		default: comboState = COMBO_NONE; break;
+		}
+
+	} else if (comboState == COMBO_CROUCH_CROUCH) {
+
+		switch(pressedKey) {
+		case SWORD_ATTACK_KEY: comboState = COMBO_NONE; break;
+		case MAGIC_ATTACK_KEY: comboState = COMBO_NONE; break;
+		case S_KEY: comboState = COMBO_NONE; break;
+		case ACTION_KEY:
+			
+			// Increase Defense
+			if (getCurrentMana() >= 30) {
+				comboImageShower->showImage(DEFENSE_INCREASE_IMAGE);
+				setDefense(50);
+				useMana(30);
+				buffTimer = 1000;
+			}
+			
+			comboState = COMBO_NONE; break;
+		default: comboState = COMBO_NONE; break;
+		}
+
 	}
 }
 
@@ -56,6 +126,9 @@ void Player::processCombo(unsigned int pressedKey)
 
 void Player::updateSprite()
 {
+
+	// Updates Buffs
+	updateBuffs();
 
 	if (!isDead()) { // is dead if statement
 
@@ -94,7 +167,16 @@ void Player::updateSprite()
 			else setCurrentState(CHARGING_STATE_LEFT);
 		
 		
-		} else { // Is Idle
+		} else if (isCasting) {
+
+			if (isFacingRight()) setCurrentState(CASTING_STATE_RIGHT);
+			else setCurrentState(CASTING_STATE_LEFT);
+
+			if (actionTime == 0)
+				isCasting = false;
+		
+		
+		} else{ // Is Idle
 
 			if (isFacingRight()) setCurrentState(IDLE_STATE_RIGHT);
 			else setCurrentState(IDLE_STATE_LEFT);
@@ -125,4 +207,18 @@ void Player::updateSprite()
 	}
 
 	AnimatedSprite::updateSprite();
+}
+void Player::updateBuffs()
+{
+
+	if (buffTimer > 0) {
+
+
+		buffTimer--;
+
+	} else {
+		setAttack(PLAYER_ATTACK);
+		setDefense(0);
+	}
+
 }

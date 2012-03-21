@@ -63,8 +63,9 @@ public:
 	~ScreenGUI();
 	void addButton(Button *buttonToAdd);
 	void addOverlayImage(OverlayImage *imageToAdd);
-	void addRenderItemsToRenderList(RenderList *renderList);
+	virtual void addRenderItemsToRenderList(RenderList *renderList);
 	bool fireButtonCommand(Game *game);
 	void registerButtonEventHandler(ButtonEventHandler *eventHandler);
 	void updateAllButtons(long mouseX, long mouseY);
+	virtual void updateGUI(Game*) {};
 };

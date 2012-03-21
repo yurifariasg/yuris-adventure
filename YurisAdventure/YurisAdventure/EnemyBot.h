@@ -46,4 +46,5 @@ public:
 	void	setState(BotState newState) { state = newState; }
 	void	setBotSpeed(int newSpeed) { botSpeed = newSpeed; }
 	int		getActionTime() { return actionTime; }
+	BotState getState() { return state; }
 };

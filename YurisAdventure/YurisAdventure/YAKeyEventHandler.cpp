@@ -82,6 +82,8 @@ void YAKeyEventHandler::handleKeyEvents(Game *game)
 				if (count > 30) count = 25;
 			}
 
+			player->processCombo(ACTION_KEY);
+
 			if (count > 25) holdingMagicKey = true;
 
 			count++;
@@ -101,29 +103,33 @@ void YAKeyEventHandler::handleKeyEvents(Game *game)
 				pp->setBuoyancy(true);
 			}
 
+			player->processCombo(W_KEY);
+
 		}
 		if (input->isKeyDown(A_KEY) && (player->canDoSomething() || pp->getBuoyancy()))
 		{
 			vX = -PLAYER_SPEED;
+			player->processCombo(A_KEY);
 		}
 		if (input->isKeyDown(S_KEY))
 		{
 			//vY = PLAYER_SPEED;
 			// Crouch
+
+			player->processCombo(S_KEY);
 		}
 		if (input->isKeyDown(D_KEY) && (player->canDoSomething() || pp->getBuoyancy()))
 		{
 			vX = PLAYER_SPEED;
+			player->processCombo(D_KEY);
 		}
 
 		if (input->isKeyDownForFirstTime(D_KEY)) {
 
-			//game->getGSM()->getSpriteManager()->getPlayer()->setCurrentState(MOVING_RIGHT_STATE);
 			if (player->isFacingLeft()) player->changeFacingDirection();
 
 		} else if (input->isKeyDownForFirstTime(A_KEY)) {
 
-			//game->getGSM()->getSpriteManager()->getPlayer()->setCurrentState(MOVING_LEFT_STATE);
 			if (player->isFacingRight()) player->changeFacingDirection();
 
 		}
@@ -137,8 +143,10 @@ void YAKeyEventHandler::handleKeyEvents(Game *game)
 		if (!player->getPhysicalProperties()->getBuoyancy()) {
 
 			if (input->isKeyDownForFirstTime(SWORD_ATTACK_KEY) && !player->isAttacking()) {
+
 				player->startAttack();
 				player->processCombo(SWORD_ATTACK_KEY);
+
 			} else if (input->isKeyDownForFirstTime(MAGIC_ATTACK_KEY) &&
 				player->getCurrentMana() >= 20) {
 
@@ -150,9 +158,11 @@ void YAKeyEventHandler::handleKeyEvents(Game *game)
 					(player->getBoundingVolume()->getHeight() / 2);
 
 				game->getGSM()->getSpriteManager()->addProjectile(
-					L"MAGIC_PROJECTILE", attackingPointX, attackingPointY - 20, player->isFacingRight());
+					PROJECTILE_MAGIC, attackingPointX, attackingPointY - 20, player->isFacingRight());
 
 				player->useMana(20);
+				player->casts();
+				player->processCombo(MAGIC_ATTACK_KEY);
 
 
 			}

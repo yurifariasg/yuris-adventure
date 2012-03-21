@@ -59,7 +59,7 @@ void FightPhysics::updatePhysics(Game* game)
 			bbWidth = player->getBoundingVolume()->getWidth(),
 			bbHeight = player->getBoundingVolume()->getHeight();
 
-		if (bot->isAttacking()) {
+		if (bot->isAttacking() && !bot->isDead()) {
 
 			int attackingPointX = bot->getPhysicalProperties()->getX() +
 				bot->getBoundingVolume()->getX() +

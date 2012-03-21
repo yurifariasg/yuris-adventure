@@ -75,6 +75,7 @@
     <ClCompile Include="EnemyBot.cpp" />
     <ClCompile Include="FightPhysics.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayerGUI.cpp" />
     <ClCompile Include="YAButtonEventHandler.cpp" />
     <ClCompile Include="YADataLoader.cpp" />
     <ClCompile Include="YAKeyEventHandler.cpp" />
@@ -88,8 +89,10 @@
     <ClInclude Include="Creature.h" />
     <ClInclude Include="EnemyBot.h" />
     <ClInclude Include="FightPhysics.h" />
+    <ClInclude Include="ImageShower.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerComboState.h" />
+    <ClInclude Include="PlayerGUI.h" />
     <ClInclude Include="Point.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="YAButtonEventHandler.h" />

@@ -19,6 +19,7 @@
 #include "SSSF_SourceCode\PlatformPlugins\DirectXPlugin\DirectXTextureManager.h"
 #include "SSSF_SourceCode\gui\ScreenGUI.h"
 #include "Player.h"
+#include "PlayerGUI.h"
 
 const bool BOTS_ACTIVE = true;
 
@@ -77,6 +78,7 @@ public:
 	void initCursor(GameGUI *gui, DirectXTextureManager *guiTextureManager);
     
     // New Methods
-    ScreenGUI* loadGUIFromFile(Game *game, wstring guiFile);
+	void loadInGameGUI(Game*,PlayerGUI*);
+    ScreenGUI* loadGUIFromFile(Game *game, wstring guiFile, ScreenGUI*);
 	TiledLayer* loadTiledLayerFromFile(Game *game, int worldColumns, int worldRows, wstring worldFile, wstring worldMapFile, vector<int>* respawnPoints);
 };
