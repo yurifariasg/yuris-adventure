@@ -1,5 +1,6 @@
 #include "YASpriteManager.h"
 #include "EnemyBot.h"
+#include "PenetrableProjectile.h"
 
 /*
 	Creatures a YASpriteManager
@@ -9,14 +10,13 @@ YASpriteManager::YASpriteManager()
 	player = new Player(PLAYER_HP, PLAYER_MANA, PLAYER_ATTACK); // Initialize the Player
 }
 
+YASpriteManager::~YASpriteManager()
+{
+	delete player;
+}
+
 void YASpriteManager::update(Game* game)
 {
-	if (player->isDead() && player->getActionTime() == 1 && !player->isAttacking()) {
-		game->getGSM()->playerKilled();
-		player->reloadData();
-		return;
-	}
-
 	// Verify if some bot is dead
 	list<Bot*>::iterator botIterator;
 	botIterator = getBotsIterator();
@@ -42,7 +42,7 @@ void YASpriteManager::update(Game* game)
 void YASpriteManager::unloadSprites()
 {
 
-	list<Bot*>::iterator it = getBotsIterator();
+	/*list<Bot*>::iterator it = getBotsIterator();
 	Bot* prev = *(it);
 	while (it != getEndOfBotsIterator())
 	{
@@ -50,7 +50,7 @@ void YASpriteManager::unloadSprites()
 		delete prev;
 		prev = *(it);
 	}
-	clearBots();
+	clearBots();*/
 	//layers = new vector<WorldLayer*>();
 
 
@@ -60,4 +60,14 @@ void YASpriteManager::unloadSprites()
 void YASpriteManager::reloadPlayer()
 {
 	player->reloadData();
+}
+
+void YASpriteManager::addProjectile(wstring type, int x, int y, bool facingRight, bool isPenetrating)
+{
+	SpriteManager::addProjectile(type, x, y, facingRight);
+
+	list<Projectile*>::iterator endIterator = getEndOfProjectileIterator();
+	endIterator--;
+	dynamic_cast<PenetrableProjectile*>(*endIterator)->setPenetrable(isPenetrating);
+
 }

@@ -28,27 +28,38 @@ static const int		DG_TARGET_FPS_Y	= 2;
 */
 void YATextGenerator::appendTargetFPS(Game *game)
 {
+	// DEBUGGING DISABLED !
+
 	// WE'LL BUILD OUR WIDE STRING USING A WIDE STRING STREAM
 	wstringstream wss;
 	WindowsTimer *timer = (WindowsTimer*)game->getTimer();
 
 	// BUILD THE WIDE STRING
-	textToGenerate.append(DG_TARGET_FPS_TEXT);
+	//textToGenerate.append(DG_TARGET_FPS_TEXT);
 	wss << timer->getTargetFPS();
-	textToGenerate.append(wss.str());
+	//textToGenerate.append(wss.str());
 
 	// Here
 	float playerX = game->getGSM()->getSpriteManager()->getPlayer()->getPhysicalProperties()->getX();
 
 	wstringstream stream;
 
-	stream << " Player Location: " << playerX;
+	Player* player = dynamic_cast<Player*>(game->getGSM()->getSpriteManager()->getPlayer());
 
-	stream << " Attack: " << dynamic_cast<Player*>(game->getGSM()->getSpriteManager()->getPlayer())->getAttack();
+	int attackingPointX = player->getPhysicalProperties()->getX() +
+		player->getBoundingVolume()->getX() +
+		(player->getBoundingVolume()->getWidth() / 2),
+		attackingPointY = player->getPhysicalProperties()->getY() +
+		player->getBoundingVolume()->getY() +
+		(player->getBoundingVolume()->getHeight() / 2);
+
+	stream << " Player Location: " << attackingPointX;
+
+	stream << " Attack: " << player->getAttack();
 
 	wstring text = stream.str();
-
-	textToGenerate.append(stream.str());
+	// Debug Disabled!
+	//textToGenerate.append(stream.str());
 }
 
 /*

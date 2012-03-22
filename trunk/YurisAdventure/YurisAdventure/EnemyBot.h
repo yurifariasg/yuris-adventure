@@ -7,7 +7,7 @@
 #include "BotVelocity.h"
 #include "BotState.h"
 #include "Creature.h"
-#include "Point.h"
+#include "SSSF_SourceCode\gsm\world\Point.h"
 
 /*
 	Class will hold properties of a bot
@@ -20,6 +20,8 @@ private:
 	BotState state;
 	int actionTime;
 	int botSpeed;
+
+
 	Point*	searchPlayerPosition(Game*);
 
 	int getTrueX() {

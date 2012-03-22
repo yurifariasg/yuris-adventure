@@ -21,6 +21,8 @@
 #include "SSSF_SourceCode\dataLoader\GameDataLoader.h"
 #include "SSSF_SourceCode\graphics\RenderList.h"
 #include "SSSF_SourceCode\gsm\world\WorldLayer.h"
+#include "SSSF_SourceCode\gsm\world\ObjectiveSeeker.h"
+#include "SSSF_SourceCode\gsm\world\Point.h"
 
 class Game;
 class SpriteManager;
@@ -34,11 +36,15 @@ private:
 	// REQUIRE SCROLLING TO SEE IT.
 	int worldWidth;
 	int worldHeight;
-
 	int backgroundID;
 
 	// THESE ARE THE BACKGROUND LAYERS
 	vector<WorldLayer*> *layers;
+
+	ObjectiveSeeker* objectiveSeeker;
+	Point* endOfLevelPosition;
+
+
 
 public:
 	// INLINED ACCESSOR METHODS
@@ -51,6 +57,9 @@ public:
 	{ worldHeight = initWorldHeight;		}
 	void setWorldWidth(int initWorldWidth)
 	{ worldWidth = initWorldWidth;			}
+
+	void setObjectiveSeeker(ObjectiveSeeker* os) { objectiveSeeker = os; }
+	void setEndOfLevelPosition(Point* p) { endOfLevelPosition = p; }
 
 	// METHODS DEFINED in GameStateManager.cpp
 	World();

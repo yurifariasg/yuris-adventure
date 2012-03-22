@@ -19,9 +19,18 @@
 #include "SSSF_SourceCode\PlatformPlugins\DirectXPlugin\DirectXTextureManager.h"
 #include "SSSF_SourceCode\gui\ScreenGUI.h"
 #include "Player.h"
+#include "SSSF_SourceCode\gsm\world\Point.h"
 #include "PlayerGUI.h"
 
 const bool BOTS_ACTIVE = true;
+const int BOTS_RESPAWN_OFFSET_Y = 50;
+const int MONSTERS_PER_SPOT = 4;
+
+const wstring TYPE1_BOT_FILE = L"";
+const wstring TYPE2_BOT_FILE = L"";
+const wstring TYPE3_BOT_FILE = L"";
+const wstring TYPE4_BOT_FILE = L"";
+const wstring TYPE5_BOT_FILE = L"";
 
 class YADataLoader : public GameDataLoader
 {
@@ -32,7 +41,7 @@ private:
 	int nCmdShow;
 
 	// Add the bots into our game
-	void addBots(Game*, vector<int>*);
+	void addBots(Game*, vector<int>*, int,int,int,int,int);
 
 	int convertToInt(wstring convertString)
 	{
@@ -80,5 +89,5 @@ public:
     // New Methods
 	void loadInGameGUI(Game*,PlayerGUI*);
     ScreenGUI* loadGUIFromFile(Game *game, wstring guiFile, ScreenGUI*);
-	TiledLayer* loadTiledLayerFromFile(Game *game, int worldColumns, int worldRows, wstring worldFile, wstring worldMapFile, vector<int>* respawnPoints);
+	TiledLayer* loadTiledLayerFromFile(Game *game, int worldColumns, int worldRows, wstring worldFile, wstring worldMapFile, vector<int>* respawnPoints, Point* changeLevelPos);
 };

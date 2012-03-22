@@ -73,7 +73,9 @@
   <ItemGroup>
     <ClCompile Include="Creature.cpp" />
     <ClCompile Include="EnemyBot.cpp" />
+    <ClCompile Include="FightGameObjective.cpp" />
     <ClCompile Include="FightPhysics.cpp" />
+    <ClCompile Include="PenetrableProjectile.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerGUI.cpp" />
     <ClCompile Include="YAButtonEventHandler.cpp" />
@@ -88,12 +90,13 @@
     <ClInclude Include="BotState.h" />
     <ClInclude Include="Creature.h" />
     <ClInclude Include="EnemyBot.h" />
+    <ClInclude Include="FightGameObjective.h" />
     <ClInclude Include="FightPhysics.h" />
     <ClInclude Include="ImageShower.h" />
+    <ClInclude Include="PenetrableProjectile.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerComboState.h" />
     <ClInclude Include="PlayerGUI.h" />
-    <ClInclude Include="Point.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="YAButtonEventHandler.h" />
     <ClInclude Include="YADataLoader.h" />

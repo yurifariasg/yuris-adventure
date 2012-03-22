@@ -15,6 +15,8 @@ BotRecycler::BotRecycler()
 BotRecycler::~BotRecycler()
 {
 	// GO THROUGH ALL THE TYPES OF BOTS AND DELETE ALL OF THEM
+	recyclableBots.clear();
+	registeredBotTypes.clear();
 }
 
 

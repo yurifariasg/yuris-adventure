@@ -18,6 +18,9 @@
 
 const float DEFAULT_MAX_VELOCITY = 100.0f;
 const float DEFAULT_GRAVITY = 4.0f;
+const bool IS_GRAVITY_ACTIVE = true;
+const int CELL_WIDTH = 64;
+const int CELL_HEIGHT = 64;
 
 class AnimatedSprite;
 class TiledLayer;

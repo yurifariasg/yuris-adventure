@@ -3,8 +3,8 @@ SPRITE_HEIGHT:120
 BOUNDING_BOX_X:60
 BOUNDING_BOX_Y:22
 BOUNDING_BOX_WIDTH:20
-BOUNDING_BOX_HEIGHT:58
-NUMBER_OF_SPRITES:15
+BOUNDING_BOX_HEIGHT:55
+NUMBER_OF_SPRITES:17
 1STATE_NAME:IDLE_STATE_LEFT
 1FRAME_COUNT:5
 11FRAME_SOURCE:textures/world/sprites/mainchar/idle_left1.png
@@ -131,3 +131,15 @@ NUMBER_OF_SPRITES:15
 151FRAME_TIME:10
 152FRAME_SOURCE:textures/world/sprites/mainchar/casting_right2.png
 152FRAME_TIME:10
+16STATE_NAME:TAKING_DAMAGE_LEFT
+16FRAME_COUNT:2
+161FRAME_SOURCE:textures/world/sprites/mainchar/taking_damage_left1.png
+161FRAME_TIME:10
+162FRAME_SOURCE:textures/world/sprites/mainchar/taking_damage_left2.png
+162FRAME_TIME:10
+17STATE_NAME:TAKING_DAMAGE_RIGHT
+17FRAME_COUNT:2
+171FRAME_SOURCE:textures/world/sprites/mainchar/taking_damage_right1.png
+171FRAME_TIME:10
+172FRAME_SOURCE:textures/world/sprites/mainchar/taking_damage_right2.png
+172FRAME_TIME:10

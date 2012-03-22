@@ -1,12 +1,12 @@
                               
                               
                               
-CYYYYYYYYV   B  CYYYYYYYYYYYYV
-            BB                
-           BBB                
-    ZZZ   BBBB                
-         BBBBB                
-        BBBBBB                
-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+    *                     *  ^
+OIOIOIOIOIOIP      UIOIOIOIOIO
+               AF             
+ SDSDASDSD    AWR * *         
+             AWXR       *     
+            AWXZESDSDSDF      
+        *  AWZZZXCVZXCVEF   * 
+SDSDSDSDSDSWCVZZXCVZXZXZESDSDS
+ZXCVZXCVZXCVZXCVZXCVZXCVZXCVZX

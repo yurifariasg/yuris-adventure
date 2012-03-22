@@ -157,10 +157,15 @@ void YAKeyEventHandler::handleKeyEvents(Game *game)
 					player->getBoundingVolume()->getY() +
 					(player->getBoundingVolume()->getHeight() / 2);
 
-				game->getGSM()->getSpriteManager()->addProjectile(
-					PROJECTILE_MAGIC, attackingPointX, attackingPointY - 20, player->isFacingRight());
+				if (player->isFacingRight()) attackingPointX += player->getBoundingVolume()->getWidth() + 10;
+				else attackingPointX -= player->getBoundingVolume()->getWidth() + 10;
 
-				player->useMana(20);
+				dynamic_cast<YASpriteManager*>(game->getGSM()->getSpriteManager())->
+					addProjectile(
+					PROJECTILE_MAGIC, attackingPointX, attackingPointY - 20,
+					player->isFacingRight(), player->getPenetrationIsActive());
+
+				player->useMana(5);
 				player->casts();
 				player->processCombo(MAGIC_ATTACK_KEY);
 

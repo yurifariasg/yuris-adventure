@@ -88,6 +88,16 @@ void SpriteManager::addSpriteItemsToRenderList(	Game *game)
 			addSpriteToRenderList(p, renderList, viewport);
 			pIterator++;
 		}
+
+		// NOW ADD THE REST OF THE SPRITES
+		list<AnimatedSprite*>::iterator aoIterator;
+		aoIterator = animatedObjects.begin();
+		while (aoIterator != animatedObjects.end())
+		{			
+			AnimatedSprite *as = (*aoIterator);
+			addSpriteToRenderList(as, renderList, viewport);
+			aoIterator++;
+		}
 	}
 }
 
@@ -124,6 +134,7 @@ void SpriteManager::clearSprites()
 	spriteTypes.clear();
 	bots.clear();
 	projectiles.clear();
+	animatedObjects.clear();
 }
 
 /*
@@ -144,9 +155,37 @@ AnimatedSpriteType* SpriteManager::getSpriteType(unsigned int typeIndex)
 */
 void SpriteManager::unloadSprites()
 {
-	// @TODO
+
+	// NOW ADD THE REST OF THE SPRITES
+	/*list<AnimatedSprite*>::iterator aoIterator;
+	aoIterator = animatedObjects.begin();
+	while (aoIterator != animatedObjects.end())
+	{			
+		AnimatedSprite *as = (*aoIterator);
+		aoIterator++;
+		delete as;
+	}
+
+	// NOW ADD THE REST OF THE SPRITES
+	list<Projectile*>::iterator pIterator;
+	pIterator = projectiles.begin();
+	while (pIterator != projectiles.end())
+	{			
+		Projectile *p = (*pIterator);
+		pIterator++;
+		delete p;
+	}
+
+	list<Bot*>::iterator botIterator;
+	botIterator = bots.begin();
+	while (botIterator != bots.end())
+	{
+		Bot *bot = (*botIterator);
+		botIterator++;
+		delete bot;
+	}*/
+
 	clearSprites();
-	bots.clear();
 }
 
 Bot* SpriteManager::removeBot(Bot *botToRemove)
@@ -154,6 +193,7 @@ Bot* SpriteManager::removeBot(Bot *botToRemove)
 
 	bots.remove(botToRemove);
 
+	//delete botToRemove;
 	return NULL;
 }
 
@@ -187,6 +227,16 @@ void SpriteManager::update(Game *game)
 		p->updateSprite();
 		pIterator++;
 	}
+
+	// NOW ADD THE REST OF THE SPRITES
+	list<AnimatedSprite*>::iterator aoIterator;
+	aoIterator = animatedObjects.begin();
+	while (aoIterator != animatedObjects.end())
+	{			
+		AnimatedSprite *as = (*aoIterator);
+		as->updateSprite();
+		aoIterator++;
+	}
 }
 
 void SpriteManager::addProjectile(wstring type, int x, int y, bool facingRight)
@@ -199,8 +249,6 @@ void SpriteManager::addProjectile(wstring type, int x, int y, bool facingRight)
 	p->setAlpha(255);
 
 	projectiles.push_back(p);
-
-
 }
 
 void SpriteManager::registerProjectile(Projectile* p)

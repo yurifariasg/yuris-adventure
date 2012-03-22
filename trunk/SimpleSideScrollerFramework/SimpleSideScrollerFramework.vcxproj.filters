@@ -215,6 +215,12 @@
     <ClInclude Include="SSSF_SourceCode\gsm\ai\ProjectileFactory.h">
       <Filter>SSSF_SourceCode\gsm\ai</Filter>
     </ClInclude>
+    <ClInclude Include="SSSF_SourceCode\gsm\world\ObjectiveSeeker.h">
+      <Filter>SSSF_SourceCode\gsm\world</Filter>
+    </ClInclude>
+    <ClInclude Include="SSSF_SourceCode\gsm\world\Point.h">
+      <Filter>SSSF_SourceCode\gsm\world</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

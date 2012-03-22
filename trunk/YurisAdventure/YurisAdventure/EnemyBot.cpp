@@ -19,7 +19,7 @@ void EnemyBot::think(Game *game)
 {
 	if (state == BOT_TAKING_DAMAGE) {
 		
-		if (isFacingRight()) (BOT_STATE_TAKING_DAMAGE_RIGHT);
+		if (isFacingRight()) setCurrentState(BOT_STATE_TAKING_DAMAGE_RIGHT);
 		else setCurrentState(BOT_STATE_TAKING_DAMAGE_LEFT);
 		
 		actionTime = 20;

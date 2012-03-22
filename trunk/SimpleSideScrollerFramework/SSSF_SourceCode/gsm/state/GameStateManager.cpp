@@ -76,6 +76,10 @@ void GameStateManager::goToLoadLevel()
 */
 void GameStateManager::goToMainMenu()
 {
+	//unloadCurrentLevel();
+	//if (currentLevel != NO_LEVEL_LOADED)
+	//	unloadCurrentLevel();
+	currentLevel = 0;
 	currentGameState = GS_MAIN_MENU;
 }
 
@@ -219,8 +223,8 @@ void GameStateManager::shutdown()
 	currentGameState = GS_EXIT_GAME;
 
 	// CLEAR LEFT OVER DATA
-	if (isWorldRenderable())
-		unloadCurrentLevel();
+	/*if (isWorldRenderable())
+		unloadCurrentLevel();*/
 }
 
 /*
@@ -247,15 +251,24 @@ void GameStateManager::unloadCurrentLevel()
 */
 void GameStateManager::update(Game *game)
 {
-	spriteManager->update(game);
 	world.update(game);
-	physics.update(game);
-	game->getGUI()->getViewport()->update(game);
+	if (currentGameState == GS_GAME_IN_PROGRESS) {
+		spriteManager->update(game);
+		physics.update(game);
+		game->getGUI()->getViewport()->update(game);
+	}
 
 }
 
-void GameStateManager::playerKilled()
+void GameStateManager::playerKilled(Game* game)
 {
-	//unloadCurrentLevel();
-	goToMainMenu();
+	game->quitGame();
+}
+
+void GameStateManager::nextLevel(Game* game)
+{
+	unloadCurrentLevel();
+	goToLoadLevel();
+	currentLevel++;
+	game->getDataLoader()->loadWorld(game, currentLevel + 1);
 }

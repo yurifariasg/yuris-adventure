@@ -9,6 +9,8 @@
 #include "EnemyBot.h"
 #include "PlayerGUI.h"
 #include "ImageShower.h"
+#include "PenetrableProjectile.h"
+#include "FightGameObjective.h"
 
 #include "SSSF_SourceCode\text\BufferedTextFileReader.h"
 
@@ -104,7 +106,7 @@ void YADataLoader::loadGame(Game *game, wstring gameInitFile)
 	text->setTextGenerator((TextGenerator*)yaTextGenerator);
 
 	// INIT THE VIEWPORT TOO
-	initViewport(game->getGUI(), properties);	
+	initViewport(game->getGUI(), properties);
 
 	// WE DON'T NEED THE PROPERTIES MAP ANYMORE, THE GAME IS ALL LOADED
 	delete properties;
@@ -157,10 +159,11 @@ void YADataLoader::loadGUI(Game *game, wstring guiInitFile)
 	game->getGUI()->addScreenGUI(GS_IN_GAME_CONTROLS, loadGUIFromFile(game, controlsGameFile, new ScreenGUI()));
 	game->getGUI()->addScreenGUI(GS_IN_GAME_ABOUT, loadGUIFromFile(game, aboutGameFile, new ScreenGUI()));
 	game->getGUI()->addScreenGUI(GS_SPLASH_SCREEN, loadGUIFromFile(game, splashscreenFile, new ScreenGUI()));
+	game->getGUI()->addScreenGUI(GS_STARTING_LEVEL, loadGUIFromFile(game, splashscreenFile, new ScreenGUI()));
 
 	// InGame GUI
 	PlayerGUI* pGUI = new PlayerGUI();
-	game->getGUI()->addScreenGUI(GS_GAME_IN_PROGRESS,	loadGUIFromFile(game, inGameFile, pGUI));
+	game->getGUI()->addScreenGUI(GS_GAME_IN_PROGRESS, pGUI);
 
 	loadInGameGUI(game, pGUI);
 
@@ -229,18 +232,37 @@ void YADataLoader::loadWorld(Game *game, int levelNumber)
 
 	vector<int>* respawnPoints = new vector<int>();
 
+	Point* changeLevelPosition = new Point(0, 0);
+
 	// Initiate World
 	world->addLayer(loadTiledLayerFromFile(game,
 		levelColumns, levelRows,
-		levelElementsPath, levelWorldPath, respawnPoints));
+		levelElementsPath, levelWorldPath, respawnPoints, changeLevelPosition));
+
+	world->setObjectiveSeeker(new FightGameObjective());
+	world->setEndOfLevelPosition(changeLevelPosition);
+
+	AnimatedSprite *endGamePoint = new AnimatedSprite();
+	loadSprite(game, L"data/Sprites/BrightnessSprite.txt", endGamePoint);
+	endGamePoint->setCurrentState(L"CHANGE");
+	endGamePoint->setAlpha(255);
+	PhysicalProperties *egpp = endGamePoint->getPhysicalProperties();
+	egpp->setX(changeLevelPosition->getX());
+	egpp->setY(changeLevelPosition->getY());
+	egpp->setAccelerationX(0);
+	egpp->setAccelerationY(0);
+
+	gsm->getSpriteManager()->addAnimatedObject(endGamePoint);
+
 
 	srand(time(NULL));
 
 	////////////////////////////////////////////
-
-	// Sprites
-
 	SpriteManager *spriteManager = gsm->getSpriteManager();
+	
+	// Load Starting Things
+
+	//SpriteManager *spriteManager = game->getGSM()->getSpriteManager();
 	AnimatedSprite *player = spriteManager->getPlayer();
 	loadSprite(game, L"data/Sprites/PlayerSprite.txt", player);
 	PhysicalProperties *playerProps = player->getPhysicalProperties();
@@ -256,17 +278,24 @@ void YADataLoader::loadWorld(Game *game, int levelNumber)
 
 	player->setAlpha(255);
 	player->setCurrentState(IDLE_STATE_RIGHT);
-
-	// Add our Bots
-	if (BOTS_ACTIVE)
-		addBots(game, respawnPoints);
+	dynamic_cast<Player*>(player)->reloadData();
 
 	// Load Projectiles
 
 	// Lightning Ball
-	Projectile* p = new Projectile(PROJECTILE_MAGIC, 20, 5);
+	PenetrableProjectile* p = new PenetrableProjectile(PROJECTILE_MAGIC, 20, 5);
+	p->setPenetrable(true);
 	loadSprite(game, L"data/Sprites/LightningBall.txt", p);
 	spriteManager->registerProjectile(p);
+
+	// Add our Bots
+	if (true)
+		addBots(game, respawnPoints,
+		convertToInt((*levels)[concat(levelNumber, L"BOT_TYPE1")]),
+		convertToInt((*levels)[concat(levelNumber, L"BOT_TYPE2")]),
+		convertToInt((*levels)[concat(levelNumber, L"BOT_TYPE3")]),
+		convertToInt((*levels)[concat(levelNumber, L"BOT_TYPE4")]),
+		convertToInt((*levels)[concat(levelNumber, L"BOT_TYPE5")]));
 }
 
 /*
@@ -481,7 +510,8 @@ ScreenGUI* YADataLoader::loadGUIFromFile(Game *game, wstring guiFile, ScreenGUI*
 
 TiledLayer* YADataLoader::loadTiledLayerFromFile(Game *game,
 		int worldColumns, int worldRows,
-		wstring worldFile, wstring worldMapFile, vector<int>* respawnPoints)
+		wstring worldFile, wstring worldMapFile, vector<int>* respawnPoints,
+		Point* endLevelPos)
 {
 
 	map<wstring,wstring> *properties = new map<wstring,wstring>();
@@ -588,6 +618,26 @@ TiledLayer* YADataLoader::loadTiledLayerFromFile(Game *game,
 			numberOfTilesTotal++;
 
 			continue;
+		} else if (line[i] == '^') {
+			// Change Level Position
+			int columnNumber = (numberOfTilesTotal % worldColumns);
+			int x = columnNumber * TILE_WIDTH;
+
+			int rowNumber = ((numberOfTilesTotal / worldColumns));
+			int y = rowNumber * TILE_HEIGHT;
+
+			endLevelPos->setX(x);
+			endLevelPos->setY(y);
+
+			// Add an Empty Tile there
+
+			Tile *tileToAdd = new Tile();
+			tileToAdd->collidable = false;
+			tileToAdd->textureID = emptyTileCode;
+			tiledLayer->addTile(tileToAdd);
+			tileCounterPerLine++;
+			numberOfTilesTotal++;
+			continue;
 		}
 
 		// Gets the Tile related to that Code and add the layer
@@ -613,10 +663,10 @@ TiledLayer* YADataLoader::loadTiledLayerFromFile(Game *game,
 /*
 	Add the Bots to our Game
 */
-void YADataLoader::addBots(Game* game, vector<int>* respawnPoints)
+void YADataLoader::addBots(Game* game, vector<int>* respawnPoints,
+	int type1Quantity, int type2Quantity, int type3Quantity,
+	int type4Quantity, int type5Quantity)
 {
-	// TO-DO: Load from File or Think of something more generic...
-
 	AnimatedSpriteType* ast;
 	TextureManager* worldTextureManager = game->getGraphics()->getWorldTextureManager();
 	SpriteManager* spriteManager = game->getGSM()->getSpriteManager();
@@ -626,8 +676,6 @@ void YADataLoader::addBots(Game* game, vector<int>* respawnPoints)
 	map<int, int>* monstersOnRespawn = new map<int, int>();
 
 	// Lets add the Green Monster
-	int BOT_WIDTH = 64;
-	int BOT_HEIGHT = 64;
 	ast = new AnimatedSpriteType();
 	vector<unsigned int> botImageIDs;
 
@@ -635,13 +683,12 @@ void YADataLoader::addBots(Game* game, vector<int>* respawnPoints)
 	loadSprite(game, L"data/Sprites/GreenMonster.txt", sample);
 
 	// Add Bots
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < type1Quantity; i++)
 	{
 		EnemyBot *newBot = sample->clone();
 		newBot->setCurrentState(BOT_IDLE_LEFT);
 		newBot->setAlpha(255);
 		PhysicalProperties *pp = newBot->getPhysicalProperties();
-		pp->setCollidable(false);
 
 		int x;
 		int y;
@@ -659,7 +706,7 @@ void YADataLoader::addBots(Game* game, vector<int>* respawnPoints)
 				continue;
 			}
 
-			if (monstersOnRespawn->find(chosenRespawnPoint)->second > 4) {
+			if (monstersOnRespawn->find(chosenRespawnPoint)->second > MONSTERS_PER_SPOT) {
 				chosenRespawnPoint = (rand() % (numberOfRespawnPoints)) + 1;
 			} else {
 				monstersOnRespawn->find(chosenRespawnPoint)->second++;
@@ -669,7 +716,7 @@ void YADataLoader::addBots(Game* game, vector<int>* respawnPoints)
 		}
 
 		x = respawnPoints->at((chosenRespawnPoint * 2) - 2);
-		y = respawnPoints->at((chosenRespawnPoint * 2) - 1) - 50 ; // Put a little up
+		y = respawnPoints->at((chosenRespawnPoint * 2) - 1) - BOTS_RESPAWN_OFFSET_Y ; // Put a little up
 
 		pp->setX(x);
 		pp->setY(y);
@@ -683,7 +730,7 @@ void YADataLoader::addBots(Game* game, vector<int>* respawnPoints)
 	loadSprite(game, L"data/Sprites/BanditSprite.txt", sample);
 
 	// Add Bots
-	for (int i = 0; i < 7; i++)
+	for (int i = 0; i < type2Quantity; i++)
 	{
 		EnemyBot *newBot = sample->clone();
 		newBot->setCurrentState(BOT_IDLE_LEFT);
@@ -707,7 +754,7 @@ void YADataLoader::addBots(Game* game, vector<int>* respawnPoints)
 				continue;
 			}
 
-			if (monstersOnRespawn->find(chosenRespawnPoint)->second > 2) {
+			if (monstersOnRespawn->find(chosenRespawnPoint)->second > MONSTERS_PER_SPOT) {
 				chosenRespawnPoint = (rand() % (numberOfRespawnPoints)) + 1; // Get another one
 			} else {
 				monstersOnRespawn->find(chosenRespawnPoint)->second++;
@@ -717,7 +764,7 @@ void YADataLoader::addBots(Game* game, vector<int>* respawnPoints)
 		}
 
 		x = respawnPoints->at((chosenRespawnPoint * 2) - 2);
-		y = respawnPoints->at((chosenRespawnPoint * 2) - 1) - 50; // Put a little up
+		y = respawnPoints->at((chosenRespawnPoint * 2) - 1) - BOTS_RESPAWN_OFFSET_Y; // Put a little up
 
 		pp->setX(x);
 		pp->setY(y);
@@ -725,6 +772,103 @@ void YADataLoader::addBots(Game* game, vector<int>* respawnPoints)
 		pp->setAccelerationY(0.0f);
 		spriteManager->addBot(newBot);
 	}
+
+	sample = new EnemyBot(150, 10, BOT_FAST);
+	loadSprite(game, L"data/Sprites/SkeletonSprite.txt", sample);
+
+	// Add Bots
+	for (int i = 0; i < type3Quantity; i++)
+	{
+		EnemyBot *newBot = sample->clone();
+		newBot->setCurrentState(BOT_IDLE_LEFT);
+		newBot->setAlpha(255);
+		PhysicalProperties *pp = newBot->getPhysicalProperties();
+		pp->setCollidable(false);
+
+		int x;
+		int y;
+
+		int numberOfRespawnPoints = respawnPoints->size() / 2;
+		int chosenRespawnPoint = (rand() % (numberOfRespawnPoints)) + 1;
+
+		bool foundHisPlace = false;
+
+		while (!foundHisPlace) {
+
+			if (monstersOnRespawn->find(chosenRespawnPoint) == monstersOnRespawn->end()) {
+				monstersOnRespawn->insert( pair<int, int> (chosenRespawnPoint, 1) );
+				foundHisPlace = true;
+				continue;
+			}
+
+			if (monstersOnRespawn->find(chosenRespawnPoint)->second > MONSTERS_PER_SPOT) {
+				chosenRespawnPoint = (rand() % (numberOfRespawnPoints)) + 1; // Get another one
+			} else {
+				monstersOnRespawn->find(chosenRespawnPoint)->second++;
+				foundHisPlace = true;
+			}
+
+		}
+
+		x = respawnPoints->at((chosenRespawnPoint * 2) - 2);
+		y = respawnPoints->at((chosenRespawnPoint * 2) - 1) - BOTS_RESPAWN_OFFSET_Y; // Put a little up
+
+		pp->setX(x);
+		pp->setY(y);
+		pp->setAccelerationX(0.0f);
+		pp->setAccelerationY(0.0f);
+		spriteManager->addBot(newBot);
+	}
+
+	sample = new EnemyBot(300, 10, BOT_FAST);
+	loadSprite(game, L"data/Sprites/KnightSprite.txt", sample);
+
+	// Add Bots
+	for (int i = 0; i < type4Quantity; i++)
+	{
+		EnemyBot *newBot = sample->clone();
+		newBot->setCurrentState(BOT_IDLE_LEFT);
+		newBot->setAlpha(255);
+		PhysicalProperties *pp = newBot->getPhysicalProperties();
+		pp->setCollidable(false);
+
+		int x;
+		int y;
+
+		int numberOfRespawnPoints = respawnPoints->size() / 2;
+		int chosenRespawnPoint = (rand() % (numberOfRespawnPoints)) + 1;
+
+		bool foundHisPlace = false;
+
+		while (!foundHisPlace) {
+
+			if (monstersOnRespawn->find(chosenRespawnPoint) == monstersOnRespawn->end()) {
+				monstersOnRespawn->insert( pair<int, int> (chosenRespawnPoint, 1) );
+				foundHisPlace = true;
+				continue;
+			}
+
+			if (monstersOnRespawn->find(chosenRespawnPoint)->second > MONSTERS_PER_SPOT) {
+				chosenRespawnPoint = (rand() % (numberOfRespawnPoints)) + 1; // Get another one
+			} else {
+				monstersOnRespawn->find(chosenRespawnPoint)->second++;
+				foundHisPlace = true;
+			}
+
+		}
+
+		x = respawnPoints->at((chosenRespawnPoint * 2) - 2);
+		y = respawnPoints->at((chosenRespawnPoint * 2) - 1) - BOTS_RESPAWN_OFFSET_Y; // Put a little up
+
+		pp->setX(x);
+		pp->setY(y);
+		pp->setAccelerationX(0.0f);
+		pp->setAccelerationY(0.0f);
+		spriteManager->addBot(newBot);
+	}
+
+	delete sample;
+	delete monstersOnRespawn;
 }
 
 void YADataLoader::loadSprite(Game* game, wstring fileName, AnimatedSprite* sprite)
@@ -774,10 +918,13 @@ void YADataLoader::loadSprite(Game* game, wstring fileName, AnimatedSprite* spri
 	sprite->getBoundingVolume()->setWidth(bbWidth);
 	sprite->getBoundingVolume()->setHeight(bbHeight);
 
+	delete properties;
 }
 
 void YADataLoader::loadInGameGUI(Game* game, PlayerGUI* pGUI)
 {
+	// This should be on a special file...
+
 	// HP BAR ... 
 	OverlayImage *hpBar = new OverlayImage();
 	hpBar->x = 157; // Specific Position, Refactoring Needed
@@ -835,5 +982,28 @@ void YADataLoader::loadInGameGUI(Game* game, PlayerGUI* pGUI)
 
 	dynamic_cast<Player*>(game->getGSM()->getSpriteManager()->getPlayer())->setImageShower(pGUI);
 
+	// Player Bars
+	OverlayImage *playerBar = new OverlayImage();
+	playerBar->x = 25;
+	playerBar->y = 15;
+	playerBar->z = 0;
+	playerBar->width = 300;
+	playerBar->height = 64;
+	playerBar->alpha = 255;
+	playerBar->imageID = game->getGraphics()->getGUITextureManager()->loadTexture(L"textures/gui/overlays/player_bar.png");
+
+	OverlayImage *altPlayerBar = new OverlayImage();
+	altPlayerBar->x = 25;
+	altPlayerBar->y = 15;
+	altPlayerBar->z = 0;
+	altPlayerBar->width = 300;
+	altPlayerBar->height = 64;
+	altPlayerBar->alpha = 255;
+	altPlayerBar->imageID = game->getGraphics()->getGUITextureManager()->loadTexture(L"textures/gui/overlays/player_bar_red.png");
+
+	pGUI->setPlayerBars(playerBar, altPlayerBar);
+
+	pGUI->setBlackAndGameOverImageID(game->getGraphics()->getGUITextureManager()->loadTexture(L"textures/gui/overlays/blackscreen.png"),
+		game->getGraphics()->getGUITextureManager()->loadTexture(L"textures/gui/overlays/gameover.png"));
 
 }

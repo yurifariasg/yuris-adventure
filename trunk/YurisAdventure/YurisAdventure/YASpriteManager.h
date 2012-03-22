@@ -26,5 +26,6 @@ public:
 	void reloadPlayer();
 	void update(Game *game);
 	void unloadSprites();
+	void addProjectile(wstring, int, int, bool, bool);
 
 };

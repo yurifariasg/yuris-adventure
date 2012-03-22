@@ -151,6 +151,8 @@ void Game::processGameData()
 {
 	// WE ONLY PERFORM GAME LOGIC IF THE GAME
 	// IS IN PROGRESS
+
+
 	if (gsm->isGameInProgress())
 	{
 		gsm->update(this);
@@ -177,8 +179,9 @@ void Game::processGameData()
 */
 void Game::quitGame()
 {
+	gsm->unloadCurrentLevel();
 	// CLEAN UP ALL THE WORLD TEXTURES
-	graphics->clearWorldTextures();
+	//graphics->clearWorldTextures();
 
 	// WE'RE GOING BACK TO THE MAIN MENU
 	gsm->goToMainMenu();
@@ -215,8 +218,8 @@ void Game::startGame()
 {
 	// AND UPDATE THE GAME STATE OF COURSE
 	gsm->goToLoadLevel();
-
 	dataLoader->loadWorld(this, 1); // Level 1
+
 }
 
 void Game::goToControls()

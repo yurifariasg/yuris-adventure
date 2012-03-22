@@ -101,5 +101,6 @@ public:
 	void			goToInGameMenu();
 	void			goToControlsInGame();
 	void			goToAboutInGame();
-	void			playerKilled();
+	void			playerKilled(Game*);
+	void			nextLevel(Game*);
 };
