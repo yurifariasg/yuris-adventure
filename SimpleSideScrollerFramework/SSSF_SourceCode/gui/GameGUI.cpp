@@ -64,9 +64,11 @@ void GameGUI::addRenderItemsToRenderList(Game *game)
 	if (gsm->isAppActive())
 	{
 		// Updates GUI
-		screens.at(gameState)->updateGUI(game);
-		// CASCADE THIS CALL TO THE APPROPRIATE SCREEN
-		screens.at(gameState)->addRenderItemsToRenderList(guiRenderList);
+		if ( screens.at(gameState) != NULL ) {
+			screens.at(gameState)->updateGUI(game);
+			// CASCADE THIS CALL TO THE APPROPRIATE SCREEN
+			screens.at(gameState)->addRenderItemsToRenderList(guiRenderList);
+		}
 	}
 
 	// CASCADE THIS CALL TO THE CURSOR, IF THERE IS ONE

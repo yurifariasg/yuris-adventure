@@ -5,6 +5,8 @@
 #include "Player.h"
 #include "EnchancedPhysics.h"
 
+const int ATTACK_POINT_OFFSET = 30;
+
 class FightPhysics : public EnchancedPhysics
 {
 	private:

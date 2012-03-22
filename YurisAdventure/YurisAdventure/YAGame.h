@@ -102,6 +102,8 @@ static const wstring	CHARGING_STATE_RIGHT = L"CHARGING_STATE_RIGHT";
 static const wstring	CHARGING_STATE_LEFT = L"CHARGING_STATE_LEFT";
 static const wstring	CASTING_STATE_RIGHT = L"CASTING_STATE_RIGHT";
 static const wstring	CASTING_STATE_LEFT = L"CASTING_STATE_LEFT";
+static const wstring	TAKING_DAMAGE_LEFT = L"TAKING_DAMAGE_LEFT";
+static const wstring	TAKING_DAMAGE_RIGHT = L"TAKING_DAMAGE_RIGHT";
 
 // BOTs STATES
 static const wstring	BOT_IDLE_RIGHT = L"BOT_IDLE_RIGHT";
@@ -146,8 +148,7 @@ const unsigned int RIGHT_KEY = VK_RIGHT;
 const unsigned int ENTER_KEY = VK_RETURN;
 
 static const int		ANIM_SPEED = 6;
-static const int		PLAYER_WIDTH = 64;
-static const int		PLAYER_HEIGHT = 92;
+static const int		FLYING_SPEED_MULTIPLIER = 1.5;
 
 // FOR OUR WORLD
 static const int		TILE_WIDTH = 64;

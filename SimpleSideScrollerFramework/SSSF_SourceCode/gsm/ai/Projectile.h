@@ -23,9 +23,9 @@ class Projectile : public AnimatedSprite
 		bool isFacingRight() { return toRight; }
 		int getSpeed() { return projectileSpeed; }
 		wstring getType() { return type; }
-		Projectile* clone();
+		virtual Projectile* clone();
 		void updateSprite();
 		bool isEnabled() { return enabled; }
-		void disables() { enabled = false; }
+		virtual void disables() { enabled = false; }
 		void enables() { enabled = true; }
 };

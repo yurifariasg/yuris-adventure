@@ -38,6 +38,8 @@ ScreenGUI::ScreenGUI()
 ScreenGUI::~ScreenGUI()
 {
 	// TODO - DELETE EACH INDIVIDUAL BUTTON AND OVERLAY IMAGE
+	buttons->clear();
+	overlayImages->clear();
 	delete buttons;
 	delete overlayImages;
 	delete screenName;

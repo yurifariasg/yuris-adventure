@@ -7,6 +7,10 @@ PlayerGUI::PlayerGUI(void)
 	hpBar = NULL;
 	manaBar = NULL;
 	centerImage = NULL;
+	showAlternatePlayerBar = false;
+	isPlayerDead = false;
+	alpha = 0;
+	count = 0;
 }
 
 
@@ -26,6 +30,16 @@ void PlayerGUI::updateGUI(Game* game)
 	int hpPercentage = p->getCurrentHP() * 100 / p->getMaxHP();
 	int manaPercentage = p->getCurrentMana() * 100 / p->getMaxMana();
 	PlayerComboState currentCombo = p->getCurrentComboState();
+
+	showAlternatePlayerBar = p->hasBuffActives();
+
+	if (p->isDead() && !isPlayerDead) {
+		isPlayerDead = true;
+		count = 500;
+	} else if (!p->isDead()) {
+		isPlayerDead = false;
+		alpha = 0;
+	}
 
 	// Now, throw this information on screen !
 	hpBarQuantity = hpPercentage * maxHPBarImages / 100;
@@ -58,8 +72,24 @@ void PlayerGUI::updateGUI(Game* game)
 void PlayerGUI::addRenderItemsToRenderList(RenderList *renderList)
 {
 
-	// Call Parents...
-	ScreenGUI::addRenderItemsToRenderList(renderList);
+	if (!showAlternatePlayerBar)
+		renderList->addRenderItem(
+			playerBar->imageID,
+			playerBar->x,
+			playerBar->y,
+			0,
+			255,
+			playerBar->width,
+			playerBar->height);
+	else
+		renderList->addRenderItem(
+			alternatePlayerBar->imageID,
+			alternatePlayerBar->x,
+			alternatePlayerBar->y,
+			0,
+			255,
+			alternatePlayerBar->width,
+			alternatePlayerBar->height);
 
 	if (hpBar != NULL) {
 		// Theres HP Bar Registered
@@ -106,6 +136,33 @@ void PlayerGUI::addRenderItemsToRenderList(RenderList *renderList)
 			centerImage->width,
 			centerImage->height);
 
+	}
+
+	if (isPlayerDead) {
+
+		renderList->addRenderItem(
+			blackImageID,
+			0,
+			0,
+			0,
+			alpha,
+			1024,
+			768);
+
+		alpha++;
+		alpha++;
+
+		if (alpha >= 255) {
+			renderList->addRenderItem(
+			gameOverImageID,
+			0,
+			0,
+			0,
+			255,
+			1024,
+			768);
+		}
+		count--;
 	}
 }
 

@@ -62,27 +62,15 @@ void Physics::update(Game *game)
 void Physics::doStaticPhysics(AnimatedSprite* sprite, TiledLayer* world, Viewport* viewport)
 {
 	// Stating of Big Functio
-
-	//player = sm->getPlayer();
 	PhysicalProperties* pp = sprite->getPhysicalProperties();
-
-	if (!viewport->areWorldCoordinatesInViewport(
-		pp->getX(), pp->getY(), sprite->getBoundingVolume()->getWidth(), sprite->getBoundingVolume()->getHeight())) {
-		return;
-	}
 
 	// Add Acelerations
 	pp->setVelocity(pp->getVelocityX() + pp->getAccelerationX(),
 		pp->getVelocityY() + pp->getAccelerationY());
 
-	const int CELL_WIDTH = 64;
-	const int CELL_HEIGHT = 64;
-
-	//pp->setVelocity(10, 0);
-
 	// Lets Add the Gravity
 
-	if (true) { // has Gravity ?
+	if (IS_GRAVITY_ACTIVE) { // has Gravity ?
 
 		// New BoundingBox Y
 		int newBBY = (pp->getY() + sprite->getBoundingVolume()->getY()) + pp->getVelocityY() + getGravity();
@@ -96,8 +84,6 @@ void Physics::doStaticPhysics(AnimatedSprite* sprite, TiledLayer* world, Viewpor
 		int bottomRow = (newBBY + sprite->getBoundingVolume()->getHeight() ) / CELL_HEIGHT;
 		int rightColumn = ((pp->getX() + sprite->getBoundingVolume()->getX()) + sprite->getBoundingVolume()->getWidth() ) / CELL_WIDTH;
 		int leftColumn = (pp->getX() + sprite->getBoundingVolume()->getX()) / CELL_WIDTH;
-
-		//int worldWidth = world->getLayerWidth();
 
 		if (leftColumn < 0 || rightColumn > world->getWorldWidth() / CELL_WIDTH) {
 

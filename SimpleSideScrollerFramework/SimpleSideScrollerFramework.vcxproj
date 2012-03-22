@@ -101,6 +101,8 @@
     <ClInclude Include="SSSF_SourceCode\gsm\sprite\SpriteManager.h" />
     <ClInclude Include="SSSF_SourceCode\gsm\state\GameState.h" />
     <ClInclude Include="SSSF_SourceCode\gsm\state\GameStateManager.h" />
+    <ClInclude Include="SSSF_SourceCode\gsm\world\ObjectiveSeeker.h" />
+    <ClInclude Include="SSSF_SourceCode\gsm\world\Point.h" />
     <ClInclude Include="SSSF_SourceCode\gsm\world\SparseLayer.h" />
     <ClInclude Include="SSSF_SourceCode\gsm\world\TiledLayer.h" />
     <ClInclude Include="SSSF_SourceCode\gsm\world\World.h" />

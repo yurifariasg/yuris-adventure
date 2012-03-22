@@ -30,6 +30,9 @@ private:
 	// THAT MOVES AROUND AND IS NOT THE PLAYER
 	list<Bot*> bots;
 
+	// Animated Objects that doesnt move
+	list<AnimatedSprite*> animatedObjects;
+
 	// Active Projectiles
 	list<Projectile*> projectiles;
 
@@ -46,7 +49,7 @@ private:
 public:
 	// NOTHING TO INIT OR DESTROY
 	SpriteManager()		{}
-	~SpriteManager()	{}
+	~SpriteManager()	{ clearSprites(); }
 
 	// INLINED ACCESSOR METHODS
 	int						getNumberOfSprites()	{ return bots.size();		}
@@ -54,6 +57,7 @@ public:
 	virtual void reloadPlayer() = 0;
 	list<Bot*>::iterator	getBotsIterator()		{ return bots.begin();		}
 	list<Bot*>::iterator	getEndOfBotsIterator()	{ return bots.end();		}
+	int getNumberOfBots() { return bots.size(); }
 
 	list<Projectile*>::iterator	getProjectileIterator()		{ return projectiles.begin();		}
 	list<Projectile*>::iterator	getEndOfProjectileIterator()	{ return projectiles.end();		}
@@ -72,4 +76,6 @@ public:
 	void addProjectile(wstring, int, int, bool);
 	void registerProjectile(Projectile*);
 	void removeProjectile(Projectile* projectileToRemove);
+
+	void addAnimatedObject(AnimatedSprite* as) { animatedObjects.push_back(as); }
 };

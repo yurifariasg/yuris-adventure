@@ -29,6 +29,8 @@ World::World()
 	worldWidth = 0;
 	worldHeight = 0;
 	backgroundID = -1;
+	objectiveSeeker = NULL;
+	endOfLevelPosition = NULL;
 }
 
 /*
@@ -38,6 +40,8 @@ World::World()
 World::~World()	
 {
 	delete layers;
+	delete objectiveSeeker;
+	delete endOfLevelPosition;
 }
 
 /*
@@ -93,14 +97,16 @@ void World::unloadWorld()
 {
 
 	vector<WorldLayer*>::iterator it = layers->begin();
-	WorldLayer* prev = *(it);
 	while (it != layers->end())
 	{
+		WorldLayer* prev = *(it);
 		it++;
 		delete prev;
-		prev = *(it);
 	}
 	delete layers;
+	delete objectiveSeeker;
+	delete endOfLevelPosition;
+	backgroundID = -1;
 	layers = new vector<WorldLayer*>();
 
 	worldWidth = 0;
@@ -119,6 +125,30 @@ void World::update(Game *game)
 	// NOTE THAT THIS METHOD IS NOT IMPLEMENTED BUT COULD BE
 	// SHOULD YOU WISH TO ADD ANY NON-COLLIDABLE LAYERS WITH
 	// DYNAMIC CONTENT OR PARTICLE SYSTEMS
+
+	if (objectiveSeeker != NULL && endOfLevelPosition != NULL) {
+
+		objectiveSeeker->verifyObjective(game);
+		
+		// Verify Player Position
+		AnimatedSprite* p = game->getGSM()->getSpriteManager()->getPlayer();
+
+		int x = p->getPhysicalProperties()->getX() + p->getBoundingVolume()->getX()
+			+ p->getBoundingVolume()->getWidth() / 2,
+			y = p->getPhysicalProperties()->getY() + p->getBoundingVolume()->getY()
+			+ p->getBoundingVolume()->getHeight() / 2;
+
+		if (endOfLevelPosition->getX() < x &&
+			x < endOfLevelPosition->getX() + 64 && // TIle Width
+			endOfLevelPosition->getY() < y &&
+			y < endOfLevelPosition->getY() + 64 //&&
+			) {//objectiveSeeker->hasCompletedObjective()) {
+
+			game->getGSM()->nextLevel(game);
+
+		}
+
+	}
 }
 
 void World::setBackground(int id)

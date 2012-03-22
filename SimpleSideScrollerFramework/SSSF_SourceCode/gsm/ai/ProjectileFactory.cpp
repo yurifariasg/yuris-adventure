@@ -9,6 +9,8 @@ ProjectileFactory::ProjectileFactory(void)
 
 ProjectileFactory::~ProjectileFactory(void)
 {
+	registeredProjectiles.clear();
+	recycledProjectiles.clear();
 }
 
 void ProjectileFactory::registerProjectile(wstring type, Projectile* p)

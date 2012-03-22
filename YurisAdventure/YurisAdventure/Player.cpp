@@ -9,7 +9,10 @@ Player::Player(int hp, int mana, int attack) : Creature(hp, mana, attack)
 	comboState = COMBO_NONE;
 	actionTime = 0;
 	buffTimer = 0;
+	attackingTime = 0;
 	comboImageShower = NULL;
+	isPenetrationActive = false;
+	isTakingDamage = false;
 }
 /*
 	Process the Player Combo State for the given pressedKey
@@ -66,11 +69,11 @@ void Player::processCombo(unsigned int pressedKey)
 		case S_KEY: comboState = COMBO_NONE; break;
 		case ACTION_KEY:
 			// Increase Attack
-			if (getCurrentMana() >= 30) {
+			if (getCurrentMana() >= ATTACK_COMBO_MANA && !hasBuffActives()) {
 				comboImageShower->showImage(ATTACK_INCREASED_IMAGE);
 				setAttack(PLAYER_ATTACK * 2);
-				useMana(30);
-				buffTimer = 1000;
+				useMana(ATTACK_COMBO_MANA);
+				buffTimer = BUFF_TIME;
 			}
 
 			comboState = COMBO_NONE; break;
@@ -86,11 +89,11 @@ void Player::processCombo(unsigned int pressedKey)
 		case ACTION_KEY:
 			
 			// Magic Penetration
-			if (getCurrentMana() >= 30) {
+			if (getCurrentMana() >= MAGIC_COMBO_MANA && !hasBuffActives()) {
 				comboImageShower->showImage(MAGIC_PENETRATION_IMAGE);
-				//setAttack(PLAYER_ATTACK * 2);
-				useMana(30);
-				buffTimer = 1000;
+				isPenetrationActive = true;
+				useMana(MAGIC_COMBO_MANA);
+				buffTimer = BUFF_TIME;
 			}
 			
 			comboState = COMBO_NONE; break;
@@ -106,11 +109,11 @@ void Player::processCombo(unsigned int pressedKey)
 		case ACTION_KEY:
 			
 			// Increase Defense
-			if (getCurrentMana() >= 30) {
+			if (getCurrentMana() >= DEFENSE_COMBO_MANA && !hasBuffActives()) {
 				comboImageShower->showImage(DEFENSE_INCREASE_IMAGE);
-				setDefense(50);
-				useMana(30);
-				buffTimer = 1000;
+				setDefense(INCREASE_DEFENSE_PERCENTAGE);
+				useMana(DEFENSE_COMBO_MANA);
+				buffTimer = BUFF_TIME;
 			}
 			
 			comboState = COMBO_NONE; break;
@@ -172,11 +175,18 @@ void Player::updateSprite()
 			if (isFacingRight()) setCurrentState(CASTING_STATE_RIGHT);
 			else setCurrentState(CASTING_STATE_LEFT);
 
-			if (actionTime == 0)
+			if (attackingTime == 0)
 				isCasting = false;
 		
 		
-		} else{ // Is Idle
+		} else if (isTakingDamage) {
+
+			if (actionTime == 0 || isDead() ||
+				(getCurrentState() != TAKING_DAMAGE_LEFT &&
+				getCurrentState() != TAKING_DAMAGE_RIGHT)) isTakingDamage = false;
+			actionTime--;
+
+		} else { // is idle
 
 			if (isFacingRight()) setCurrentState(IDLE_STATE_RIGHT);
 			else setCurrentState(IDLE_STATE_LEFT);
@@ -184,26 +194,25 @@ void Player::updateSprite()
 		}
 	}
 
-	if (isAttacking() && actionTime == 0) {
-		actionTime = 20;
+	if (isAttacking() && attackingTime == 0) {
+		attackingTime = TIME_FOR_ATTACK_ANIMATION;
 	}
 
-	if (actionTime == 1 && isAttacking())
+	if (attackingTime == 1 && isAttacking())
 		stopAttack();
 
-	} else if (actionTime == 0 || isAttacking()) { // is dead endif statement
+	} else if (attackingTime == 0 || isAttacking()) { // is dead endif statement
 		stopAttack();
 
-		if (isFacingRight())
-			setCurrentState(DYING_STATE_RIGHT);
+		if (isFacingRight()) setCurrentState(DYING_STATE_RIGHT);
 		else setCurrentState(DYING_STATE_LEFT);
 
-		actionTime = 200;
+		attackingTime = TIME_FOR_DEATH_ANIMATION;
 	}
 
-	if (actionTime > 0) {
-		if((isDead() && actionTime > 1)) { actionTime--;
-		} else if (!isDead()) { actionTime--; }
+	if (attackingTime > 0) {
+		if((isDead() && attackingTime > 1)) { attackingTime--;
+		} else if (!isDead()) { attackingTime--; }
 	}
 
 	AnimatedSprite::updateSprite();
@@ -219,6 +228,7 @@ void Player::updateBuffs()
 	} else {
 		setAttack(PLAYER_ATTACK);
 		setDefense(0);
+		isPenetrationActive = false;
 	}
 
 }

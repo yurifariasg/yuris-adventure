@@ -1,5 +1,6 @@
 #include "FightPhysics.h"
 #include "EnemyBot.h"
+#include "PenetrableProjectile.h"
 
 void FightPhysics::updatePhysics(Game* game)
 {
@@ -20,6 +21,7 @@ void FightPhysics::updatePhysics(Game* game)
 
 		if (wasAttacking && !player->isAttacking()) {
 
+			// Calculate Center of Player
 			int attackingPointX = player->getPhysicalProperties()->getX() +
 				player->getBoundingVolume()->getX() +
 				(player->getBoundingVolume()->getWidth() / 2),
@@ -27,12 +29,20 @@ void FightPhysics::updatePhysics(Game* game)
 				player->getBoundingVolume()->getY() +
 				(player->getBoundingVolume()->getHeight() / 2);
 
-			if (player->isFacingRight()) attackingPointX += 30;
-			else attackingPointX -= 30;
+			// Put the Attacking Point in front of player...
+			if (player->isFacingRight()) attackingPointX += player->getBoundingVolume()->getWidth() * 2;
+			else attackingPointX -= player->getBoundingVolume()->getWidth() * 2;
 
 
+			// Attack "Boxes"
+			// is in front of creature and has 2 times creature width and 1 time creature height
+			
+			// Verify if it has collision
 			if (hasAABBCollision(
-				attackingPointX, attackingPointY, 20, 20,
+				attackingPointX - player->getBoundingVolume()->getWidth(), attackingPointY -
+				(player->getBoundingVolume()->getHeight()/2),
+				player->getBoundingVolume()->getWidth() * 2, // Twice his Width
+				player->getBoundingVolume()->getHeight(),
 				bbX, bbY, bbWidth, bbHeight) && !dynamic_cast<EnemyBot*>(bot)->isDead()) {
 
 				dynamic_cast<EnemyBot*>(bot)->takeDamage(player->getAttack());
@@ -68,20 +78,22 @@ void FightPhysics::updatePhysics(Game* game)
 				bot->getBoundingVolume()->getY() +
 				(bot->getBoundingVolume()->getHeight() / 2);
 
-			if (bot->isFacingRight()) attackingPointX += 30;
-			else attackingPointX -= 30;
+			if (bot->isFacingRight()) attackingPointX += bot->getBoundingVolume()->getWidth() * 2;
+			else attackingPointX -= bot->getBoundingVolume()->getWidth() * 2;
 
 
 			if (hasAABBCollision(
-				attackingPointX, attackingPointY, 20, 20,
-				bbX, bbY, bbWidth, bbHeight)) {
+				attackingPointX, attackingPointY,
+				bot->getBoundingVolume()->getWidth() * 2, // Twice his Width
+				bot->getBoundingVolume()->getHeight(),
+				bbX, bbY, bbWidth, bbHeight) && !player->isDead()) {
 
 				player->takeDamage(bot->getAttack());
-				bot->stopAttack();
-				//dynamic_cast<EnemyBot*>(bot)->setState(BOT_TAKING_DAMAGE);
+				player->setTakingDamage(true);
+				bot->stopAttack();				
 
-				//if (bot->isFacingLeft()) dynamic_cast<EnemyBot*>(bot)->setBotSpeed(-PLAYER_SPEED);
-				//else dynamic_cast<EnemyBot*>(bot)->setBotSpeed(PLAYER_SPEED);
+				if (bot->isFacingRight()) player->setCurrentState(TAKING_DAMAGE_LEFT);
+				else player->setCurrentState(TAKING_DAMAGE_RIGHT);
 
 			}
 		}
@@ -112,8 +124,17 @@ void FightPhysics::updatePhysics(Game* game)
 			bbX, bbY, bbWidth, bbHeight) && p->isEnabled()) {
 			// Collision with Player
 			
-				player->takeDamage(p->getDamage());
+			PenetrableProjectile* pProjectile = dynamic_cast<PenetrableProjectile*>(p);
+
+			if (pProjectile != NULL && pProjectile->isPenetrable()) {
+				// Penetrable Projectile
+				pProjectile->hit(player);
+
+			} else {
+				// Simple Projectile
 				p->disables();
+				player->takeDamage(p->getDamage());
+			}
 
 
 		}
@@ -130,13 +151,22 @@ void FightPhysics::updatePhysics(Game* game)
 				bot->getBoundingVolume()->getWidth(), bot->getBoundingVolume()->getHeight(),
 				bbX, bbY, bbWidth, bbHeight) && !bot->isDead() && p->isEnabled()) {
 
-					dynamic_cast<EnemyBot*>(bot)->takeDamage(p->getDamage());
-					dynamic_cast<EnemyBot*>(bot)->setState(BOT_TAKING_DAMAGE);
+				PenetrableProjectile* pProjectile = dynamic_cast<PenetrableProjectile*>(p);
+				EnemyBot* eBot = dynamic_cast<EnemyBot*>(bot);
 
-					if (!p->isFacingRight()) dynamic_cast<EnemyBot*>(bot)->setBotSpeed(-PLAYER_SPEED);
-					else dynamic_cast<EnemyBot*>(bot)->setBotSpeed(PLAYER_SPEED);
+				if (pProjectile != NULL && pProjectile->isPenetrable()) {
+					// Penetrable Projectile
+					pProjectile->hit(bot);
 
+				} else {
+					// Simple Projectile
 					p->disables();
+					dynamic_cast<EnemyBot*>(bot)->takeDamage(p->getDamage());
+				}
+
+				dynamic_cast<EnemyBot*>(bot)->setState(BOT_TAKING_DAMAGE);
+				if (!p->isFacingRight()) dynamic_cast<EnemyBot*>(bot)->setBotSpeed(-PLAYER_SPEED);
+				else dynamic_cast<EnemyBot*>(bot)->setBotSpeed(PLAYER_SPEED);
 
 			}
 
@@ -150,6 +180,11 @@ void FightPhysics::updatePhysics(Game* game)
 		pIterator++;
 
 		if (toRemove != NULL) sm->removeProjectile(toRemove);
+	}
+
+	if (player->isDead() && player->getDeathAnimationFinished() && !player->isAttacking()) {
+		game->getGSM()->playerKilled(game);
+		return;
 	}
 
 	wasAttacking = player->isAttacking();

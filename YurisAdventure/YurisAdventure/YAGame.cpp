@@ -101,7 +101,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	delete (YATextGenerator*)dummyGame->getText()->getTextGenerator();
 	delete dummyButtonHandler;
 	delete dummyKeyHandler;
-	delete dummyGame;
+	//delete dummyGame; // Gives errors..
 
 	// AND RETURN
 	return 0;

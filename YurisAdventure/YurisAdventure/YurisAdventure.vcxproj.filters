@@ -48,6 +48,12 @@
     <ClCompile Include="PlayerGUI.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="PenetrableProjectile.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FightGameObjective.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="YAGame.h">
@@ -92,13 +98,16 @@
     <ClInclude Include="FightPhysics.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Point.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="PlayerGUI.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ImageShower.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PenetrableProjectile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FightGameObjective.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
