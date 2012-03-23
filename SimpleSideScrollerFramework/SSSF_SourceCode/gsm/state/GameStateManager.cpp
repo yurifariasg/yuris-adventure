@@ -108,6 +108,11 @@ void GameStateManager::goToAbout()
     currentGameState = GS_MENU_ABOUT_MENU;
 }
 
+void GameStateManager::goToStoryBoard()
+{
+	currentGameState = GS_STORY_BOARD;
+}
+
 /*
 	isAtSplashScreen - Used to test if this application is currently
 	at the splash screen. This will dictate what to render, but also
@@ -268,7 +273,16 @@ void GameStateManager::playerKilled(Game* game)
 void GameStateManager::nextLevel(Game* game)
 {
 	unloadCurrentLevel();
-	goToLoadLevel();
 	currentLevel++;
-	game->getDataLoader()->loadWorld(game, currentLevel + 1);
+
+	if (currentLevel == 4) {// End game..
+
+		currentGameState = GS_END_GAME;
+
+	} else {
+
+		goToLoadLevel();
+		game->getDataLoader()->loadWorld(game, currentLevel + 1);
+
+	}
 }

@@ -50,12 +50,18 @@ void EnemyBot::think(Game *game)
 
 			// if found in bigger range
 			// continue chasing
-			if (p->getX() > x - 300 && p->getX() < x + 300
-			&& p->getY() > y - 200 && p->getY() < y + 200) {
+			if (p->getX() > x - 500 && p->getX() < x + 500
+			&& p->getY() > y - 300 && p->getY() < y + 300) {
+
+				int distanceXToAttack = getBoundingVolume()->getWidth() * 3;
+				int distanceYToAttack = getBoundingVolume()->getHeight() * 2;
 
 				// if Close Attack !
-				if (p->getX() > x - 60 && p->getX() < x + 60
-					&& p->getY() > y - 50 && p->getY() < y + 50 && !isAttacking()) {
+				if (p->getX() > x - distanceXToAttack &&
+					p->getX() < x + distanceXToAttack &&
+					p->getY() > y - distanceYToAttack &&
+					p->getY() < y + distanceYToAttack &&
+					!isAttacking()) {
 
 						botSpeed = 0;
 						state = BOT_ATTACKING;

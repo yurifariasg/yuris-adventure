@@ -139,10 +139,10 @@ void World::update(Game *game)
 			+ p->getBoundingVolume()->getHeight() / 2;
 
 		if (endOfLevelPosition->getX() < x &&
-			x < endOfLevelPosition->getX() + 64 && // TIle Width
+			x < endOfLevelPosition->getX() + CELL_WIDTH &&
 			endOfLevelPosition->getY() < y &&
-			y < endOfLevelPosition->getY() + 64 //&&
-			) {//objectiveSeeker->hasCompletedObjective()) {
+			y < endOfLevelPosition->getY() + CELL_HEIGHT &&
+			objectiveSeeker->hasCompletedObjective()) {
 
 			game->getGSM()->nextLevel(game);
 

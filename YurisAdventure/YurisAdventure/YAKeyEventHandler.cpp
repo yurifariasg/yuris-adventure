@@ -27,6 +27,7 @@
 #include "SSSF_SourceCode\PlatformPlugins\WindowsPlugin\WindowsTimer.h"
 
 #include "YASpriteManager.h"
+#include "FadeScreen.h"
 
 // THIS IS JUST FOR SHOWING HOW THE CURSOR CAN BE CHANGED
 const unsigned int C_KEY = (unsigned int)'C';
@@ -115,8 +116,10 @@ void YAKeyEventHandler::handleKeyEvents(Game *game)
 		{
 			//vY = PLAYER_SPEED;
 			// Crouch
+			player->crouch();
 
-			player->processCombo(S_KEY);
+			if (input->isKeyDownForFirstTime(S_KEY))
+				player->processCombo(S_KEY);
 		}
 		if (input->isKeyDown(D_KEY) && (player->canDoSomething() || pp->getBuoyancy()))
 		{
@@ -148,7 +151,7 @@ void YAKeyEventHandler::handleKeyEvents(Game *game)
 				player->processCombo(SWORD_ATTACK_KEY);
 
 			} else if (input->isKeyDownForFirstTime(MAGIC_ATTACK_KEY) &&
-				player->getCurrentMana() >= 20) {
+				player->getCurrentMana() >= MAGIC_ATTACK_MANA) {
 
 				int attackingPointX = player->getPhysicalProperties()->getX() +
 					player->getBoundingVolume()->getX() +
@@ -157,15 +160,17 @@ void YAKeyEventHandler::handleKeyEvents(Game *game)
 					player->getBoundingVolume()->getY() +
 					(player->getBoundingVolume()->getHeight() / 2);
 
+				// Offset
 				if (player->isFacingRight()) attackingPointX += player->getBoundingVolume()->getWidth() + 10;
 				else attackingPointX -= player->getBoundingVolume()->getWidth() + 10;
+				attackingPointY -= 20;
 
 				dynamic_cast<YASpriteManager*>(game->getGSM()->getSpriteManager())->
 					addProjectile(
-					PROJECTILE_MAGIC, attackingPointX, attackingPointY - 20,
+					PROJECTILE_MAGIC, attackingPointX, attackingPointY,
 					player->isFacingRight(), player->getPenetrationIsActive());
 
-				player->useMana(5);
+				player->useMana(MAGIC_ATTACK_MANA);
 				player->casts();
 				player->processCombo(MAGIC_ATTACK_KEY);
 
@@ -245,7 +250,31 @@ void YAKeyEventHandler::handleKeyEvents(Game *game)
         if (input->isKeyDownForFirstTime(VK_ESCAPE) || input->isKeyDownForFirstTime(VK_RETURN)) {
             game->getGSM()->goToMainMenu();
         }
-    }
+	} else if (gsm->getCurrentGameState() == GS_STORY_BOARD) {
+
+		if (input->isKeyDownForFirstTime(VK_SPACE) ||
+			input->isKeyDownForFirstTime(VK_RETURN) ||
+			input->isKeyDownForFirstTime(VK_ESCAPE) ||
+			dynamic_cast<FadeScreen*>(game->getGUI()->getScreen(GS_STORY_BOARD))->isDone()) {
+				game->startGame();
+
+				// Resets data, for further uses...
+				dynamic_cast<FadeScreen*>(game->getGUI()->getScreen(GS_STORY_BOARD))->reset();
+		}
+
+	} else if (gsm->getCurrentGameState() == GS_END_GAME) {
+
+		if (input->isKeyDownForFirstTime(VK_SPACE) ||
+			input->isKeyDownForFirstTime(VK_RETURN) ||
+			input->isKeyDownForFirstTime(VK_ESCAPE) ||
+			dynamic_cast<FadeScreen*>(game->getGUI()->getScreen(GS_END_GAME))->isDone()) {
+				game->getGSM()->goToMainMenu();
+
+				// Resets data, for further uses...
+				dynamic_cast<FadeScreen*>(game->getGUI()->getScreen(GS_END_GAME))->reset();
+		}
+
+	}
 
 	// 0X43 is HEX FOR THE 'C' VIRTUAL KEY
 	// THIS CHANGES THE CURSOR IMAGE

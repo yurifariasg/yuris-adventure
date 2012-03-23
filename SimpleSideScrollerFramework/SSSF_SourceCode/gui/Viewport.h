@@ -20,6 +20,12 @@
 #include "stdafx.h"
 #include "SSSF_SourceCode\game\game.h"
 
+// Values in percentage !
+const int FAST_SCROLLING_RIGHT = 70;
+const int FAST_SCROLLING_LEFT = 30;
+const int NORMAL_SCROLLING_RIGHT = 60;
+const int NORMAL_SCROLLING_LEFT = 40;
+
 class Viewport
 {
 private:

@@ -66,7 +66,18 @@ void SpriteManager::addSpriteItemsToRenderList(	Game *game)
 		RenderList *renderList = graphics->getWorldRenderList();
 		Viewport *viewport = gui->getViewport();
 
-		// NOW ADD THE REST OF THE SPRITES
+
+		// Add Animated Objects
+		list<AnimatedSprite*>::iterator aoIterator;
+		aoIterator = animatedObjects.begin();
+		while (aoIterator != animatedObjects.end())
+		{			
+			AnimatedSprite *as = (*aoIterator);
+			addSpriteToRenderList(as, renderList, viewport);
+			aoIterator++;
+		}
+
+		// Add Bots
 		list<Bot*>::iterator botIterator;
 		botIterator = bots.begin();
 		while (botIterator != bots.end())
@@ -87,16 +98,6 @@ void SpriteManager::addSpriteItemsToRenderList(	Game *game)
 			Projectile *p = (*pIterator);
 			addSpriteToRenderList(p, renderList, viewport);
 			pIterator++;
-		}
-
-		// NOW ADD THE REST OF THE SPRITES
-		list<AnimatedSprite*>::iterator aoIterator;
-		aoIterator = animatedObjects.begin();
-		while (aoIterator != animatedObjects.end())
-		{			
-			AnimatedSprite *as = (*aoIterator);
-			addSpriteToRenderList(as, renderList, viewport);
-			aoIterator++;
 		}
 	}
 }

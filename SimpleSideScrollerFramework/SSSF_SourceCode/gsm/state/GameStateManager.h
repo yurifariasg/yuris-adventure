@@ -103,4 +103,6 @@ public:
 	void			goToAboutInGame();
 	void			playerKilled(Game*);
 	void			nextLevel(Game*);
+	void			goToStoryBoard();
+	void			setCurrentLevel(unsigned int i) { currentLevel = i; }
 };

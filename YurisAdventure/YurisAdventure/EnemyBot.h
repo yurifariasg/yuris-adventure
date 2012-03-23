@@ -21,7 +21,7 @@ private:
 	int actionTime;
 	int botSpeed;
 
-
+protected:
 	Point*	searchPlayerPosition(Game*);
 
 	int getTrueX() {
@@ -44,7 +44,7 @@ private:
 public:
 	EnemyBot(int hp, int attack, BotVelocity);
 	EnemyBot*	clone();
-	void	think(Game *game);
+	virtual void	think(Game *game);
 	void	setState(BotState newState) { state = newState; }
 	void	setBotSpeed(int newSpeed) { botSpeed = newSpeed; }
 	int		getActionTime() { return actionTime; }
