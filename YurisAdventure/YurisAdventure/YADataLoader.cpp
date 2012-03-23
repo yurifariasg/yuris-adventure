@@ -11,6 +11,7 @@
 #include "ImageShower.h"
 #include "PenetrableProjectile.h"
 #include "FightGameObjective.h"
+#include "BossBot.h"
 
 #include "SSSF_SourceCode\text\BufferedTextFileReader.h"
 
@@ -714,7 +715,7 @@ void YADataLoader::addBots(Game* game, vector<int>* respawnPoints,
 	addBot(sample, type4Quantity, respawnPoints, monstersOnRespawn, spriteManager);
 
 	delete sample;
-	sample = new EnemyBot(TYPE5_HP, TYPE5_ATTACK, TYPE5_SPEED);
+	sample = new BossBot(TYPE5_HP, TYPE5_ATTACK, TYPE5_SPEED);
 	loadSprite(game, TYPE5_BOT_FILE, sample);
 
 	addBot(sample, type5Quantity, respawnPoints, monstersOnRespawn, spriteManager);
@@ -836,27 +837,27 @@ void YADataLoader::loadInGameGUI(Game* game, PlayerGUI* pGUI)
 
 	// Player Bars
 	OverlayImage *playerBar = new OverlayImage();
-	playerBar->x = 25;
-	playerBar->y = 15;
+	playerBar->x = 25; // Should be loaded from a file
+	playerBar->y = 15; // Should be loaded from a file
 	playerBar->z = 0;
 	playerBar->width = 300;
 	playerBar->height = 64;
 	playerBar->alpha = 255;
-	playerBar->imageID = game->getGraphics()->getGUITextureManager()->loadTexture(L"textures/gui/overlays/player_bar.png");
+	playerBar->imageID = game->getGraphics()->getGUITextureManager()->loadTexture(PLAYER_BAR);
 
 	OverlayImage *altPlayerBar = new OverlayImage();
-	altPlayerBar->x = 25;
-	altPlayerBar->y = 15;
+	altPlayerBar->x = 25; // Should be loaded from a file
+	altPlayerBar->y = 15; // Should be loaded from a file
 	altPlayerBar->z = 0;
 	altPlayerBar->width = 300;
 	altPlayerBar->height = 64;
 	altPlayerBar->alpha = 255;
-	altPlayerBar->imageID = game->getGraphics()->getGUITextureManager()->loadTexture(L"textures/gui/overlays/player_bar_red.png");
+	altPlayerBar->imageID = game->getGraphics()->getGUITextureManager()->loadTexture(ALTERNATIVE_PLAYER_BAR);
 
 	pGUI->setPlayerBars(playerBar, altPlayerBar);
 
-	pGUI->setBlackAndGameOverImageID(game->getGraphics()->getGUITextureManager()->loadTexture(L"textures/gui/overlays/blackscreen.png"),
-		game->getGraphics()->getGUITextureManager()->loadTexture(L"textures/gui/overlays/gameover.png"));
+	pGUI->setBlackAndGameOverImageID(game->getGraphics()->getGUITextureManager()->loadTexture(BLACK_SCREEN),
+		game->getGraphics()->getGUITextureManager()->loadTexture(GAME_OVER_SCREEN));
 
 }
 
@@ -914,46 +915,46 @@ void YADataLoader::loadStoryBoard(Game* game, FadeScreen* fScreen)
 	OverlayImage* image = new OverlayImage();
 
 	image->imageID = game->getGraphics()->getGUITextureManager()->loadTexture(
-		L"textures/gui/overlays/blackscreen.png");
+		BLACK_SCREEN);
 	image->x = 0;
 	image->y = 0;
 	image->z = 0;
-	image->width = 1024;
-	image->height = 768;
+	image->width = SCREEN_WIDTH;
+	image->height = SCREEN_WIDTH;
 
 	fScreen->setBackground(image);
 
 	// First Image of StoryBoard
 	image = new OverlayImage();
 	image->imageID = game->getGraphics()->getGUITextureManager()->loadTexture(
-		L"textures/gui/overlays/story1.png");
+		STORY1_SCREEN);
 	image->x = 0;
 	image->y = 0;
 	image->z = 0;
-	image->width = 1024;
-	image->height = 768;
+	image->width = SCREEN_WIDTH;
+	image->height = SCREEN_WIDTH;
 
 	fScreen->addImage(image);
 
 	image = new OverlayImage();
 	image->imageID = game->getGraphics()->getGUITextureManager()->loadTexture(
-		L"textures/gui/overlays/story2.png");
+		STORY2_SCREEN);
 	image->x = 0;
 	image->y = 0;
 	image->z = 0;
-	image->width = 1024;
-	image->height = 768;
+	image->width = SCREEN_WIDTH;
+	image->height = SCREEN_HEIGHT;
 
 	fScreen->addImage(image);
 
 	image = new OverlayImage();
 	image->imageID = game->getGraphics()->getGUITextureManager()->loadTexture(
-		L"textures/gui/overlays/story3.png");
+		STORY3_SCREEN);
 	image->x = 0;
 	image->y = 0;
 	image->z = 0;
-	image->width = 1024;
-	image->height = 768;
+	image->width = SCREEN_WIDTH;
+	image->height = SCREEN_WIDTH;
 
 	fScreen->addImage(image);
 
@@ -965,24 +966,24 @@ void YADataLoader::loadEndGame(Game* game, FadeScreen* fScreen)
 	OverlayImage* image = new OverlayImage();
 
 	image->imageID = game->getGraphics()->getGUITextureManager()->loadTexture(
-		L"textures/gui/overlays/blackscreen.png");
+		BLACK_SCREEN);
 	image->x = 0;
 	image->y = 0;
 	image->z = 0;
-	image->width = 1024;
-	image->height = 768;
+	image->width = SCREEN_WIDTH;
+	image->height = SCREEN_WIDTH;
 
 	fScreen->setBackground(image);
 
 	// First Image of StoryBoard
 	image = new OverlayImage();
 	image->imageID = game->getGraphics()->getGUITextureManager()->loadTexture(
-		L"textures/gui/overlays/endgame.png");
+		ENDGAME_SCREEN);
 	image->x = 0;
 	image->y = 0;
 	image->z = 0;
-	image->width = 1024;
-	image->height = 768;
+	image->width = SCREEN_WIDTH;
+	image->height = SCREEN_WIDTH;
 
 	fScreen->addImage(image);
 

@@ -34,13 +34,13 @@ const int TYPE1_ATTACK = 5;
 const BotVelocity TYPE1_SPEED = BOT_SLOW;
 
 const wstring TYPE2_BOT_FILE = L"data/Sprites/BanditSprite.txt";
-const int TYPE2_HP = 150;
+const int TYPE2_HP = 140;
 const int TYPE2_ATTACK = 10;
 const BotVelocity TYPE2_SPEED = BOT_NORMAL;
 
 const wstring TYPE3_BOT_FILE = L"data/Sprites/SkeletonSprite.txt";
 const int TYPE3_HP = 150;
-const int TYPE3_ATTACK = 10;
+const int TYPE3_ATTACK = 5;
 const BotVelocity TYPE3_SPEED = BOT_NORMAL;
 
 const wstring TYPE4_BOT_FILE = L"data/Sprites/KnightSprite.txt";

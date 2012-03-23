@@ -1,38 +1,63 @@
-﻿Build started 2/17/2012 5:33:44 PM.
+﻿Build started 3/23/2012 1:54:44 PM.
      1>Project "C:\Users\Yuri\Documents\Projects\IndividualProject\SimpleSideScrollerFramework\SimpleSideScrollerFramework.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
          Creating "C:\Users\Yuri\Documents\Projects\IndividualProject\Temp\SimpleSideScrollerFramework\Debug\SimpleSideScrollerFramework.unsuccessfulbuild" because "AlwaysCreate" was specified.
        ClCompile:
          All outputs are up-to-date.
-         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /IC:\Users\Yuri\Documents\Projects\IndividualProject\SimpleSideScrollerFramework\ /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"StdAfx.h" /Fp"C:\Users\Yuri\Documents\Projects\IndividualProject\Temp\SimpleSideScrollerFramework\Debug\SimpleSideScrollerFramework.pch" /Fo"C:\Users\Yuri\Documents\Projects\IndividualProject\Temp\SimpleSideScrollerFramework\Debug\\" /Fd"C:\Users\Yuri\Documents\Projects\IndividualProject\Temp\SimpleSideScrollerFramework\Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt SSSF_SourceCode\PlatformPlugins\DirectXPlugin\DirectXGraphics.cpp SSSF_SourceCode\PlatformPlugins\DirectXPlugin\DirectXTextureManager.cpp SSSF_SourceCode\PlatformPlugins\WindowsPlugin\WindowsInput.cpp SSSF_SourceCode\PlatformPlugins\WindowsPlugin\WindowsOS.cpp SSSF_SourceCode\game\Game.cpp SSSF_SourceCode\graphics\GameGraphics.cpp SSSF_SourceCode\gsm\ai\RandomFloatingBot.cpp SSSF_SourceCode\gsm\physics\Physics.cpp SSSF_SourceCode\gsm\sprite\SpriteManager.cpp SSSF_SourceCode\gsm\state\GameStateManager.cpp SSSF_SourceCode\gsm\world\TiledLayer.cpp SSSF_SourceCode\gsm\world\World.cpp SSSF_SourceCode\gui\Button.cpp SSSF_SourceCode\gui\Cursor.cpp SSSF_SourceCode\gui\GameGUI.cpp SSSF_SourceCode\gui\ScreenGUI.cpp SSSF_SourceCode\input\GameInput.cpp SSSF_SourceCode\text\GameText.cpp
-         GameStateManager.cpp
-         Generating Code...
-         Skipping... (no relevant changes detected)
-         GameText.cpp
-         GameInput.cpp
-         ScreenGUI.cpp
-         GameGUI.cpp
-         Cursor.cpp
-         Button.cpp
-         World.cpp
-         TiledLayer.cpp
-         SpriteManager.cpp
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /IC:\Users\Yuri\Documents\Projects\IndividualProject\SimpleSideScrollerFramework\ /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"StdAfx.h" /Fp"C:\Users\Yuri\Documents\Projects\IndividualProject\Temp\SimpleSideScrollerFramework\Debug\SimpleSideScrollerFramework.pch" /Fo"C:\Users\Yuri\Documents\Projects\IndividualProject\Temp\SimpleSideScrollerFramework\Debug\\" /Fd"C:\Users\Yuri\Documents\Projects\IndividualProject\Temp\SimpleSideScrollerFramework\Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt SSSF_SourceCode\gsm\physics\Physics.cpp
          Physics.cpp
-         RandomFloatingBot.cpp
-         GameGraphics.cpp
-         Game.cpp
-         WindowsOS.cpp
-         WindowsInput.cpp
-         DirectXTextureManager.cpp
-         DirectXGraphics.cpp
+     1>c:\users\yuri\documents\projects\individualproject\simplesidescrollerframework\sssf_sourcecode\gsm\physics\physics.cpp(79): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\yuri\documents\projects\individualproject\simplesidescrollerframework\sssf_sourcecode\gsm\physics\physics.cpp(83): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\yuri\documents\projects\individualproject\simplesidescrollerframework\sssf_sourcecode\gsm\physics\physics.cpp(87): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\yuri\documents\projects\individualproject\simplesidescrollerframework\sssf_sourcecode\gsm\physics\physics.cpp(88): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\yuri\documents\projects\individualproject\simplesidescrollerframework\sssf_sourcecode\gsm\physics\physics.cpp(89): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\yuri\documents\projects\individualproject\simplesidescrollerframework\sssf_sourcecode\gsm\physics\physics.cpp(167): warning C4244: 'initializing' : conversion from 'const double' to 'int', possible loss of data
+     1>c:\users\yuri\documents\projects\individualproject\simplesidescrollerframework\sssf_sourcecode\gsm\physics\physics.cpp(170): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\yuri\documents\projects\individualproject\simplesidescrollerframework\sssf_sourcecode\gsm\physics\physics.cpp(171): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\yuri\documents\projects\individualproject\simplesidescrollerframework\sssf_sourcecode\gsm\physics\physics.cpp(172): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\yuri\documents\projects\individualproject\simplesidescrollerframework\sssf_sourcecode\gsm\physics\physics.cpp(173): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\yuri\documents\projects\individualproject\simplesidescrollerframework\sssf_sourcecode\gsm\physics\physics.cpp(207): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\yuri\documents\projects\individualproject\simplesidescrollerframework\sssf_sourcecode\gsm\physics\physics.cpp(221): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\yuri\documents\projects\individualproject\simplesidescrollerframework\sssf_sourcecode\gsm\physics\physics.cpp(221): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\yuri\documents\projects\individualproject\simplesidescrollerframework\sssf_sourcecode\gsm\physics\physics.cpp(233): warning C4244: 'initializing' : conversion from 'const double' to 'int', possible loss of data
+     1>c:\users\yuri\documents\projects\individualproject\simplesidescrollerframework\sssf_sourcecode\gsm\physics\physics.cpp(236): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\yuri\documents\projects\individualproject\simplesidescrollerframework\sssf_sourcecode\gsm\physics\physics.cpp(237): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\yuri\documents\projects\individualproject\simplesidescrollerframework\sssf_sourcecode\gsm\physics\physics.cpp(238): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\yuri\documents\projects\individualproject\simplesidescrollerframework\sssf_sourcecode\gsm\physics\physics.cpp(239): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\yuri\documents\projects\individualproject\simplesidescrollerframework\sssf_sourcecode\gsm\physics\physics.cpp(273): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\yuri\documents\projects\individualproject\simplesidescrollerframework\sssf_sourcecode\gsm\physics\physics.cpp(330): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\yuri\documents\projects\individualproject\simplesidescrollerframework\sssf_sourcecode\gsm\physics\physics.cpp(331): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\yuri\documents\projects\individualproject\simplesidescrollerframework\sssf_sourcecode\gsm\physics\physics.cpp(332): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\yuri\documents\projects\individualproject\simplesidescrollerframework\sssf_sourcecode\gsm\physics\physics.cpp(333): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\yuri\documents\projects\individualproject\simplesidescrollerframework\sssf_sourcecode\gsm\physics\physics.cpp(334): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\yuri\documents\projects\individualproject\simplesidescrollerframework\sssf_sourcecode\gsm\physics\physics.cpp(335): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\yuri\documents\projects\individualproject\simplesidescrollerframework\sssf_sourcecode\gsm\physics\physics.cpp(386): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\yuri\documents\projects\individualproject\simplesidescrollerframework\sssf_sourcecode\gsm\physics\physics.cpp(421): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\yuri\documents\projects\individualproject\simplesidescrollerframework\sssf_sourcecode\gsm\physics\physics.cpp(421): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\yuri\documents\projects\individualproject\simplesidescrollerframework\sssf_sourcecode\gsm\physics\physics.cpp(421): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\yuri\documents\projects\individualproject\simplesidescrollerframework\sssf_sourcecode\gsm\physics\physics.cpp(421): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\yuri\documents\projects\individualproject\simplesidescrollerframework\sssf_sourcecode\gsm\physics\physics.cpp(421): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\yuri\documents\projects\individualproject\simplesidescrollerframework\sssf_sourcecode\gsm\physics\physics.cpp(421): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\yuri\documents\projects\individualproject\simplesidescrollerframework\sssf_sourcecode\gsm\physics\physics.cpp(429): warning C4244: '*=' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\yuri\documents\projects\individualproject\simplesidescrollerframework\sssf_sourcecode\gsm\physics\physics.cpp(430): warning C4244: '*=' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\yuri\documents\projects\individualproject\simplesidescrollerframework\sssf_sourcecode\gsm\physics\physics.cpp(434): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\yuri\documents\projects\individualproject\simplesidescrollerframework\sssf_sourcecode\gsm\physics\physics.cpp(434): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\yuri\documents\projects\individualproject\simplesidescrollerframework\sssf_sourcecode\gsm\physics\physics.cpp(445): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\yuri\documents\projects\individualproject\simplesidescrollerframework\sssf_sourcecode\gsm\physics\physics.cpp(445): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\yuri\documents\projects\individualproject\simplesidescrollerframework\sssf_sourcecode\gsm\physics\physics.cpp(523): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\yuri\documents\projects\individualproject\simplesidescrollerframework\sssf_sourcecode\gsm\physics\physics.cpp(524): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\yuri\documents\projects\individualproject\simplesidescrollerframework\sssf_sourcecode\gsm\physics\physics.cpp(525): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\yuri\documents\projects\individualproject\simplesidescrollerframework\sssf_sourcecode\gsm\physics\physics.cpp(526): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
        Lib:
-         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\Lib.exe /OUT:"C:\Users\Yuri\Documents\Projects\IndividualProject\Common\SimpleSideScrollerFramework.lib" /NOLOGO C:\Users\Yuri\Documents\Projects\IndividualProject\Temp\SimpleSideScrollerFramework\Debug\GameDataLoader.obj
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\Lib.exe /OUT:"C:\Users\Yuri\Documents\Projects\IndividualProject\Common\SimpleSideScrollerFramework.lib" /NOLOGO C:\Users\Yuri\Documents\Projects\IndividualProject\Temp\SimpleSideScrollerFramework\Debug\GameDataLoader.obj
          C:\Users\Yuri\Documents\Projects\IndividualProject\Temp\SimpleSideScrollerFramework\Debug\Game.obj
          C:\Users\Yuri\Documents\Projects\IndividualProject\Temp\SimpleSideScrollerFramework\Debug\WStringTable.obj
          C:\Users\Yuri\Documents\Projects\IndividualProject\Temp\SimpleSideScrollerFramework\Debug\GameGraphics.obj
          C:\Users\Yuri\Documents\Projects\IndividualProject\Temp\SimpleSideScrollerFramework\Debug\RenderList.obj
          C:\Users\Yuri\Documents\Projects\IndividualProject\Temp\SimpleSideScrollerFramework\Debug\TextureManager.obj
          C:\Users\Yuri\Documents\Projects\IndividualProject\Temp\SimpleSideScrollerFramework\Debug\BotRecycler.obj
+         C:\Users\Yuri\Documents\Projects\IndividualProject\Temp\SimpleSideScrollerFramework\Debug\Projectile.obj
+         C:\Users\Yuri\Documents\Projects\IndividualProject\Temp\SimpleSideScrollerFramework\Debug\ProjectileFactory.obj
          C:\Users\Yuri\Documents\Projects\IndividualProject\Temp\SimpleSideScrollerFramework\Debug\RandomFloatingBot.obj
          C:\Users\Yuri\Documents\Projects\IndividualProject\Temp\SimpleSideScrollerFramework\Debug\Physics.obj
          C:\Users\Yuri\Documents\Projects\IndividualProject\Temp\SimpleSideScrollerFramework\Debug\AnimatedSprite.obj
@@ -65,4 +90,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:03.98
+Time Elapsed 00:00:07.17

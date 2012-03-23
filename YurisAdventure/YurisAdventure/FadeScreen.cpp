@@ -36,10 +36,13 @@ void FadeScreen::addRenderItemsToRenderList(RenderList *renderList)
 	image = images.at(currentImage);
 
 	if (animationTime < FADE_ANIMATION_TIME && currentAlpha < 255)
-		currentAlpha++;
+		currentAlpha += 2;
+
+	if (animationTime > FADE_ANIMATION_TIME && animationTime < FADE_ANIMATION_TIME * 4)
+		currentAlpha = 255;
 
 	if (animationTime > FADE_ANIMATION_TIME * 4 && currentAlpha > 0)
-		currentAlpha--;	
+		currentAlpha--;
 	
 	renderList->addRenderItem(	image->imageID,
 							image->x,
