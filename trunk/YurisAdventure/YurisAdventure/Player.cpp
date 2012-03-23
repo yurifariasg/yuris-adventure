@@ -13,6 +13,9 @@ Player::Player(int hp, int mana, int attack) : Creature(hp, mana, attack)
 	comboImageShower = NULL;
 	isPenetrationActive = false;
 	isTakingDamage = false;
+	isCrouched = false;
+	aura = NULL;
+	comboAnimationTimer = 0;
 }
 /*
 	Process the Player Combo State for the given pressedKey
@@ -179,6 +182,12 @@ void Player::updateSprite()
 				isCasting = false;
 		
 		
+		} else if (isCrouched) {
+		
+			if (isFacingRight()) setCurrentState(CROUCH_STATE_RIGHT);
+			else setCurrentState(CROUCH_STATE_LEFT);
+			isCrouched = false;
+		
 		} else if (isTakingDamage) {
 
 			if (actionTime == 0 || isDead() ||
@@ -221,14 +230,39 @@ void Player::updateBuffs()
 {
 
 	if (buffTimer > 0) {
+		// Sets aura !
 
+		if (aura != NULL) {
+			if (comboAnimationTimer < TIME_FOR_COMBO_ANIMATION) {
+				aura->setAlpha(255);
+				aura->getPhysicalProperties()->setX(
+					getPhysicalProperties()->getX()- 65);
 
+				aura->getPhysicalProperties()->setY(
+					getPhysicalProperties()->getY() - 70);
+			} else {
+				aura->setAlpha(0);
+			}
+
+		}
+
+		comboAnimationTimer++;
 		buffTimer--;
 
 	} else {
 		setAttack(PLAYER_ATTACK);
 		setDefense(0);
 		isPenetrationActive = false;
+		comboAnimationTimer = 0;
+		if (aura != NULL) {
+			aura->setAlpha(0);
+
+		}
 	}
 
+}
+
+void Player::crouch()
+{
+	isCrouched = true;
 }

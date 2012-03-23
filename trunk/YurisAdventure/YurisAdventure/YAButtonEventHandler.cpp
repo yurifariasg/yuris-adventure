@@ -34,7 +34,8 @@ void YAButtonEventHandler::handleButtonEvents(	Game *game,
 	// SO LET'S START THE GAME FROM THE FIRST LEVEL
 	else if (command.compare(DG_START_COMMAND) == 0)
 	{
-		game->startGame();
+		//game->startGame();
+		game->getGSM()->goToStoryBoard();
 	}
 	// THE USER PRESSED THE Quit BUTTON ON THE IN-GAME MENU,
 	// SO LET'S UNLOAD THE LEVEL AND RETURN TO THE MAIN MENU

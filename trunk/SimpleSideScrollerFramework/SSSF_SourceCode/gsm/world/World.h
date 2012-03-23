@@ -27,6 +27,9 @@
 class Game;
 class SpriteManager;
 
+static const int CELL_WIDTH = 64;
+static const int CELL_HEIGHT = 64;
+
 class World
 {
 private:

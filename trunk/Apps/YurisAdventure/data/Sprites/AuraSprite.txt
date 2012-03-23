@@ -1,0 +1,17 @@
+SPRITE_WIDTH:109
+SPRITE_HEIGHT:132
+BOUNDING_BOX_X:0
+BOUNDING_BOX_Y:0
+BOUNDING_BOX_WIDTH:0
+BOUNDING_BOX_HEIGHT:0
+NUMBER_OF_SPRITES:1
+1STATE_NAME:SHINING_STATE
+1FRAME_COUNT:3
+11FRAME_SOURCE:textures/world/sprites/aura/combo_aura1.png
+11FRAME_TIME:15
+12FRAME_SOURCE:textures/world/sprites/aura/combo_aura2.png
+12FRAME_TIME:15
+13FRAME_SOURCE:textures/world/sprites/aura/combo_aura3.png
+13FRAME_TIME:15
+14FRAME_SOURCE:textures/world/sprites/aura/combo_aura4.png
+14FRAME_TIME:15

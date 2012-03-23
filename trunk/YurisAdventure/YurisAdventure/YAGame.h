@@ -104,6 +104,11 @@ static const wstring	CASTING_STATE_RIGHT = L"CASTING_STATE_RIGHT";
 static const wstring	CASTING_STATE_LEFT = L"CASTING_STATE_LEFT";
 static const wstring	TAKING_DAMAGE_LEFT = L"TAKING_DAMAGE_LEFT";
 static const wstring	TAKING_DAMAGE_RIGHT = L"TAKING_DAMAGE_RIGHT";
+static const wstring	CROUCH_STATE_RIGHT = L"CROUCH_STATE_RIGHT";
+static const wstring	CROUCH_STATE_LEFT = L"CROUCH_STATE_LEFT";
+
+// Aura State
+static const wstring	AURA_SHINING_STATE = L"SHINING_STATE";
 
 // BOTs STATES
 static const wstring	BOT_IDLE_RIGHT = L"BOT_IDLE_RIGHT";

@@ -161,6 +161,15 @@ void YADataLoader::loadGUI(Game *game, wstring guiInitFile)
 	game->getGUI()->addScreenGUI(GS_SPLASH_SCREEN, loadGUIFromFile(game, splashscreenFile, new ScreenGUI()));
 	game->getGUI()->addScreenGUI(GS_STARTING_LEVEL, loadGUIFromFile(game, splashscreenFile, new ScreenGUI()));
 
+	// History Screen
+	FadeScreen* fScreen = new FadeScreen();
+	loadStoryBoard(game, fScreen);
+	game->getGUI()->addScreenGUI(GS_STORY_BOARD, fScreen);
+
+	fScreen = new FadeScreen();
+	loadEndGame(game, fScreen);
+	game->getGUI()->addScreenGUI(GS_END_GAME, fScreen);
+
 	// InGame GUI
 	PlayerGUI* pGUI = new PlayerGUI();
 	game->getGUI()->addScreenGUI(GS_GAME_IN_PROGRESS, pGUI);
@@ -266,12 +275,19 @@ void YADataLoader::loadWorld(Game *game, int levelNumber)
 	AnimatedSprite *player = spriteManager->getPlayer();
 	loadSprite(game, L"data/Sprites/PlayerSprite.txt", player);
 	PhysicalProperties *playerProps = player->getPhysicalProperties();
-	playerProps->setX(100);
-	playerProps->setY(500);
+	playerProps->setX(PLAYER_STARTING_X);
+	playerProps->setY(PLAYER_STARTING_Y);
 	playerProps->setVelocity(0.0f, 0.0f);
 	playerProps->setAccelerationX(0);
 	playerProps->setAccelerationY(0);
 	playerProps->setBuoyancy(true);
+
+	// Load Player Aura
+	AnimatedSprite* aura = new AnimatedSprite();
+	loadSprite(game, L"data/Sprites/AuraSprite.txt", aura);
+	aura->setCurrentState(AURA_SHINING_STATE);
+	dynamic_cast<Player*>(player)->setAura(aura);
+	spriteManager->addAnimatedObject(aura);
 
 	// WE WILL SET LOTS OF OTHER PROPERTIES ONCE
 	// WE START DOING COLLISIONS AND PHYSICS
@@ -667,205 +683,41 @@ void YADataLoader::addBots(Game* game, vector<int>* respawnPoints,
 	int type1Quantity, int type2Quantity, int type3Quantity,
 	int type4Quantity, int type5Quantity)
 {
-	AnimatedSpriteType* ast;
-	TextureManager* worldTextureManager = game->getGraphics()->getWorldTextureManager();
 	SpriteManager* spriteManager = game->getGSM()->getSpriteManager();
-	int spriteTypeID = 0;
 
 	// This map will hold the respawnPoint and how many monsters it has
 	map<int, int>* monstersOnRespawn = new map<int, int>();
+	EnemyBot *sample;
+	
+	
+	sample= new EnemyBot(TYPE1_HP, TYPE1_ATTACK, TYPE1_SPEED);
+	loadSprite(game, TYPE1_BOT_FILE, sample);
 
-	// Lets add the Green Monster
-	ast = new AnimatedSpriteType();
-	vector<unsigned int> botImageIDs;
-
-	EnemyBot *sample = new EnemyBot(70, 5, BOT_SLOW);
-	loadSprite(game, L"data/Sprites/GreenMonster.txt", sample);
-
-	// Add Bots
-	for (int i = 0; i < type1Quantity; i++)
-	{
-		EnemyBot *newBot = sample->clone();
-		newBot->setCurrentState(BOT_IDLE_LEFT);
-		newBot->setAlpha(255);
-		PhysicalProperties *pp = newBot->getPhysicalProperties();
-
-		int x;
-		int y;
-
-		int numberOfRespawnPoints = respawnPoints->size() / 2;
-		int chosenRespawnPoint = (rand() % (numberOfRespawnPoints)) + 1;
-
-		bool foundHisPlace = false;
-
-		while (!foundHisPlace) {
-
-			if (monstersOnRespawn->find(chosenRespawnPoint) == monstersOnRespawn->end()) {
-				monstersOnRespawn->insert( pair<int, int> (chosenRespawnPoint, 1) );
-				foundHisPlace = true;
-				continue;
-			}
-
-			if (monstersOnRespawn->find(chosenRespawnPoint)->second > MONSTERS_PER_SPOT) {
-				chosenRespawnPoint = (rand() % (numberOfRespawnPoints)) + 1;
-			} else {
-				monstersOnRespawn->find(chosenRespawnPoint)->second++;
-				foundHisPlace = true;
-			}
-
-		}
-
-		x = respawnPoints->at((chosenRespawnPoint * 2) - 2);
-		y = respawnPoints->at((chosenRespawnPoint * 2) - 1) - BOTS_RESPAWN_OFFSET_Y ; // Put a little up
-
-		pp->setX(x);
-		pp->setY(y);
-		pp->setAccelerationX(0.0f);
-		pp->setAccelerationY(0.0f);
-		spriteManager->addBot(newBot);
-	}
+	addBot(sample, type1Quantity, respawnPoints, monstersOnRespawn, spriteManager);
 	
 	delete sample; // Free the last bot...
-	sample = new EnemyBot(150, 10, BOT_NORMAL);
-	loadSprite(game, L"data/Sprites/BanditSprite.txt", sample);
+	sample = new EnemyBot(TYPE2_HP, TYPE2_ATTACK, TYPE2_SPEED);
+	loadSprite(game, TYPE2_BOT_FILE, sample);
 
-	// Add Bots
-	for (int i = 0; i < type2Quantity; i++)
-	{
-		EnemyBot *newBot = sample->clone();
-		newBot->setCurrentState(BOT_IDLE_LEFT);
-		newBot->setAlpha(255);
-		PhysicalProperties *pp = newBot->getPhysicalProperties();
-		pp->setCollidable(false);
+	addBot(sample, type2Quantity, respawnPoints, monstersOnRespawn, spriteManager);
 
-		int x;
-		int y;
+	delete sample;
+	sample = new EnemyBot(TYPE3_HP, TYPE3_ATTACK, TYPE3_SPEED);
+	loadSprite(game, TYPE3_BOT_FILE, sample);
 
-		int numberOfRespawnPoints = respawnPoints->size() / 2;
-		int chosenRespawnPoint = (rand() % (numberOfRespawnPoints)) + 1;
+	addBot(sample, type3Quantity, respawnPoints, monstersOnRespawn, spriteManager);
 
-		bool foundHisPlace = false;
+	delete sample;
+	sample = new EnemyBot(TYPE4_HP, TYPE4_ATTACK, TYPE4_SPEED);
+	loadSprite(game, TYPE4_BOT_FILE, sample);
 
-		while (!foundHisPlace) {
+	addBot(sample, type4Quantity, respawnPoints, monstersOnRespawn, spriteManager);
 
-			if (monstersOnRespawn->find(chosenRespawnPoint) == monstersOnRespawn->end()) {
-				monstersOnRespawn->insert( pair<int, int> (chosenRespawnPoint, 1) );
-				foundHisPlace = true;
-				continue;
-			}
+	delete sample;
+	sample = new EnemyBot(TYPE5_HP, TYPE5_ATTACK, TYPE5_SPEED);
+	loadSprite(game, TYPE5_BOT_FILE, sample);
 
-			if (monstersOnRespawn->find(chosenRespawnPoint)->second > MONSTERS_PER_SPOT) {
-				chosenRespawnPoint = (rand() % (numberOfRespawnPoints)) + 1; // Get another one
-			} else {
-				monstersOnRespawn->find(chosenRespawnPoint)->second++;
-				foundHisPlace = true;
-			}
-
-		}
-
-		x = respawnPoints->at((chosenRespawnPoint * 2) - 2);
-		y = respawnPoints->at((chosenRespawnPoint * 2) - 1) - BOTS_RESPAWN_OFFSET_Y; // Put a little up
-
-		pp->setX(x);
-		pp->setY(y);
-		pp->setAccelerationX(0.0f);
-		pp->setAccelerationY(0.0f);
-		spriteManager->addBot(newBot);
-	}
-
-	sample = new EnemyBot(150, 10, BOT_FAST);
-	loadSprite(game, L"data/Sprites/SkeletonSprite.txt", sample);
-
-	// Add Bots
-	for (int i = 0; i < type3Quantity; i++)
-	{
-		EnemyBot *newBot = sample->clone();
-		newBot->setCurrentState(BOT_IDLE_LEFT);
-		newBot->setAlpha(255);
-		PhysicalProperties *pp = newBot->getPhysicalProperties();
-		pp->setCollidable(false);
-
-		int x;
-		int y;
-
-		int numberOfRespawnPoints = respawnPoints->size() / 2;
-		int chosenRespawnPoint = (rand() % (numberOfRespawnPoints)) + 1;
-
-		bool foundHisPlace = false;
-
-		while (!foundHisPlace) {
-
-			if (monstersOnRespawn->find(chosenRespawnPoint) == monstersOnRespawn->end()) {
-				monstersOnRespawn->insert( pair<int, int> (chosenRespawnPoint, 1) );
-				foundHisPlace = true;
-				continue;
-			}
-
-			if (monstersOnRespawn->find(chosenRespawnPoint)->second > MONSTERS_PER_SPOT) {
-				chosenRespawnPoint = (rand() % (numberOfRespawnPoints)) + 1; // Get another one
-			} else {
-				monstersOnRespawn->find(chosenRespawnPoint)->second++;
-				foundHisPlace = true;
-			}
-
-		}
-
-		x = respawnPoints->at((chosenRespawnPoint * 2) - 2);
-		y = respawnPoints->at((chosenRespawnPoint * 2) - 1) - BOTS_RESPAWN_OFFSET_Y; // Put a little up
-
-		pp->setX(x);
-		pp->setY(y);
-		pp->setAccelerationX(0.0f);
-		pp->setAccelerationY(0.0f);
-		spriteManager->addBot(newBot);
-	}
-
-	sample = new EnemyBot(300, 10, BOT_FAST);
-	loadSprite(game, L"data/Sprites/KnightSprite.txt", sample);
-
-	// Add Bots
-	for (int i = 0; i < type4Quantity; i++)
-	{
-		EnemyBot *newBot = sample->clone();
-		newBot->setCurrentState(BOT_IDLE_LEFT);
-		newBot->setAlpha(255);
-		PhysicalProperties *pp = newBot->getPhysicalProperties();
-		pp->setCollidable(false);
-
-		int x;
-		int y;
-
-		int numberOfRespawnPoints = respawnPoints->size() / 2;
-		int chosenRespawnPoint = (rand() % (numberOfRespawnPoints)) + 1;
-
-		bool foundHisPlace = false;
-
-		while (!foundHisPlace) {
-
-			if (monstersOnRespawn->find(chosenRespawnPoint) == monstersOnRespawn->end()) {
-				monstersOnRespawn->insert( pair<int, int> (chosenRespawnPoint, 1) );
-				foundHisPlace = true;
-				continue;
-			}
-
-			if (monstersOnRespawn->find(chosenRespawnPoint)->second > MONSTERS_PER_SPOT) {
-				chosenRespawnPoint = (rand() % (numberOfRespawnPoints)) + 1; // Get another one
-			} else {
-				monstersOnRespawn->find(chosenRespawnPoint)->second++;
-				foundHisPlace = true;
-			}
-
-		}
-
-		x = respawnPoints->at((chosenRespawnPoint * 2) - 2);
-		y = respawnPoints->at((chosenRespawnPoint * 2) - 1) - BOTS_RESPAWN_OFFSET_Y; // Put a little up
-
-		pp->setX(x);
-		pp->setY(y);
-		pp->setAccelerationX(0.0f);
-		pp->setAccelerationY(0.0f);
-		spriteManager->addBot(newBot);
-	}
+	addBot(sample, type5Quantity, respawnPoints, monstersOnRespawn, spriteManager);
 
 	delete sample;
 	delete monstersOnRespawn;
@@ -1005,5 +857,133 @@ void YADataLoader::loadInGameGUI(Game* game, PlayerGUI* pGUI)
 
 	pGUI->setBlackAndGameOverImageID(game->getGraphics()->getGUITextureManager()->loadTexture(L"textures/gui/overlays/blackscreen.png"),
 		game->getGraphics()->getGUITextureManager()->loadTexture(L"textures/gui/overlays/gameover.png"));
+
+}
+
+void YADataLoader::addBot(Bot* bot,int quantity, vector<int>* respawnPoints, map<int,int>* monstersOnRespawn,
+	SpriteManager* sm)
+{
+
+	// Add Bots
+	for (int i = 0; i < quantity; i++)
+	{
+		Bot *newBot = bot->clone();
+		newBot->setCurrentState(BOT_IDLE_LEFT);
+		newBot->setAlpha(255);
+		PhysicalProperties *pp = newBot->getPhysicalProperties();
+		pp->setCollidable(false);
+
+		int x;
+		int y;
+
+		int numberOfRespawnPoints = respawnPoints->size() / 2;
+		int chosenRespawnPoint = (rand() % (numberOfRespawnPoints)) + 1;
+
+		bool foundHisPlace = false;
+
+		while (!foundHisPlace) {
+
+			if (monstersOnRespawn->find(chosenRespawnPoint) == monstersOnRespawn->end()) {
+				monstersOnRespawn->insert( pair<int, int> (chosenRespawnPoint, 1) );
+				foundHisPlace = true;
+				continue;
+			}
+
+			if (monstersOnRespawn->find(chosenRespawnPoint)->second > MONSTERS_PER_SPOT) {
+				chosenRespawnPoint = (rand() % (numberOfRespawnPoints)) + 1; // Get another one
+			} else {
+				monstersOnRespawn->find(chosenRespawnPoint)->second++;
+				foundHisPlace = true;
+			}
+
+		}
+
+		x = respawnPoints->at((chosenRespawnPoint * 2) - 2);
+		y = respawnPoints->at((chosenRespawnPoint * 2) - 1) - BOTS_RESPAWN_OFFSET_Y; // Put a little up
+
+		pp->setX(x);
+		pp->setY(y);
+		pp->setAccelerationX(0.0f);
+		pp->setAccelerationY(0.0f);
+		sm->addBot(newBot);
+	}
+}
+
+void YADataLoader::loadStoryBoard(Game* game, FadeScreen* fScreen)
+{
+	OverlayImage* image = new OverlayImage();
+
+	image->imageID = game->getGraphics()->getGUITextureManager()->loadTexture(
+		L"textures/gui/overlays/blackscreen.png");
+	image->x = 0;
+	image->y = 0;
+	image->z = 0;
+	image->width = 1024;
+	image->height = 768;
+
+	fScreen->setBackground(image);
+
+	// First Image of StoryBoard
+	image = new OverlayImage();
+	image->imageID = game->getGraphics()->getGUITextureManager()->loadTexture(
+		L"textures/gui/overlays/story1.png");
+	image->x = 0;
+	image->y = 0;
+	image->z = 0;
+	image->width = 1024;
+	image->height = 768;
+
+	fScreen->addImage(image);
+
+	image = new OverlayImage();
+	image->imageID = game->getGraphics()->getGUITextureManager()->loadTexture(
+		L"textures/gui/overlays/story2.png");
+	image->x = 0;
+	image->y = 0;
+	image->z = 0;
+	image->width = 1024;
+	image->height = 768;
+
+	fScreen->addImage(image);
+
+	image = new OverlayImage();
+	image->imageID = game->getGraphics()->getGUITextureManager()->loadTexture(
+		L"textures/gui/overlays/story3.png");
+	image->x = 0;
+	image->y = 0;
+	image->z = 0;
+	image->width = 1024;
+	image->height = 768;
+
+	fScreen->addImage(image);
+
+
+}
+
+void YADataLoader::loadEndGame(Game* game, FadeScreen* fScreen)
+{
+	OverlayImage* image = new OverlayImage();
+
+	image->imageID = game->getGraphics()->getGUITextureManager()->loadTexture(
+		L"textures/gui/overlays/blackscreen.png");
+	image->x = 0;
+	image->y = 0;
+	image->z = 0;
+	image->width = 1024;
+	image->height = 768;
+
+	fScreen->setBackground(image);
+
+	// First Image of StoryBoard
+	image = new OverlayImage();
+	image->imageID = game->getGraphics()->getGUITextureManager()->loadTexture(
+		L"textures/gui/overlays/endgame.png");
+	image->x = 0;
+	image->y = 0;
+	image->z = 0;
+	image->width = 1024;
+	image->height = 768;
+
+	fScreen->addImage(image);
 
 }

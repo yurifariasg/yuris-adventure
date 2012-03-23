@@ -159,25 +159,25 @@ void Viewport::update(Game *game)
 	PhysicalProperties* pp = game->getGSM()->getSpriteManager()->getPlayer()->getPhysicalProperties();
 
 
-	if (pp->getX() - viewportX > viewportWidth * 0.8
+	if (pp->getX() - viewportX > viewportWidth * FAST_SCROLLING_RIGHT / 100
 				&& viewportX + PLAYER_SPEED < game->getGSM()->getWorld()->getWorldWidth()) {
 		moveViewport(PLAYER_SPEED * 2, 0,
 				game->getGSM()->getWorld()->getWorldWidth(),
 				game->getGSM()->getWorld()->getWorldHeight());
 
-	} else if (pp->getX() - viewportX > viewportWidth * 0.5
+	} else if (pp->getX() - viewportX > viewportWidth * NORMAL_SCROLLING_RIGHT / 100
 				&& viewportX + PLAYER_SPEED < game->getGSM()->getWorld()->getWorldWidth()) {
 		moveViewport(PLAYER_SPEED, 0,
 				game->getGSM()->getWorld()->getWorldWidth(),
 				game->getGSM()->getWorld()->getWorldHeight());
 
 
-	} else if (pp->getX() - viewportX < viewportWidth * 0.2 && viewportX - PLAYER_SPEED > 0) {
+	} else if (pp->getX() - viewportX < viewportWidth * FAST_SCROLLING_LEFT / 100 && viewportX - PLAYER_SPEED > 0) {
 		moveViewport(-PLAYER_SPEED * 2, 0,
 				game->getGSM()->getWorld()->getWorldWidth(),
 				game->getGSM()->getWorld()->getWorldHeight());
 
-	} else if (pp->getX() - viewportX < viewportWidth * 0.4 && viewportX - PLAYER_SPEED > 0) {
+	} else if (pp->getX() - viewportX < viewportWidth * NORMAL_SCROLLING_LEFT / 100 && viewportX - PLAYER_SPEED > 0) {
 		moveViewport(-PLAYER_SPEED, 0,
 				game->getGSM()->getWorld()->getWorldWidth(),
 				game->getGSM()->getWorld()->getWorldHeight());

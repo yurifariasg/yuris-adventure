@@ -54,6 +54,12 @@
     <ClCompile Include="FightGameObjective.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="BossBot.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FadeScreen.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="YAGame.h">
@@ -108,6 +114,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="FightGameObjective.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BossBot.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FadeScreen.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

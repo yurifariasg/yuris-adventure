@@ -19,13 +19,13 @@
 const float DEFAULT_MAX_VELOCITY = 100.0f;
 const float DEFAULT_GRAVITY = 4.0f;
 const bool IS_GRAVITY_ACTIVE = true;
-const int CELL_WIDTH = 64;
-const int CELL_HEIGHT = 64;
+const double AIR_VELOCITY_MULTIPLIER = 2;
 
 class AnimatedSprite;
 class TiledLayer;
 class Viewport;
 class Projectile;
+class SpriteManager;
 
 class Physics
 {
@@ -40,8 +40,7 @@ private:
 
 	void doStaticPhysics(AnimatedSprite*, TiledLayer*, Viewport*);
 	void doProjectilePhysics(Projectile*, TiledLayer*, Viewport*);
-
-	
+	void doCollisionPhysicsBetween(AnimatedSprite*, AnimatedSprite*);
 
 public:
 	// INLINED METHODS
@@ -66,6 +65,11 @@ public:
 	// METHODS TO BE DEFINED IN Physics.cpp
 	Physics();
 	~Physics();
+	static bool hasAABBCollision(int,int,int,int,int,int,int,int);
 	void update(Game *game);
+	void doDynamicPhysics(SpriteManager*);
+	double firstTimeCollision(int,int,int,int,int,int,int,int,int,int,int,int);
+	bool findOnArray(vector<pair<int,int>*>*, pair<int,int>*);
+	bool occupiesCell(AnimatedSprite*, pair<int,int>*);
 
 };

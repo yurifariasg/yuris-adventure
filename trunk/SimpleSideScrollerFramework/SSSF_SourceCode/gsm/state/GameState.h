@@ -59,4 +59,9 @@ enum GameState
 
 	// WHEN A GAME APP IS TO CLOSE, WE'LL NEED TO UNLOAD GUI ARTWORK
 	GS_UNLOADING_GAME,
+
+	// StoryTelling
+	GS_STORY_BOARD,
+	// Ending Game
+	GS_END_GAME
 };

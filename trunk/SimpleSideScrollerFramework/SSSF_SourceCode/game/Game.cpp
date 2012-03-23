@@ -218,7 +218,8 @@ void Game::startGame()
 {
 	// AND UPDATE THE GAME STATE OF COURSE
 	gsm->goToLoadLevel();
-	dataLoader->loadWorld(this, 1); // Level 1
+	dataLoader->loadWorld(this, 3); // Level 1
+	gsm->setCurrentLevel(3);
 
 }
 
