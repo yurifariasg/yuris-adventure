@@ -1,17 +1,71 @@
-﻿Build started 3/22/2012 3:41:19 AM.
-     1>Project "C:\Users\Yuri\Documents\Projects\IndividualProject\YurisAdventure\YurisAdventure\YurisAdventure.vcxproj" on node 2 (build target(s)).
+﻿Build started 3/23/2012 1:54:52 PM.
+     1>Project "C:\Users\Yuri\Documents\Projects\IndividualProject\YurisAdventure\YurisAdventure\YurisAdventure.vcxproj" on node 3 (build target(s)).
      1>InitializeBuildStatus:
          Creating "C:\Users\Yuri\Documents\Projects\IndividualProject\Temp\YurisAdventure\Debug\YurisAdventure.unsuccessfulbuild" because "AlwaysCreate" was specified.
        ClCompile:
-         All outputs are up-to-date.
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"C:\Users\Yuri\Documents\Projects\IndividualProject\Temp\YurisAdventure\Debug\\" /Fd"C:\Users\Yuri\Documents\Projects\IndividualProject\Temp\YurisAdventure\Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt BossBot.cpp YADataLoader.cpp
+         BossBot.cpp
+     1>c:\users\yuri\documents\projects\individualproject\yurisadventure\yurisadventure\enemybot.h(28): warning C4244: 'return' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\yuri\documents\projects\individualproject\yurisadventure\yurisadventure\enemybot.h(32): warning C4244: 'return' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\yuri\documents\projects\individualproject\yurisadventure\yurisadventure\enemybot.h(36): warning C4244: 'return' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\yuri\documents\projects\individualproject\yurisadventure\yurisadventure\enemybot.h(37): warning C4244: 'return' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\yuri\documents\projects\individualproject\yurisadventure\yurisadventure\enemybot.h(38): warning C4244: 'return' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\yuri\documents\projects\individualproject\yurisadventure\yurisadventure\yagame.h(167): warning C4244: 'initializing' : conversion from 'double' to 'const int', possible loss of data
+     1>c:\users\yuri\documents\projects\individualproject\yurisadventure\yurisadventure\bossbot.cpp(47): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\yuri\documents\projects\individualproject\yurisadventure\yurisadventure\bossbot.cpp(48): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\yuri\documents\projects\individualproject\yurisadventure\yurisadventure\bossbot.cpp(126): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\yuri\documents\projects\individualproject\yurisadventure\yurisadventure\bossbot.cpp(148): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+         Generating Code...
+         Compiling...
+         YADataLoader.cpp
+     1>c:\users\yuri\documents\projects\individualproject\yurisadventure\yurisadventure\yagame.h(167): warning C4244: 'initializing' : conversion from 'double' to 'const int', possible loss of data
+     1>c:\users\yuri\documents\projects\individualproject\yurisadventure\yurisadventure\fadescreen.h(21): warning C4018: '>=' : signed/unsigned mismatch
+     1>c:\users\yuri\documents\projects\individualproject\yurisadventure\yurisadventure\enemybot.h(28): warning C4244: 'return' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\yuri\documents\projects\individualproject\yurisadventure\yurisadventure\enemybot.h(32): warning C4244: 'return' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\yuri\documents\projects\individualproject\yurisadventure\yurisadventure\enemybot.h(36): warning C4244: 'return' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\yuri\documents\projects\individualproject\yurisadventure\yurisadventure\enemybot.h(37): warning C4244: 'return' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\yuri\documents\projects\individualproject\yurisadventure\yurisadventure\enemybot.h(38): warning C4244: 'return' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\yuri\documents\projects\individualproject\yurisadventure\yurisadventure\yadataloader.cpp(260): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\yuri\documents\projects\individualproject\yurisadventure\yurisadventure\yadataloader.cpp(261): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\yuri\documents\projects\individualproject\yurisadventure\yurisadventure\yadataloader.cpp(268): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
+     1>c:\users\yuri\documents\projects\individualproject\yurisadventure\yurisadventure\yadataloader.cpp(279): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\yuri\documents\projects\individualproject\yurisadventure\yurisadventure\yadataloader.cpp(280): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\yuri\documents\projects\individualproject\yurisadventure\yurisadventure\yadataloader.cpp(593): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\yuri\documents\projects\individualproject\yurisadventure\yurisadventure\yadataloader.cpp(769): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\yuri\documents\projects\individualproject\yurisadventure\yurisadventure\yadataloader.cpp(770): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\yuri\documents\projects\individualproject\yurisadventure\yurisadventure\yadataloader.cpp(771): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\yuri\documents\projects\individualproject\yurisadventure\yurisadventure\yadataloader.cpp(772): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\yuri\documents\projects\individualproject\yurisadventure\yurisadventure\yadataloader.cpp(905): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\yuri\documents\projects\individualproject\yurisadventure\yurisadventure\yadataloader.cpp(906): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+         Generating Code...
        ResourceCompile:
          All outputs are up-to-date.
        ManifestResourceCompile:
          All outputs are up-to-date.
        Link:
-         All outputs are up-to-date.
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Yuri\Documents\Projects\IndividualProject\Apps\YurisAdventure\YurisAdventure.exe" /INCREMENTAL /NOLOGO SimpleSideScrollerFramework.lib winmm.lib d3d9.lib d3dx9.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"C:\Users\Yuri\Documents\Projects\IndividualProject\Temp\YurisAdventure\Debug\YurisAdventure.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\Users\Yuri\Documents\Projects\IndividualProject\Apps\YurisAdventure\YurisAdventure.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Yuri\Documents\Projects\IndividualProject\Apps\YurisAdventure\YurisAdventure.lib" /MACHINE:X86 C:\Users\Yuri\Documents\Projects\IndividualProject\Temp\YurisAdventure\Debug\YurisAdventure.res
+         C:\Users\Yuri\Documents\Projects\IndividualProject\Temp\YurisAdventure\Debug\YurisAdventure.exe.embed.manifest.res
+         C:\Users\Yuri\Documents\Projects\IndividualProject\Temp\YurisAdventure\Debug\BossBot.obj
+         C:\Users\Yuri\Documents\Projects\IndividualProject\Temp\YurisAdventure\Debug\Creature.obj
+         C:\Users\Yuri\Documents\Projects\IndividualProject\Temp\YurisAdventure\Debug\EnemyBot.obj
+         C:\Users\Yuri\Documents\Projects\IndividualProject\Temp\YurisAdventure\Debug\FadeScreen.obj
+         C:\Users\Yuri\Documents\Projects\IndividualProject\Temp\YurisAdventure\Debug\FightGameObjective.obj
+         C:\Users\Yuri\Documents\Projects\IndividualProject\Temp\YurisAdventure\Debug\FightPhysics.obj
+         C:\Users\Yuri\Documents\Projects\IndividualProject\Temp\YurisAdventure\Debug\PenetrableProjectile.obj
+         C:\Users\Yuri\Documents\Projects\IndividualProject\Temp\YurisAdventure\Debug\Player.obj
+         C:\Users\Yuri\Documents\Projects\IndividualProject\Temp\YurisAdventure\Debug\PlayerGUI.obj
+         C:\Users\Yuri\Documents\Projects\IndividualProject\Temp\YurisAdventure\Debug\YAButtonEventHandler.obj
+         C:\Users\Yuri\Documents\Projects\IndividualProject\Temp\YurisAdventure\Debug\YADataLoader.obj
+         C:\Users\Yuri\Documents\Projects\IndividualProject\Temp\YurisAdventure\Debug\YAKeyEventHandler.obj
+         C:\Users\Yuri\Documents\Projects\IndividualProject\Temp\YurisAdventure\Debug\YASpriteManager.obj
+         C:\Users\Yuri\Documents\Projects\IndividualProject\Temp\YurisAdventure\Debug\YATextGenerator.obj
+         C:\Users\Yuri\Documents\Projects\IndividualProject\Temp\YurisAdventure\Debug\YAGame.obj
        Manifest:
+         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /out:"C:\Users\Yuri\Documents\Projects\IndividualProject\Temp\YurisAdventure\Debug\YurisAdventure.exe.embed.manifest" /manifest C:\Users\Yuri\Documents\Projects\IndividualProject\Temp\YurisAdventure\Debug\YurisAdventure.exe.intermediate.manifest
          All outputs are up-to-date.
+       LinkEmbedManifest:
+         All outputs are up-to-date.
+         YurisAdventure.vcxproj -> C:\Users\Yuri\Documents\Projects\IndividualProject\Apps\YurisAdventure\YurisAdventure.exe
        FinalizeBuildStatus:
          Deleting file "C:\Users\Yuri\Documents\Projects\IndividualProject\Temp\YurisAdventure\Debug\YurisAdventure.unsuccessfulbuild".
          Touching "C:\Users\Yuri\Documents\Projects\IndividualProject\Temp\YurisAdventure\Debug\YurisAdventure.lastbuildstate".
@@ -19,4 +73,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:00.19
+Time Elapsed 00:00:21.64

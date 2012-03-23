@@ -15,13 +15,12 @@
 
 class EnemyBot : public Bot, public Creature
 {
-private:
+protected:
 	BotVelocity velocity;
 	BotState state;
 	int actionTime;
 	int botSpeed;
 
-protected:
 	Point*	searchPlayerPosition(Game*);
 
 	int getTrueX() {

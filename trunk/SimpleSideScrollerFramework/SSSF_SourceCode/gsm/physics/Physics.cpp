@@ -406,8 +406,8 @@ void Physics::doDynamicPhysics(SpriteManager* sm)
 
 		while (moveTo < 1) {
 			// Find first contact time between them..
-			// X Axis
 			
+			// If they're moving...
 			if (b->getPhysicalProperties()->
 				getVelocityX() > 0 && b->getPhysicalProperties()->
 				getVelocityY() > 0) {

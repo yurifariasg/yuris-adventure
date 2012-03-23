@@ -81,10 +81,21 @@ static const wstring DG_QUIT_IMAGE_PATH		= L"textures/gui/buttons/quit.png";
 static const wstring DG_QUIT_IMAGE_MO_PATH	= L"textures/gui/buttons/quit_mo.png";
 
 // INGame GUI Images
+static const wstring PLAYER_BAR = L"textures/gui/overlays/player_bar.png";
+static const wstring ALTERNATIVE_PLAYER_BAR = L"textures/gui/overlays/player_bar_red.png";
 static const wstring HP_BAR_PIECE	= L"textures/gui/overlays/hp_piece.png";
 static const int HP_BAR_MAX = 30;
 static const wstring MANA_BAR_PIECE	= L"textures/gui/overlays/mana_piece.png";
 static const int MANA_BAR_MAX = 30;
+
+//  Gui Images for Story (Should be loaded from a file)
+
+static const wstring BLACK_SCREEN = L"textures/gui/overlays/blackscreen.png";
+static const wstring GAME_OVER_SCREEN = L"textures/gui/overlays/gameover.png";
+static const wstring STORY1_SCREEN = L"textures/gui/overlays/story1.png";
+static const wstring STORY2_SCREEN = L"textures/gui/overlays/story2.png";
+static const wstring STORY3_SCREEN = L"textures/gui/overlays/story3.png";
+static const wstring ENDGAME_SCREEN = L"textures/gui/overlays/endgame.png";
 
 
 // FOR OUR SPRITE
@@ -159,6 +170,12 @@ static const int		FLYING_SPEED_MULTIPLIER = 1.5;
 static const int		TILE_WIDTH = 64;
 static const int		TILE_HEIGHT = 64;
 static const int		Z_LAYER = 0;
+
+// Screen
+
+const int SCREEN_WIDTH = 1024;
+const int SCREEN_HEIGHT = 768;
+
 
 static const int PLAYER_HP = 100;
 static const int PLAYER_MANA = 100;

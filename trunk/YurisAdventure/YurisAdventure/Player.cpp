@@ -236,10 +236,10 @@ void Player::updateBuffs()
 			if (comboAnimationTimer < TIME_FOR_COMBO_ANIMATION) {
 				aura->setAlpha(255);
 				aura->getPhysicalProperties()->setX(
-					getPhysicalProperties()->getX()- 65);
+					getPhysicalProperties()->getX()- 65); // Should be add from file
 
 				aura->getPhysicalProperties()->setY(
-					getPhysicalProperties()->getY() - 70);
+					getPhysicalProperties()->getY() - 70); // Should be add from file
 			} else {
 				aura->setAlpha(0);
 			}

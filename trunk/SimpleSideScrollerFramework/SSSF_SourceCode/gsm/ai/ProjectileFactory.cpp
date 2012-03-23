@@ -1,12 +1,6 @@
 #include "stdafx.h"
 #include "SSSF_SourceCode\gsm\ai\ProjectileFactory.h"
 
-
-ProjectileFactory::ProjectileFactory(void)
-{
-}
-
-
 ProjectileFactory::~ProjectileFactory(void)
 {
 	registeredProjectiles.clear();

@@ -1,7 +1,9 @@
 #pragma once
 #include "stdafx.h"
 #include "SSSF_SourceCode\gsm\ai\Projectile.h"
-
+/*
+	Projectile Factory, recycles and creates projectiles
+*/
 class ProjectileFactory
 {
 private:
@@ -9,8 +11,8 @@ private:
 	map<wstring, Projectile*> registeredProjectiles;
 
 public:
-	ProjectileFactory(void);
-	~ProjectileFactory(void);
+	ProjectileFactory() {};
+	~ProjectileFactory();
 	void registerProjectile(wstring, Projectile*);
 	Projectile* createProjectile(wstring);
 	void recycleProjectile(wstring, Projectile*);

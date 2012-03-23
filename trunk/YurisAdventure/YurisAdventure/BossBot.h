@@ -1,5 +1,12 @@
 #pragma once
 #include "enemybot.h"
+#include "SSSF_SourceCode\game\Game.h"
+#include "YAGame.h"
+
+/*
+	Different bot that has a bigger range to follow the player
+*/
+
 class BossBot : public EnemyBot
 {
 public:

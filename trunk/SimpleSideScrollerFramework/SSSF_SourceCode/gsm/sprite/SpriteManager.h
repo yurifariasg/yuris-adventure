@@ -43,7 +43,7 @@ private:
 	// WE NEED TO SPAWN THEM, INSTEAD IT WILL RECYCLE THEM FOR US
 	BotRecycler recyclableBots;
 
-	
+	// Projectile Factory
 	ProjectileFactory pFactory;
 
 public:

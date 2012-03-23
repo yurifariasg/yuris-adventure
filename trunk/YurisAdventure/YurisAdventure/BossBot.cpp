@@ -2,14 +2,13 @@
 
 
 
-
 BossBot::~BossBot(void)
 {
 }
 
-void BossBot::think(Game*)
+void BossBot::think(Game* game)
 {
-	/*	if (state == BOT_TAKING_DAMAGE) {
+	if (state == BOT_TAKING_DAMAGE) {
 		
 		if (isFacingRight()) setCurrentState(BOT_STATE_TAKING_DAMAGE_RIGHT);
 		else setCurrentState(BOT_STATE_TAKING_DAMAGE_LEFT);
@@ -42,14 +41,18 @@ void BossBot::think(Game*)
 
 			// if found in bigger range
 			// continue chasing
-			if (p->getX() > x - 500 && p->getX() < x + 500
-			&& p->getY() > y - 300 && p->getY() < y + 300) {
+			if (p->getX() > x - 1000 && p->getX() < x + 1000
+			&& p->getY() > y - 400 && p->getY() < y + 400) {
 
-				int distanceXToAttack = 60;
+				int distanceXToAttack = getBoundingVolume()->getWidth() * 3;
+				int distanceYToAttack = getBoundingVolume()->getHeight() * 2;
 
 				// if Close Attack !
-				if (p->getX() > x - distanceXToAttack && p->getX() < x + distanceXToAttack
-					&& p->getY() > y - 50 && p->getY() < y + 50 && !isAttacking()) {
+				if (p->getX() > x - distanceXToAttack &&
+					p->getX() < x + distanceXToAttack &&
+					p->getY() > y - distanceYToAttack &&
+					p->getY() < y + distanceYToAttack &&
+					!isAttacking()) {
 
 						botSpeed = 0;
 						state = BOT_ATTACKING;
@@ -120,9 +123,7 @@ void BossBot::think(Game*)
 
 			state = BOT_MOVING;
 
-			this->pp.setVelocitySafely(
-				game->getGSM()->getPhysics(),
-				botSpeed, 0);
+			getPhysicalProperties()->setVelocity(botSpeed, 0);
 
 			// For some time...
 			actionTime = 50 + (rand() % 100);
@@ -145,5 +146,5 @@ void BossBot::think(Game*)
 		actionTime--;
 
 		this->pp.setVelocity(botSpeed, 0);
-	}*/
+	}
 }
